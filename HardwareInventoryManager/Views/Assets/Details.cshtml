@@ -1,0 +1,122 @@
+﻿@model HardwareInventoryManager.Models.Asset
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Asset</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenantOrganisation.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenantOrganisation.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SerialNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SerialNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchaseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PurchaseDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ObsolescenseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ObsolescenseDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PricePaid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PricePaid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetMake.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetMake.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WarrantyPeriod.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WarrantyPeriod.Description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TenantId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

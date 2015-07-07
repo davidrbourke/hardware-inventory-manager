@@ -8,17 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Interfaces;
 
 namespace HardwareInventoryManager.Controllers
 {
-    public class AssetsController : Controller
+    [Authorize]
+    public class AssetsController : Controller, ITenant
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();
 
+        private int tenantId;
+        
         // GET: Assets
         public ActionResult Index()
         {
-            var tenants = db.Assets.Include(a => a.TenantOrganisation).Include(a => a.AssetMake).Include(a => a.Category).Include(a => a.WarrantyPeriod);
+            tenantId = LoadTenant();
+            var tenants = db.Assets.Include(a => a.Tenant).Include(a => a.AssetMake).Include(a => a.Category).Include(a => a.WarrantyPeriod).Where(t => t.TenantId == tenantId);
             return View(tenants.ToList());
         }
 
@@ -41,9 +47,9 @@ namespace HardwareInventoryManager.Controllers
         public ActionResult Create()
         {
             ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name");
-            ViewBag.AssetMakeId = new SelectList(db.Lookups, "LookupId", "Description");
-            ViewBag.CategoryId = new SelectList(db.Lookups, "LookupId", "Description");
-            ViewBag.WarrantyPeriodId = new SelectList(db.Lookups, "LookupId", "Description");
+            ViewBag.AssetMakeId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Make.ToString()), "LookupId", "Description");
+            ViewBag.CategoryId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString()), "LookupId", "Description");
+            ViewBag.WarrantyPeriodId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString()), "LookupId", "Description");
             return View();
         }
 
@@ -56,12 +62,12 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Tenants.Add(asset);
+                db.Assets.Add(asset);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantOrganisationId);
+            ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantId);
             ViewBag.AssetMakeId = new SelectList(db.Lookups, "LookupId", "Description", asset.AssetMakeId);
             ViewBag.CategoryId = new SelectList(db.Lookups, "LookupId", "Description", asset.CategoryId);
             ViewBag.WarrantyPeriodId = new SelectList(db.Lookups, "LookupId", "Description", asset.WarrantyPeriodId);
@@ -80,7 +86,7 @@ namespace HardwareInventoryManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantOrganisationId);
+            ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantId);
             ViewBag.AssetMakeId = new SelectList(db.Lookups, "LookupId", "Description", asset.AssetMakeId);
             ViewBag.CategoryId = new SelectList(db.Lookups, "LookupId", "Description", asset.CategoryId);
             ViewBag.WarrantyPeriodId = new SelectList(db.Lookups, "LookupId", "Description", asset.WarrantyPeriodId);
@@ -100,7 +106,7 @@ namespace HardwareInventoryManager.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantOrganisationId);
+            ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantId);
             ViewBag.AssetMakeId = new SelectList(db.Lookups, "LookupId", "Description", asset.AssetMakeId);
             ViewBag.CategoryId = new SelectList(db.Lookups, "LookupId", "Description", asset.CategoryId);
             ViewBag.WarrantyPeriodId = new SelectList(db.Lookups, "LookupId", "Description", asset.WarrantyPeriodId);
@@ -128,7 +134,7 @@ namespace HardwareInventoryManager.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Asset asset = db.Assets.Find(id);
-            db.Tenants.Remove(asset);
+            db.Assets.Remove(asset);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -140,6 +146,11 @@ namespace HardwareInventoryManager.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public int LoadTenant()
+        {
+            return TenantHelper.LoadTenant(HttpContext.User.Identity.Name);
         }
     }
 }

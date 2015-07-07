@@ -58,6 +58,13 @@ namespace HardwareInventoryManager.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Display(Name = "Your Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Organisation Name")]
+        public string OrganisationName { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -68,6 +75,24 @@ namespace HardwareInventoryManager.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Building Name or Number")]
+        public string AddressLine1 { get; set; }
+
+        [Display(Name = "Street Name")]
+        public string AddressLine2 { get; set; }
+
+        [Display(Name = "Town or City")]
+        public string AddressLine3 { get; set; }
+
+        [Display(Name = "County")]
+        public string AddressLine4 { get; set; }
+
+        [Display(Name = "Postcode")]
+        public string Postcode { get; set; }
+
+        [Display(Name = "Telephone Number")]
+        public string TelephoneNumber { get; set; }
     }
 
     public class ResetPasswordViewModel

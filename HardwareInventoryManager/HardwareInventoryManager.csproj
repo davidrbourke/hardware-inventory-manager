@@ -178,6 +178,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
@@ -191,13 +192,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507061522183_Initial.cs" />
-    <Compile Include="Migrations\201507061522183_Initial.Designer.cs">
-      <DependentUpon>201507061522183_Initial.cs</DependentUpon>
+    <Compile Include="Interfaces\ITenant.cs" />
+    <Compile Include="Migrations\201507071201322_Initial.cs" />
+    <Compile Include="Migrations\201507071201322_Initial.Designer.cs">
+      <DependentUpon>201507071201322_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507061614187_NonRequiredDateTime.cs" />
-    <Compile Include="Migrations\201507061614187_NonRequiredDateTime.Designer.cs">
-      <DependentUpon>201507061614187_NonRequiredDateTime.cs</DependentUpon>
+    <Compile Include="Migrations\201507071229263_AppUser_TenantAdded.cs" />
+    <Compile Include="Migrations\201507071229263_AppUser_TenantAdded.Designer.cs">
+      <DependentUpon>201507071229263_AppUser_TenantAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -212,7 +214,9 @@
     <Compile Include="Models\RolePermission.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EnumHelper.cs" />
     <Compile Include="Services\SeedService.cs" />
+    <Compile Include="Services\TenantHelper.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +228,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ball-63527_640.jpg" />
+    <Content Include="Images\man-475557_640.jpg" />
+    <Content Include="Images\office-605503_640.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Mvc.sitemap" />
@@ -296,11 +303,13 @@
     <Content Include="Views\Assets\Details.cshtml" />
     <Content Include="Views\Assets\Edit.cshtml" />
     <Content Include="Views\Assets\Index.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Repository\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -313,11 +322,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507061522183_Initial.resx">
-      <DependentUpon>201507061522183_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507071201322_Initial.resx">
+      <DependentUpon>201507071201322_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507061614187_NonRequiredDateTime.resx">
-      <DependentUpon>201507061614187_NonRequiredDateTime.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507071229263_AppUser_TenantAdded.resx">
+      <DependentUpon>201507071229263_AppUser_TenantAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

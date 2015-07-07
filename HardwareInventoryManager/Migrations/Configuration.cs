@@ -16,8 +16,8 @@ namespace HardwareInventoryManager.Migrations
 
         protected override void Seed(HardwareInventoryManager.Models.ApplicationDbContext context)
         {
-            if (System.Diagnostics.Debugger.IsAttached == false)
-                System.Diagnostics.Debugger.Launch();
+            //if (System.Diagnostics.Debugger.IsAttached == false)
+            //    System.Diagnostics.Debugger.Launch();
 
             //  This method will be called after migrating to the latest version.
             CustomApplicationDbContext customContext = new CustomApplicationDbContext();

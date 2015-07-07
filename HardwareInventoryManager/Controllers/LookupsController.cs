@@ -11,6 +11,7 @@ using HardwareInventoryManager.Models;
 
 namespace HardwareInventoryManager.Controllers
 {
+    [Authorize]
     public class LookupsController : Controller
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();

@@ -5,8 +5,8 @@
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
     <mvcSiteMapNode title="About" controller="Home" action="About"/>
-    <mvcSiteMapNode title="Assets" controller="Assets" action="Index"/>
-    <mvcSiteMapNode title="Administration" clickable="false">
+    <mvcSiteMapNode title="Assets" controller="Assets" action="Index" />
+    <mvcSiteMapNode title="Administration" controller="Lookups" action="Index">
       <mvcSiteMapNode title="Lookup" controller="Lookups" action="Index"/>
       <mvcSiteMapNode title="Lookup Types" controller="LookupTypes" action="Index"/>
     </mvcSiteMapNode>

@@ -8,10 +8,14 @@ using System.ComponentModel;
 
 namespace HardwareInventoryManager.Models
 {
-    public class Asset: Tenant
+    public class Asset : ModelEntity
     {
         [Key]
         public int AssetId { get; set; }
+
+        public int TenantId { get; set; }
+        [ForeignKey("TenantId")]
+        public Tenant Tenant { get; set; } 
 
         public int AssetMakeId { get; set; }
         [ForeignKey("AssetMakeId")]
@@ -36,6 +40,5 @@ namespace HardwareInventoryManager.Models
         public Lookup Category{ get; set; }
 
         public string LocationDescription { get; set; }
-
     }
 }

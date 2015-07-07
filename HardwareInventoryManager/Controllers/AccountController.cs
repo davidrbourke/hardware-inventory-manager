@@ -90,7 +90,16 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+                Tenant tenant = new Tenant
+                {
+                    TenantOrganisation = new Organisation
+                    {
+                        Name = model.OrganisationName
+                    }
+                };
+
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Tenant = tenant };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

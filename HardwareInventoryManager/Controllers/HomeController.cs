@@ -10,6 +10,10 @@ namespace HardwareInventoryManager.Controllers
     {
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Dashboard");
+            }
             return View();
         }
 
@@ -24,6 +28,11 @@ namespace HardwareInventoryManager.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult Dashboard()
+        {
             return View();
         }
     }

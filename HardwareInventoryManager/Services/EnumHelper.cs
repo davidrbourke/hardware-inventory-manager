@@ -21,5 +21,12 @@ namespace HardwareInventoryManager.Services
             Info,
             Error
         }
+
+        public enum Roles
+        {
+            Admin,
+            Author,
+            Viewer
+        }
     }
 }

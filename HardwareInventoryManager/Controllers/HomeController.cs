@@ -1,4 +1,7 @@
-﻿using System;
+﻿using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Services;
+using HardwareInventoryManager.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +9,7 @@ using System.Web.Mvc;
 
 namespace HardwareInventoryManager.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : AppController
     {
         public ActionResult Index()
         {
@@ -33,7 +36,12 @@ namespace HardwareInventoryManager.Controllers
 
         public ActionResult Dashboard()
         {
-            return View();
+            int tenant = TenantHelper.LoadTenant(User.Identity.Name);
+            CustomApplicationDbContext context = new CustomApplicationDbContext();
+            DashboardViewModel dashboad = new DashboardViewModel();
+            dashboad.DashboardUpdates = context.DashboardUpdates;
+            dashboad.TotalAssets = context.Assets.Count(a => a.TenantId == tenant);
+            return View(dashboad);
         }
     }
 }

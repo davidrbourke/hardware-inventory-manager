@@ -185,6 +185,7 @@
     <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\LookupTypesController.cs" />
     <Compile Include="CustomApplicationDbContext.cs" />
+    <Compile Include="Filters\CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,31 +195,20 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\ITenant.cs" />
-    <Compile Include="Migrations\201507071201322_Initial.cs" />
-    <Compile Include="Migrations\201507071201322_Initial.Designer.cs">
-      <DependentUpon>201507071201322_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201507081445414_Correct.cs" />
+    <Compile Include="Migrations\201507081445414_Correct.Designer.cs">
+      <DependentUpon>201507081445414_Correct.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507071229263_AppUser_TenantAdded.cs" />
-    <Compile Include="Migrations\201507071229263_AppUser_TenantAdded.Designer.cs">
-      <DependentUpon>201507071229263_AppUser_TenantAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507071751268_ContactConstraints.cs" />
-    <Compile Include="Migrations\201507071751268_ContactConstraints.Designer.cs">
-      <DependentUpon>201507071751268_ContactConstraints.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507081045396_PricePaidOptional.cs" />
-    <Compile Include="Migrations\201507081045396_PricePaidOptional.Designer.cs">
-      <DependentUpon>201507081045396_PricePaidOptional.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507081124112_AssetModelRequired.cs" />
-    <Compile Include="Migrations\201507081124112_AssetModelRequired.Designer.cs">
-      <DependentUpon>201507081124112_AssetModelRequired.cs</DependentUpon>
+    <Compile Include="Migrations\201507081515180_DashboardBool.cs" />
+    <Compile Include="Migrations\201507081515180_DashboardBool.Designer.cs">
+      <DependentUpon>201507081515180_DashboardBool.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\DashboardUpdates.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lookup.cs" />
     <Compile Include="Models\LookupType.cs" />
@@ -232,6 +222,7 @@
     <Compile Include="Services\SeedService.cs" />
     <Compile Include="Services\TenantHelper.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -273,6 +264,8 @@
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\dbinventory - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\dbinventory - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -353,7 +346,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Repository\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
@@ -367,20 +359,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507071201322_Initial.resx">
-      <DependentUpon>201507071201322_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507081445414_Correct.resx">
+      <DependentUpon>201507081445414_Correct.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507071229263_AppUser_TenantAdded.resx">
-      <DependentUpon>201507071229263_AppUser_TenantAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507071751268_ContactConstraints.resx">
-      <DependentUpon>201507071751268_ContactConstraints.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507081045396_PricePaidOptional.resx">
-      <DependentUpon>201507081045396_PricePaidOptional.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507081124112_AssetModelRequired.resx">
-      <DependentUpon>201507081124112_AssetModelRequired.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507081515180_DashboardBool.resx">
+      <DependentUpon>201507081515180_DashboardBool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

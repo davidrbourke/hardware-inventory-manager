@@ -18,6 +18,7 @@ namespace HardwareInventoryManager.Services
             SeedLookups();
             SeedTenants();
             SeedInitialUserAndRole();
+            SeedRoles();
         }
 
         /// <summary>
@@ -65,10 +66,28 @@ namespace HardwareInventoryManager.Services
                 {
                     var user = new ApplicationUser { UserName = emailAddress, Email = emailAddress, TenantId = tenant.TenantId };
 
-                    roleManager.Create(new IdentityRole { Name = "admin" });
+                    roleManager.Create(new IdentityRole { Name = EnumHelper.Roles.Admin.ToString() });
                     manager.Create(user, "password");
-                    manager.AddToRole(user.Id, "admin");
+                    manager.AddToRole(user.Id, EnumHelper.Roles.Admin.ToString());
                 }
+            }
+        }
+
+        private void SeedRoles()
+        {
+            if (!_context.Roles.Any(x => x.Name == EnumHelper.Roles.Author.ToString()))
+            {
+                var roleStore = new RoleStore<IdentityRole>(_context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                roleManager.Create(new IdentityRole { Name = EnumHelper.Roles.Author.ToString() });
+            }
+            if (!_context.Roles.Any(x => x.Name == EnumHelper.Roles.Viewer.ToString()))
+            {
+                var roleStore = new RoleStore<IdentityRole>(_context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                roleManager.Create(new IdentityRole { Name = EnumHelper.Roles.Viewer.ToString() });
             }
         }
 

@@ -10,10 +10,11 @@ using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Interfaces;
+using HardwareInventoryManager.Filters;
 
 namespace HardwareInventoryManager.Controllers
 {
-    [Authorize]
+    [CustomAuthorize]
     public class AssetsController : AppController, ITenant
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();

@@ -14,7 +14,7 @@ using HardwareInventoryManager.Interfaces;
 namespace HardwareInventoryManager.Controllers
 {
     [Authorize]
-    public class AssetsController : Controller, ITenant
+    public class AssetsController : AppController, ITenant
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();
 
@@ -62,15 +62,18 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                tenantId = LoadTenant();
+                asset.TenantId = tenantId;
                 db.Assets.Add(asset);
                 db.SaveChanges();
+                Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                 return RedirectToAction("Index");
             }
-
+            Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
             ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantId);
-            ViewBag.AssetMakeId = new SelectList(db.Lookups, "LookupId", "Description", asset.AssetMakeId);
-            ViewBag.CategoryId = new SelectList(db.Lookups, "LookupId", "Description", asset.CategoryId);
-            ViewBag.WarrantyPeriodId = new SelectList(db.Lookups, "LookupId", "Description", asset.WarrantyPeriodId);
+            ViewBag.AssetMakeId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Make.ToString()), "LookupId", "Description");
+            ViewBag.CategoryId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString()), "LookupId", "Description");
+            ViewBag.WarrantyPeriodId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString()), "LookupId", "Description");
             return View(asset);
         }
 
@@ -87,9 +90,9 @@ namespace HardwareInventoryManager.Controllers
                 return HttpNotFound();
             }
             ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantId);
-            ViewBag.AssetMakeId = new SelectList(db.Lookups, "LookupId", "Description", asset.AssetMakeId);
-            ViewBag.CategoryId = new SelectList(db.Lookups, "LookupId", "Description", asset.CategoryId);
-            ViewBag.WarrantyPeriodId = new SelectList(db.Lookups, "LookupId", "Description", asset.WarrantyPeriodId);
+            ViewBag.AssetMakeId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Make.ToString()), "LookupId", "Description");
+            ViewBag.CategoryId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString()), "LookupId", "Description");
+            ViewBag.WarrantyPeriodId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString()), "LookupId", "Description");
             return View(asset);
         }
 
@@ -104,12 +107,14 @@ namespace HardwareInventoryManager.Controllers
             {
                 db.Entry(asset).State = EntityState.Modified;
                 db.SaveChanges();
+                Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                 return RedirectToAction("Index");
             }
             ViewBag.TenantOrganisationId = new SelectList(db.Organisations, "OrganisationId", "Name", asset.TenantId);
-            ViewBag.AssetMakeId = new SelectList(db.Lookups, "LookupId", "Description", asset.AssetMakeId);
-            ViewBag.CategoryId = new SelectList(db.Lookups, "LookupId", "Description", asset.CategoryId);
-            ViewBag.WarrantyPeriodId = new SelectList(db.Lookups, "LookupId", "Description", asset.WarrantyPeriodId);
+            ViewBag.AssetMakeId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Make.ToString()), "LookupId", "Description");
+            ViewBag.CategoryId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString()), "LookupId", "Description");
+            ViewBag.WarrantyPeriodId = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString()), "LookupId", "Description");
+            Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
             return View(asset);
         }
 
@@ -136,6 +141,7 @@ namespace HardwareInventoryManager.Controllers
             Asset asset = db.Assets.Find(id);
             db.Assets.Remove(asset);
             db.SaveChanges();
+            Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
             return RedirectToAction("Index");
         }
 

@@ -1,4 +1,5 @@
 ﻿using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,9 @@ namespace HardwareInventoryManager.Controllers
             base.Initialize(requestContext);
         }
 
-        public Tenant LoadTenant()
+        public void Alert(EnumHelper.Alerts alertType, string message)
         {
-            CustomApplicationDbContext context = new CustomApplicationDbContext();
-            ApplicationUser user  = context.Users.First(u => u.UserName == this.HttpContext.User.Identity.Name);
-            return user.Tenant;
+            TempData[alertType.ToString()] = message;
         }
     }
 }

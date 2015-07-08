@@ -4,7 +4,7 @@
             xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
-    <mvcSiteMapNode title="About" controller="Home" action="About"/>
+    <mvcSiteMapNode title="Contact Us" controller="Contacts" action="Create"/>
     <mvcSiteMapNode title="Assets" controller="Assets" action="Index" />
     <mvcSiteMapNode title="Administration" controller="Lookups" action="Index">
       <mvcSiteMapNode title="Lookup" controller="Lookups" action="Index"/>

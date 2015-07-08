@@ -13,5 +13,13 @@ namespace HardwareInventoryManager.Services
             Category,
             WarrantyPeriod
         }
+
+        public enum Alerts
+        {
+            Success,
+            Warning,
+            Info,
+            Error
+        }
     }
 }

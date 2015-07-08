@@ -68,5 +68,41 @@ namespace HardwareInventoryManager.HIResources {
                 return ResourceManager.GetString("AppName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your change has not been saved, please try again..
+        /// </summary>
+        public static string Change_Error {
+            get {
+                return ResourceManager.GetString("Change_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your change has been saved..
+        /// </summary>
+        public static string Change_Success {
+            get {
+                return ResourceManager.GetString("Change_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error sending your request, please try again..
+        /// </summary>
+        public static string Contact_Error {
+            get {
+                return ResourceManager.GetString("Contact_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you. Your contact request has been sent..
+        /// </summary>
+        public static string Contact_Success {
+            get {
+                return ResourceManager.GetString("Contact_Success", resourceCulture);
+            }
+        }
     }
 }

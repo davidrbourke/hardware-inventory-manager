@@ -11,10 +11,17 @@ namespace HardwareInventoryManager.Models
         [Key]
         public int ContactId { get; set; }
 
+        [Required]
+        [Display(Name="Your Name")]
         public string Name { get; set; }
 
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Your Email Address")]
         public string EmailAddress { get; set; }
 
+        [Required]
+        [Display(Name = "How can we help?")]
         public string Description { get; set; }
     }
 }

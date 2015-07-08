@@ -120,4 +120,16 @@
   <data name="AppName" xml:space="preserve">
     <value>Hardware Inventory</value>
   </data>
+  <data name="Change_Error" xml:space="preserve">
+    <value>Your change has not been saved, please try again.</value>
+  </data>
+  <data name="Change_Success" xml:space="preserve">
+    <value>Your change has been saved.</value>
+  </data>
+  <data name="Contact_Error" xml:space="preserve">
+    <value>There was an error sending your request, please try again.</value>
+  </data>
+  <data name="Contact_Success" xml:space="preserve">
+    <value>Thank you. Your contact request has been sent.</value>
+  </data>
 </root>

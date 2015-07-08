@@ -18,6 +18,12 @@ namespace HardwareInventoryManager
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+      
+            BundleTable.EnableOptimizations = true;
+
+            #if DEBUG
+                BundleTable.EnableOptimizations = false;
+            #endif
         }
     }
 }

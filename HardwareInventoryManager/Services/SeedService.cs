@@ -30,17 +30,11 @@ namespace HardwareInventoryManager.Services
             {
                 Tenant sampleTenantA = new Tenant
                 {
-                    TenantOrganisation = new Organisation
-                    {
-                        Name = "Orbital"
-                    }
+                    Name = "Orbital"
                 };
                 Tenant sampleTenantB = new Tenant
                 {
-                    TenantOrganisation = new Organisation
-                    {
-                        Name = "Polar"
-                    }
+                    Name = "Polar"
                 };
                 _context.Tenants.Add(sampleTenantA);
                 _context.Tenants.Add(sampleTenantB);
@@ -61,10 +55,12 @@ namespace HardwareInventoryManager.Services
 
                 var store = new UserStore<ApplicationUser>(_context);
                 var manager = new UserManager<ApplicationUser>(store);
-                Tenant tenant = _context.Tenants.First(t => t.TenantOrganisation.Name == "Polar");
+                Tenant tenant = _context.Tenants.First(t => t.Name == "Polar");
                 if (tenant != null)
                 {
-                    var user = new ApplicationUser { UserName = emailAddress, Email = emailAddress, TenantId = tenant.TenantId };
+                    IList<Tenant> tenants = new List<Tenant>();
+                    tenants.Add(tenant);
+                    var user = new ApplicationUser { UserName = emailAddress, Email = emailAddress, UserTenants = tenants };
 
                     roleManager.Create(new IdentityRole { Name = EnumHelper.Roles.Admin.ToString() });
                     manager.Create(user, "password");

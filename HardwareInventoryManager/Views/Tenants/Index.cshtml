@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HardwareInventoryManager.Models.Lookup>
+﻿@model IEnumerable<HardwareInventoryManager.Models.Tenant>
 
 @{
     ViewBag.Title = "Index";
@@ -12,10 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayName("Lookup Type")
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CreatedDate)
@@ -29,10 +26,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Type.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedDate)
@@ -41,9 +35,9 @@
             @Html.DisplayFor(modelItem => item.UpdatedDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LookupId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LookupId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LookupId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.TenantId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TenantId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TenantId })
         </td>
     </tr>
 }

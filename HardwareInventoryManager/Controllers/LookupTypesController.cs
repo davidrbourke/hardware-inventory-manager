@@ -8,11 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
+using HardwareInventoryManager.HIResources;
 
 namespace HardwareInventoryManager.Controllers
 {
     [Authorize]
-    public class LookupTypesController : Controller
+    public class LookupTypesController : AppController
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();
 
@@ -111,9 +112,17 @@ namespace HardwareInventoryManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LookupType lookupType = db.LookupTypes.Find(id);
-            db.LookupTypes.Remove(lookupType);
-            db.SaveChanges();
+            try
+            {
+                LookupType lookupType = db.LookupTypes.Find(id);
+                db.LookupTypes.Remove(lookupType);
+                db.SaveChanges();
+                Alert(Services.EnumHelper.Alerts.Success, Strings.Change_Success);
+            }
+            catch(System.Data.Entity.Infrastructure.DbUpdateException)
+            {
+                Alert(Services.EnumHelper.Alerts.Error, Strings.Delete_Lookup_Type_Error);
+            }
             return RedirectToAction("Index");
         }
 

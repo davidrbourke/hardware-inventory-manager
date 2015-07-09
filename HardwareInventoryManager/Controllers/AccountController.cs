@@ -93,13 +93,11 @@ namespace HardwareInventoryManager.Controllers
 
                 Tenant tenant = new Tenant
                 {
-                    TenantOrganisation = new Organisation
-                    {
                         Name = model.OrganisationName
-                    }
                 };
-
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Tenant = tenant };
+                IList<Tenant> tenants = new List<Tenant>();//
+                tenants.Add(tenant);
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, UserTenants = tenants };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

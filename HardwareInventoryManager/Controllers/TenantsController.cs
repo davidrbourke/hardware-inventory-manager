@@ -13,124 +13,117 @@ using HardwareInventoryManager.HIResources;
 
 namespace HardwareInventoryManager.Controllers
 {
-    [Authorize]
-    public class LookupsController : AppController
+    public class TenantsController : AppController
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();
 
-        // GET: Lookups
+        // GET: Tenants
         public ActionResult Index()
         {
-            var lookups = db.Lookups.Include(l => l.Type);
-            return View(lookups.ToList());
+            return View(db.Tenants.ToList());
         }
 
-        // GET: Lookups/Details/5
+        // GET: Tenants/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Lookup lookup = db.Lookups.Include(u => u.Type).First(l => l.LookupId == id);
-            if (lookup == null)
+            Tenant tenant = db.Tenants.Find(id);
+            if (tenant == null)
             {
                 return HttpNotFound();
             }
-            return View(lookup);
+            return View(tenant);
         }
 
-        // GET: Lookups/Create
+        // GET: Tenants/Create
         public ActionResult Create()
         {
-            ViewBag.LookupTypeId = new SelectList(db.LookupTypes, "LookupTypeId", "Description");
             return View();
         }
 
-        // POST: Lookups/Create
+        // POST: Tenants/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LookupId,Description,LookupTypeId,CreatedDate,UpdatedDate")] Lookup lookup)
+        public ActionResult Create([Bind(Include = "TenantId,Name,CreatedDate,UpdatedDate")] Tenant tenant)
         {
             if (ModelState.IsValid)
             {
-                db.Lookups.Add(lookup);
+                db.Tenants.Add(tenant);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.LookupTypeId = new SelectList(db.LookupTypes, "LookupTypeId", "Description", lookup.LookupTypeId);
-            return View(lookup);
+            return View(tenant);
         }
 
-        // GET: Lookups/Edit/5
+        // GET: Tenants/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Lookup lookup = db.Lookups.Find(id);
-            if (lookup == null)
+            Tenant tenant = db.Tenants.Find(id);
+            if (tenant == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.LookupTypeId = new SelectList(db.LookupTypes, "LookupTypeId", "Description", lookup.LookupTypeId);
-            return View(lookup);
+            return View(tenant);
         }
 
-        // POST: Lookups/Edit/5
+        // POST: Tenants/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LookupId,Description,LookupTypeId,CreatedDate,UpdatedDate")] Lookup lookup)
+        public ActionResult Edit([Bind(Include = "TenantId,Name,CreatedDate,UpdatedDate")] Tenant tenant)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(lookup).State = EntityState.Modified;
+                db.Entry(tenant).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.LookupTypeId = new SelectList(db.LookupTypes, "LookupTypeId", "Description", lookup.LookupTypeId);
-            return View(lookup);
+            return View(tenant);
         }
 
-        // GET: Lookups/Delete/5
+        // GET: Tenants/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Lookup lookup = db.Lookups.Include(u => u.Type).First(l => l.LookupId == id);
-            if (lookup == null)
+            Tenant tenant = db.Tenants.Find(id);
+            if (tenant == null)
             {
                 return HttpNotFound();
             }
-            return View(lookup);
+            return View(tenant);
         }
 
-        // POST: Lookups/Delete/5
+        // POST: Tenants/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             try
             {
-                Lookup lookup = db.Lookups.Find(id);
-                db.Lookups.Remove(lookup);
+                Tenant tenant = db.Tenants.Find(id);
+                db.Tenants.Remove(tenant);
                 db.SaveChanges();
                 Alert(EnumHelper.Alerts.Success, Strings.Change_Success);
-                return RedirectToAction("Index");
             }
             catch(System.Data.Entity.Infrastructure.DbUpdateException)
             {
-                Alert(EnumHelper.Alerts.Error, Strings.Delete_Lookup_Error);
-                return RedirectToAction("Index");
+                Alert(EnumHelper.Alerts.Error, Strings.Delete_Organisation_Error);
             }
+            return RedirectToAction("Index");        
         }
 
         protected override void Dispose(bool disposing)

@@ -184,6 +184,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\LookupTypesController.cs" />
+    <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="CustomApplicationDbContext.cs" />
     <Compile Include="Filters\CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,13 +196,13 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\ITenant.cs" />
-    <Compile Include="Migrations\201507081445414_Correct.cs" />
-    <Compile Include="Migrations\201507081445414_Correct.Designer.cs">
-      <DependentUpon>201507081445414_Correct.cs</DependentUpon>
+    <Compile Include="Migrations\201507091614513_Initial.cs" />
+    <Compile Include="Migrations\201507091614513_Initial.Designer.cs">
+      <DependentUpon>201507091614513_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507081515180_DashboardBool.cs" />
-    <Compile Include="Migrations\201507081515180_DashboardBool.Designer.cs">
-      <DependentUpon>201507081515180_DashboardBool.cs</DependentUpon>
+    <Compile Include="Migrations\201507091620245_mtom.cs" />
+    <Compile Include="Migrations\201507091620245_mtom.Designer.cs">
+      <DependentUpon>201507091620245_mtom.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -213,14 +214,12 @@
     <Compile Include="Models\Lookup.cs" />
     <Compile Include="Models\LookupType.cs" />
     <Compile Include="Models\ModelEntity.cs" />
-    <Compile Include="Models\Organisation.cs" />
     <Compile Include="Models\RolePermission.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomHelpers.cs" />
     <Compile Include="Services\EnumHelper.cs" />
     <Compile Include="Services\SeedService.cs" />
-    <Compile Include="Services\TenantHelper.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
   </ItemGroup>
@@ -342,6 +341,11 @@
     <Content Include="Views\Contacts\Details.cshtml" />
     <Content Include="Views\Contacts\Edit.cshtml" />
     <Content Include="Views\Contacts\Index.cshtml" />
+    <Content Include="Views\Tenants\Create.cshtml" />
+    <Content Include="Views\Tenants\Delete.cshtml" />
+    <Content Include="Views\Tenants\Details.cshtml" />
+    <Content Include="Views\Tenants\Edit.cshtml" />
+    <Content Include="Views\Tenants\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -359,11 +363,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507081445414_Correct.resx">
-      <DependentUpon>201507081445414_Correct.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507091614513_Initial.resx">
+      <DependentUpon>201507091614513_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507081515180_DashboardBool.resx">
-      <DependentUpon>201507081515180_DashboardBool.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507091620245_mtom.resx">
+      <DependentUpon>201507091620245_mtom.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

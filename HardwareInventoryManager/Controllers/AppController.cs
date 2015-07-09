@@ -1,7 +1,9 @@
 ﻿using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,6 +23,15 @@ namespace HardwareInventoryManager.Controllers
         public void Alert(EnumHelper.Alerts alertType, string message)
         {
             TempData[alertType.ToString()] = message;
+        }
+
+        public IList<int> LoadTenants()
+        {
+            CustomApplicationDbContext context = new CustomApplicationDbContext();
+            
+            ApplicationUser user = context.Users.Include(x =>x.UserTenants).First(u => u.UserName == User.Identity.Name) as ApplicationUser;
+            
+            return user.UserTenants.Select(x => x.TenantId).ToList();
         }
     }
 }

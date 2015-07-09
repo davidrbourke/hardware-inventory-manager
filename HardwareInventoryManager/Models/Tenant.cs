@@ -11,9 +11,12 @@ namespace HardwareInventoryManager.Models
     {
         [Key]
         public int TenantId { get; set; }
+        
+        [Required]
+        public string Name { get; set; }
 
-        public int TenantOrganisationId { get; set; }
-        [ForeignKey("TenantOrganisationId")]
-        public Organisation TenantOrganisation { get; set; }
+        public Address OrganisationAddress { get; set; }
+
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

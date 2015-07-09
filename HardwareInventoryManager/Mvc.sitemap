@@ -9,6 +9,7 @@
     <mvcSiteMapNode title="Administration" controller="Lookups" action="Index">
       <mvcSiteMapNode title="Lookup" controller="Lookups" action="Index"/>
       <mvcSiteMapNode title="Lookup Types" controller="LookupTypes" action="Index"/>
+      <mvcSiteMapNode title="Organisations" controller="Tenants" action="Index"/>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 

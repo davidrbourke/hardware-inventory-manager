@@ -7,16 +7,15 @@ using System.Diagnostics;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace HardwareInventoryManager.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        [Required]
-        public int TenantId { get; set; }
-        [ForeignKey("TenantId")]
-        public Tenant Tenant { get; set; }
+
+        public ICollection<Tenant> UserTenants { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -52,7 +51,6 @@ namespace HardwareInventoryManager.Models
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Lookup> Lookups { get; set; }
         public DbSet<LookupType> LookupTypes { get; set; }
-        public DbSet<Organisation> Organisations { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<DashboardUpdates> DashboardUpdates { get; set; }

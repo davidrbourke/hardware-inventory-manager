@@ -36,11 +36,12 @@ namespace HardwareInventoryManager.Controllers
 
         public ActionResult Dashboard()
         {
-            int tenant = TenantHelper.LoadTenant(User.Identity.Name);
             CustomApplicationDbContext context = new CustomApplicationDbContext();
             DashboardViewModel dashboad = new DashboardViewModel();
             dashboad.DashboardUpdates = context.DashboardUpdates;
-            dashboad.TotalAssets = context.Assets.Count(a => a.TenantId == tenant);
+            IList<int> ii = LoadTenants();
+            var filteredAssets = context.Assets.Where(a => ii.Contains(a.TenantId));
+            dashboad.TotalAssets = filteredAssets.Count();
             return View(dashboad);
         }
     }

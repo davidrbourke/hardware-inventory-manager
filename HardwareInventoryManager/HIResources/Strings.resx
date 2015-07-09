@@ -132,4 +132,13 @@
   <data name="Contact_Success" xml:space="preserve">
     <value>Thank you. Your contact request has been sent.</value>
   </data>
+  <data name="Delete_Lookup_Error" xml:space="preserve">
+    <value>The lookup cannot be deleted as it is being used.</value>
+  </data>
+  <data name="Delete_Lookup_Type_Error" xml:space="preserve">
+    <value>The lookup type cannot be deleted as it is being used.</value>
+  </data>
+  <data name="Delete_Organisation_Error" xml:space="preserve">
+    <value>The organisation cannot be deleted as it is being used.</value>
+  </data>
 </root>

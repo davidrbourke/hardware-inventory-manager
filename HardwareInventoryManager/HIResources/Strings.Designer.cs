@@ -104,5 +104,32 @@ namespace HardwareInventoryManager.HIResources {
                 return ResourceManager.GetString("Contact_Success", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The lookup cannot be deleted as it is being used..
+        /// </summary>
+        public static string Delete_Lookup_Error {
+            get {
+                return ResourceManager.GetString("Delete_Lookup_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The lookup type cannot be deleted as it is being used..
+        /// </summary>
+        public static string Delete_Lookup_Type_Error {
+            get {
+                return ResourceManager.GetString("Delete_Lookup_Type_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The organisation cannot be deleted as it is being used..
+        /// </summary>
+        public static string Delete_Organisation_Error {
+            get {
+                return ResourceManager.GetString("Delete_Organisation_Error", resourceCulture);
+            }
+        }
     }
 }

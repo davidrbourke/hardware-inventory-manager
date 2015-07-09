@@ -17,5 +17,9 @@ namespace HardwareInventoryManager.Models
         public int LookupTypeId { get; set; }
         [ForeignKey("LookupTypeId")]
         public LookupType Type { get; set; }
+
+        public int? TenantId { get; set; }
+        [ForeignKey("TenantId")]
+        public Tenant Tenant { get; set; }
     }
 }

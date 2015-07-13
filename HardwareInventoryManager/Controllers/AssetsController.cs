@@ -63,11 +63,19 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                tenantId = LoadTenants().First();
-                asset.TenantId = tenantId;
-                db.Assets.Add(asset);
-                db.SaveChanges();
-                Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
+                IList<int> tenants = LoadTenants();
+                if (tenants.Count() == 0)
+                {
+                    Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+                }
+                else
+                {
+                    tenantId = LoadTenants().First();
+                    asset.TenantId = tenantId;
+                    db.Assets.Add(asset);
+                    db.SaveChanges();
+                    Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
+                }
                 return RedirectToAction("Index");
             }
             Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);

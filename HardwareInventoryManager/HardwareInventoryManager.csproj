@@ -196,13 +196,9 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\ITenant.cs" />
-    <Compile Include="Migrations\201507091614513_Initial.cs" />
-    <Compile Include="Migrations\201507091614513_Initial.Designer.cs">
-      <DependentUpon>201507091614513_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507091620245_mtom.cs" />
-    <Compile Include="Migrations\201507091620245_mtom.Designer.cs">
-      <DependentUpon>201507091620245_mtom.cs</DependentUpon>
+    <Compile Include="Migrations\201507130959085_update.cs" />
+    <Compile Include="Migrations\201507130959085_update.Designer.cs">
+      <DependentUpon>201507130959085_update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -363,11 +359,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507091614513_Initial.resx">
-      <DependentUpon>201507091614513_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507091620245_mtom.resx">
-      <DependentUpon>201507091620245_mtom.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507130959085_update.resx">
+      <DependentUpon>201507130959085_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

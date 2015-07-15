@@ -1,4 +1,5 @@
 ﻿using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Services;
 using HardwareInventoryManager.ViewModels;
 using System;
@@ -36,11 +37,15 @@ namespace HardwareInventoryManager.Controllers
 
         public ActionResult Dashboard()
         {
+            IRepository<Asset> rep;
+
+            rep = new Repository<Asset>();
+            rep.SetCurrentUser(GetCurrentUser());
             CustomApplicationDbContext context = new CustomApplicationDbContext();
             DashboardViewModel dashboad = new DashboardViewModel();
             dashboad.DashboardUpdates = context.DashboardUpdates;
-            IList<int> ii = LoadTenants();
-            var filteredAssets = context.Assets.Where(a => ii.Contains(a.TenantId));
+
+            var filteredAssets = rep.GetAll();
             dashboad.TotalAssets = filteredAssets.Count();
             return View(dashboad);
         }

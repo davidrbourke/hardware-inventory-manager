@@ -120,6 +120,15 @@
   <data name="AppName" xml:space="preserve">
     <value>Hardware Inventory</value>
   </data>
+  <data name="Asset_DetailDelete_Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Asset_DetailDelete_Make" xml:space="preserve">
+    <value>Make</value>
+  </data>
+  <data name="Asset_DetailDelete_WarrantyPeriod" xml:space="preserve">
+    <value>Warranty Period</value>
+  </data>
   <data name="Change_Error" xml:space="preserve">
     <value>Your change has not been saved, please try again.</value>
   </data>

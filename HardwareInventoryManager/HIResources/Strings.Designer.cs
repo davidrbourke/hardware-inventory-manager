@@ -70,6 +70,33 @@ namespace HardwareInventoryManager.HIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category.
+        /// </summary>
+        public static string Asset_DetailDelete_Category {
+            get {
+                return ResourceManager.GetString("Asset_DetailDelete_Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make.
+        /// </summary>
+        public static string Asset_DetailDelete_Make {
+            get {
+                return ResourceManager.GetString("Asset_DetailDelete_Make", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warranty Period.
+        /// </summary>
+        public static string Asset_DetailDelete_WarrantyPeriod {
+            get {
+                return ResourceManager.GetString("Asset_DetailDelete_WarrantyPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your change has not been saved, please try again..
         /// </summary>
         public static string Change_Error {

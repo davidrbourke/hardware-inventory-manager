@@ -65,5 +65,5 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Release\HardwareInventoryManager.csproj.GenerateResource.Cache
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Release\HardwareInventoryManager.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Release\HardwareInventoryManager.pdb
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Release\HardwareInventoryManager.csprojResolveAssemblyReference.cache
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Release\HardwareInventoryManager.Migrations.update.resources
+C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Release\HardwareInventoryManager.csprojResolveAssemblyReference.cache

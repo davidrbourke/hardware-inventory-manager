@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HardwareInventoryManager.ViewModels
 {
-    public class DashboardViewModel
+    public class DashboardViewModel : AppViewModel
     {
         public DashboardViewModel()
         {

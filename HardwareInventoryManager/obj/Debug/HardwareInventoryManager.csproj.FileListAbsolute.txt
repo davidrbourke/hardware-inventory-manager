@@ -66,4 +66,8 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Debug\HardwareInventoryManager.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Debug\HardwareInventoryManager.pdb
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Debug\HardwareInventoryManager.csprojResolveAssemblyReference.cache
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\obj\Debug\HardwareInventoryManager.Migrations.Initial.resources
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\bin\AutoMapper.Net4.dll
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\bin\AutoMapper.dll
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\bin\AutoMapper.pdb
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\bin\AutoMapper.xml
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager\bin\AutoMapper.Net4.pdb

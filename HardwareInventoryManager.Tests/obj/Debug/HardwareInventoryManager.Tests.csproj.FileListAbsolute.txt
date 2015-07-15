@@ -2,10 +2,7 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\HardwareInventoryManager.Tests.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\HardwareInventoryManager.Tests.pdb
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\HardwareInventoryManager.dll
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\Newtonsoft.Json.dll
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.Helpers.dll
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.Mvc.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.Razor.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.WebPages.dll
@@ -26,8 +23,6 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Net.Http.Formatting.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\HardwareInventoryManager.pdb
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\Newtonsoft.Json.xml
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.Helpers.xml
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.Mvc.xml
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.Razor.xml
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.WebPages.xml
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
@@ -48,3 +43,12 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\obj\Debug\HardwareInventoryManager.Tests.csprojResolveAssemblyReference.cache
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\obj\Debug\HardwareInventoryManager.Tests.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\obj\Debug\HardwareInventoryManager.Tests.pdb
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\Moq.dll
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\Moq.xml
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\AutoMapper.Net4.dll
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\AutoMapper.dll
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\AutoMapper.pdb
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\AutoMapper.xml
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\AutoMapper.Net4.pdb

@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MvcSiteMapProvider">
       <HintPath>..\packages\MvcSiteMapProvider.MVC5.Core.4.6.18\lib\net45\MvcSiteMapProvider.dll</HintPath>
@@ -182,6 +188,7 @@
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IAppController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\LookupTypesController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
@@ -195,11 +202,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\ITenant.cs" />
-    <Compile Include="Migrations\201507130959085_update.cs" />
-    <Compile Include="Migrations\201507130959085_update.Designer.cs">
-      <DependentUpon>201507130959085_update.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -207,16 +209,21 @@
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\DashboardUpdates.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ITenant.cs" />
     <Compile Include="Models\Lookup.cs" />
     <Compile Include="Models\LookupType.cs" />
     <Compile Include="Models\ModelEntity.cs" />
     <Compile Include="Models\RolePermission.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Services\CustomHelpers.cs" />
     <Compile Include="Services\EnumHelper.cs" />
     <Compile Include="Services\SeedService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AppViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -345,7 +352,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Repository\" />
     <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
@@ -358,9 +364,6 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507130959085_update.resx">
-      <DependentUpon>201507130959085_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -391,6 +394,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

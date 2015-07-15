@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HardwareInventoryManager.Models.Asset>
+﻿@model IEnumerable<HardwareInventoryManager.ViewModels.AssetViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -30,13 +30,13 @@
             @Html.DisplayNameFor(model => model.LocationDescription)
         </th>
         <th>
-            @Html.DisplayName("Make")
+            @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_Make)
         </th>
         <th>
-            @Html.DisplayName("Category")
+            @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_Category)
         </th>
         <th>
-            @Html.DisplayName("Warranty Period")
+            @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_WarrantyPeriod)
         </th>
         <th></th>
     </tr>

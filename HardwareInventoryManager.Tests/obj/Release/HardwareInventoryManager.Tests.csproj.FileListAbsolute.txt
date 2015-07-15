@@ -2,10 +2,7 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\HardwareInventoryManager.Tests.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\HardwareInventoryManager.Tests.pdb
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\HardwareInventoryManager.dll
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\Microsoft.Web.Infrastructure.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\Newtonsoft.Json.dll
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.Helpers.dll
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.Mvc.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.Razor.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.WebPages.Deployment.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.WebPages.dll
@@ -26,8 +23,6 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Net.Http.Formatting.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\HardwareInventoryManager.pdb
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\Newtonsoft.Json.xml
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.Helpers.xml
-C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.Mvc.xml
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.Razor.xml
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.WebPages.xml
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\System.Web.WebPages.Deployment.xml
@@ -48,3 +43,5 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\obj\Release\HardwareInventoryManager.Tests.csprojResolveAssemblyReference.cache
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\obj\Release\HardwareInventoryManager.Tests.dll
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\obj\Release\HardwareInventoryManager.Tests.pdb
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\David\Documents\Visual Studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Release\EntityFramework.SqlServer.xml

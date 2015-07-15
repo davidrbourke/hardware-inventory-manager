@@ -1,6 +1,7 @@
 ﻿using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,10 +15,19 @@ namespace HardwareInventoryManager.Controllers
 {
     public class AppController : Controller
     {
+        private CustomApplicationDbContext _context;
+        private UserManager<ApplicationUser> _userManager;
+
+        public AppController()
+        {
+           
+        }
 
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
+            _context = new CustomApplicationDbContext();
+            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
         }
 
         public void Alert(EnumHelper.Alerts alertType, string message)
@@ -25,13 +35,29 @@ namespace HardwareInventoryManager.Controllers
             TempData[alertType.ToString()] = message;
         }
 
-        public IList<int> LoadTenants()
+        public ApplicationUser GetCurrentUser()
         {
-            CustomApplicationDbContext context = new CustomApplicationDbContext();
-            
-            ApplicationUser user = context.Users.Include(x =>x.UserTenants).First(u => u.UserName == User.Identity.Name) as ApplicationUser;
-            
-            return user.UserTenants.Select(x => x.TenantId).ToList();
+            if (User != null)
+            {
+                var user = _userManager.FindByName(User.Identity.Name);
+                ApplicationUser uu = _context.Users.Include(x => x.UserTenants).First(u => u.UserName == User.Identity.Name) as ApplicationUser;
+                return user;
+            }
+            return null;
+        }
+
+        public int GetTenantContextId()
+        {
+            int tenantContextId = 0;
+            if(User != null)
+            {
+                ApplicationUser uu = _context.Users.Include(x => x.UserTenants).First(u => u.UserName == User.Identity.Name) as ApplicationUser;
+                if (uu.UserTenants != null && uu.UserTenants.Count > 0)
+                {
+                    return uu.UserTenants.First().TenantId;
+                }
+            }
+            return tenantContextId;
         }
     }
 }

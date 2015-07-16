@@ -45,7 +45,7 @@ namespace HardwareInventoryManager.Repository
         /// <param name="entity"></param>
         /// <param name="tenantId"></param>
         /// <returns></returns>
-        public T Create(T entity, int tenantId)
+        public virtual T Create(T entity, int tenantId)
         {
             List<int> tenants = GetTenantIds();
             if (tenants.Contains(tenantId))
@@ -80,7 +80,7 @@ namespace HardwareInventoryManager.Repository
         /// <param name="tenantId"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public IQueryable<T> Find(int tenantId, Expression<Func<T, bool>> predicate)
+        public virtual IQueryable<T> Find(int tenantId, Expression<Func<T, bool>> predicate)
         {
             List<int> tenants = GetTenantIds();
             return _db.Set<T>().Where(predicate).Where(x => tenants.Contains(x.TenantId));

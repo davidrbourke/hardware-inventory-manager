@@ -61,7 +61,7 @@ namespace HardwareInventoryManager.Controllers
                 .Include(x => x.AssetMake)
                 .Include(x => x.Category)
                 .Include(x => x.WarrantyPeriod)
-                .First();
+                .FirstOrDefault();
 
             Mapper.CreateMap<Asset, AssetViewModel>();
             AssetViewModel detailAssetViewModel = Mapper.Map<Asset, AssetViewModel>(asset);
@@ -160,11 +160,13 @@ namespace HardwareInventoryManager.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             _assetRepository.SetCurrentUser(GetCurrentUser());
-            Asset asset =_assetRepository.Find(GetTenantContextId(), x => x.AssetId == id)
+            int tenantContextId = GetTenantContextId();
+            var assets = _assetRepository.Find(tenantContextId, x => x.AssetId == id);
+            Asset asset =_assetRepository.Find(tenantContextId, x => x.AssetId == id)
                 .Include(x => x.AssetMake)
                 .Include(x => x.Category)
                 .Include(x => x.WarrantyPeriod)
-                .First();
+                .FirstOrDefault();
             
             Mapper.CreateMap<Asset, AssetViewModel>();
             AssetViewModel deleteAssetViewModel = Mapper.DynamicMap<Asset, AssetViewModel>(asset);

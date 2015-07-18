@@ -32,6 +32,11 @@
         </div>
     </div>
     <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+            </div>
+        </div>
         @RenderBody()
         <hr />
         <footer>

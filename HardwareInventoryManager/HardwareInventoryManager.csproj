@@ -206,6 +206,10 @@
     <Compile Include="Migrations\201507231131155_RoleToPermissions.Designer.cs">
       <DependentUpon>201507231131155_RoleToPermissions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507231258462_RolePermissionIsAllowed.cs" />
+    <Compile Include="Migrations\201507231258462_RolePermissionIsAllowed.Designer.cs">
+      <DependentUpon>201507231258462_RolePermissionIsAllowed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -373,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507231131155_RoleToPermissions.resx">
       <DependentUpon>201507231131155_RoleToPermissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507231258462_RolePermissionIsAllowed.resx">
+      <DependentUpon>201507231258462_RolePermissionIsAllowed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

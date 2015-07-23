@@ -19,6 +19,7 @@ namespace HardwareInventoryManager.Services
             SeedTenants();
             SeedInitialUserAndRole();
             SeedRoles();
+            SeedDefaultRolePermissions();
         }
 
         /// <summary>
@@ -69,6 +70,9 @@ namespace HardwareInventoryManager.Services
             }
         }
 
+        /// <summary>
+        /// Seed inital Roles
+        /// </summary>
         private void SeedRoles()
         {
             if (!_context.Roles.Any(x => x.Name == EnumHelper.Roles.Author.ToString()))
@@ -84,6 +88,42 @@ namespace HardwareInventoryManager.Services
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
 
                 roleManager.Create(new IdentityRole { Name = EnumHelper.Roles.Viewer.ToString() });
+            }
+        }
+
+        /// <summary>
+        /// Seed default Roles
+        /// </summary>
+        private void SeedDefaultRolePermissions()
+        {
+            if(!_context.RolePermissions.Any(r => r.Role.Equals(EnumHelper.Roles.Author.ToString()) &&
+                r.Controller.Equals("LookupTypes")))
+            {
+                RolePermission authorRolePermission = new RolePermission
+                {
+                    Role = EnumHelper.Roles.Author.ToString(),
+                    Controller = "LookupTypes",
+                    IsAllowed = false,
+                    CreatedDate = DateTime.Now
+                };
+
+                _context.RolePermissions.Add(authorRolePermission);
+                _context.SaveChanges();
+            }
+
+            if (!_context.RolePermissions.Any(r => r.Role.Equals(EnumHelper.Roles.Viewer.ToString()) &&
+                r.Controller.Equals("LookupTypes")))
+            {
+                RolePermission authorRolePermission = new RolePermission
+                {
+                    Role = EnumHelper.Roles.Viewer.ToString(),
+                    Controller = "LookupTypes",
+                    IsAllowed = false,
+                    CreatedDate = DateTime.Now
+                };
+
+                _context.RolePermissions.Add(authorRolePermission);
+                _context.SaveChanges();
             }
         }
 

@@ -16,5 +16,7 @@ namespace HardwareInventoryManager.Models
         public string Action { get; set; }
 
         public string Role { get; set; }
+
+        public bool IsAllowed { get; set; }
     }
 }

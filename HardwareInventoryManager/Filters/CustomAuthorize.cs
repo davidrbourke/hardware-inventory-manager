@@ -18,28 +18,26 @@ namespace HardwareInventoryManager.Filters
         {
             base.OnAuthorization(filterContext);
 
-            
-            bool isAuthor = HttpContext.Current.User.IsInRole(EnumHelper.Roles.Author.ToString());
-            bool isAdmin = HttpContext.Current.User.IsInRole(EnumHelper.Roles.Admin.ToString());
-            bool isViewer = HttpContext.Current.User.IsInRole(EnumHelper.Roles.Viewer.ToString());
+            EnumHelper.Roles role = EnumHelper.Roles.Viewer;
+            if(HttpContext.Current.User.IsInRole(EnumHelper.Roles.Author.ToString()))
+            {
+                role = EnumHelper.Roles.Author;
+            } else if(HttpContext.Current.User.IsInRole(EnumHelper.Roles.Admin.ToString()))
+            {
+                role = EnumHelper.Roles.Admin;
+            }
 
             string action = filterContext.Controller.ControllerContext.RouteData.Values["action"].ToString();
             string controller = filterContext.Controller.ControllerContext.RouteData.Values["controller"].ToString();
 
-            if (!HttpContext.Current.User.IsInRole(EnumHelper.Roles.Author.ToString())
-           && !HttpContext.Current.User.IsInRole(EnumHelper.Roles.Admin.ToString()))
+            CustomApplicationDbContext context = new CustomApplicationDbContext();
+            IQueryable<RolePermission> rolePermissions = context.RolePermissions;
+            PermissionHelper permissionHelper = new PermissionHelper(rolePermissions);
+
+            if (!permissionHelper.HasPermission(role, controller, action))
             {
-                if (filterContext.Controller.ControllerContext.RouteData.Values["action"].ToString() ==
-                    "Edit"
-
-                    ||
-                    filterContext.Controller.ControllerContext.RouteData.Values["action"].ToString() ==
-                   "Delete")
-                {
-                    HandleUnauthorizedRequest(filterContext);
-                }
+                HandleUnauthorizedRequest(filterContext);
             }
-
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)

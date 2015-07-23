@@ -28,14 +28,47 @@ namespace HardwareInventoryManager.Services
             if (role == EnumHelper.Roles.Admin)
                 return true;
 
+            // Is permission explicitely granted
             if(_rolePermissions.Any(r => 
                 r.Role.Equals(role.ToString(), StringComparison.CurrentCultureIgnoreCase) &&
                 r.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase) && 
-                r.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase)))
+                r.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase) &&
+                r.IsAllowed))
             {
                 return true;
             }
-            return false;
+            
+            // Is permission explicitly denied
+            if (_rolePermissions.Any(r =>
+                r.Role.Equals(role.ToString(), StringComparison.CurrentCultureIgnoreCase) &&
+                r.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase) &&
+                r.Action.Equals(action, StringComparison.CurrentCultureIgnoreCase) &&
+                !r.IsAllowed))
+            {
+                return false;
+            }
+
+            // Is permission explicitly denied for Role to full controller
+            if (_rolePermissions.Any(r =>
+                r.Role.Equals(role.ToString(), StringComparison.CurrentCultureIgnoreCase) &&
+                r.Controller.Equals(controller, StringComparison.CurrentCultureIgnoreCase) &&
+                (r.Action ==null || r.Action.Trim() == string.Empty) &&
+                !r.IsAllowed))
+            {
+                return false;
+            }
+
+
+            // Revert to default permission using Action keywords
+            // return false if user is a Viewer and wants to access Edit or Delete actions
+            if(role == EnumHelper.Roles.Viewer && (action.Equals("Edit") || action.Equals("Delete")))
+            {
+                return false;
+            } 
+            else
+            {
+                return true;
+            }
         }
     }
 }

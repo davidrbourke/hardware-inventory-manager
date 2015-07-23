@@ -9,10 +9,11 @@ using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.HIResources;
+using HardwareInventoryManager.Filters;
 
 namespace HardwareInventoryManager.Controllers
 {
-    [Authorize]
+    [CustomAuthorize]
     public class LookupTypesController : AppController
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();

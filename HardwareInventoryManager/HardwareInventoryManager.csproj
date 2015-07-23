@@ -202,6 +202,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507231131155_RoleToPermissions.cs" />
+    <Compile Include="Migrations\201507231131155_RoleToPermissions.Designer.cs">
+      <DependentUpon>201507231131155_RoleToPermissions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -220,6 +224,7 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Services\CustomHelpers.cs" />
     <Compile Include="Services\EnumHelper.cs" />
+    <Compile Include="Services\PermissionHelper.cs" />
     <Compile Include="Services\SeedService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
@@ -365,6 +370,9 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507231131155_RoleToPermissions.resx">
+      <DependentUpon>201507231131155_RoleToPermissions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

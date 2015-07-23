@@ -87,6 +87,7 @@
     <Compile Include="Controllers\AssetsControllerTests.cs" />
     <Compile Include="Mappings\MappingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\PermissionHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

@@ -18,6 +18,13 @@ namespace HardwareInventoryManager.Filters
         {
             base.OnAuthorization(filterContext);
 
+            
+            bool isAuthor = HttpContext.Current.User.IsInRole(EnumHelper.Roles.Author.ToString());
+            bool isAdmin = HttpContext.Current.User.IsInRole(EnumHelper.Roles.Admin.ToString());
+            bool isViewer = HttpContext.Current.User.IsInRole(EnumHelper.Roles.Viewer.ToString());
+
+            string action = filterContext.Controller.ControllerContext.RouteData.Values["action"].ToString();
+            string controller = filterContext.Controller.ControllerContext.RouteData.Values["controller"].ToString();
 
             if (!HttpContext.Current.User.IsInRole(EnumHelper.Roles.Author.ToString())
            && !HttpContext.Current.User.IsInRole(EnumHelper.Roles.Admin.ToString()))

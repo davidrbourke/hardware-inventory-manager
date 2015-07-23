@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<HardwareInventoryManager.ViewModels.AssetViewModel>
-
+@using HardwareInventoryManager.Services
 @{
     ViewBag.Title = "Index";
 }
@@ -71,9 +71,7 @@
             @Html.DisplayFor(modelItem => item.WarrantyPeriod.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AssetId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AssetId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AssetId })
+            @Html.IndexLinks(new { id=item.AssetId })
         </td>
     </tr>
 }

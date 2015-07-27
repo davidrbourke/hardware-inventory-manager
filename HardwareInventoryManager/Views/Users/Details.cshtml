@@ -1,0 +1,66 @@
+﻿@model HardwareInventoryManager.ViewModels.UserViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ApplicationUser</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LockoutEnabled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LockoutEnabled)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccessFailedCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccessFailedCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+</div>
+<article>
+    <h2>Organisation</h2>
+    <ul>
+        @foreach (var tenant in Model.UserTenants)
+        {
+            <li>@tenant.Name</li>
+        }
+    </ul>
+</article>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

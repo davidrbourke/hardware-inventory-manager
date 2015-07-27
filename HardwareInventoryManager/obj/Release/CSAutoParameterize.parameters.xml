@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Server=tcp:js8uxptd4o.database.windows.net,1433;Database=assetmanager;User ID=dbourke@js8uxptd4o;Password=JStrummer01;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\David\\documents\\visual\ studio\ 2013\\Projects\\HardwareInventoryManager\\HardwareInventoryManager\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

@@ -5948,7 +5948,6 @@ button.close {
   overflow-y: auto;
 }
 .modal-dialog {
-  position: relative;
   width: auto;
   margin: 10px;
 }

@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title @HardwareInventoryManager.HIResources.Strings.AppName </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(HardwareInventoryManager.HIResources.Strings.AppName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @*<ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>*@
+                @Html.MvcSiteMap().Menu("BootstrapMenuHelperModel")
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+            </div>
+        </div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - @HardwareInventoryManager.HIResources.Strings.AppName</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toastr")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#success').val()) {
+                displayMessage($('#success').val(), 'success');
+            }
+            if ($('#info').val()) {
+                displayMessage($('#info').val(), 'info');
+            }
+            if ($('#warning').val()) {
+                displayMessage($('#warning').val(), 'warning');
+            }
+            if ($('#error').val()) {
+                displayMessage($('#error').val(), 'error');
+            }
+        });
+
+        var displayMessage = function (message, msgType) {
+            toastr.options = {
+            'closeButton': false,
+            'debug': false,
+            'positionClass': 'toast-top-right',
+            'onClick': null,
+            'showDuration': '300',
+            'hideDuration': '1000',
+            'timeOut': '8000',
+            'extendedTimeOut': '1000',
+            'showEasing': 'swing',
+            'hideEasing': 'linear',
+            'showMethod': 'fadeIn',
+            'hideMethod': 'fadeOut'
+            };
+
+            toastr[msgType](message);
+        };
+
+        $(function () {
+            $("input[id*='Date']").datepicker({
+                dateFormat: 'dd/mm/yy',
+                showButtonPanel: true,
+                changeMonth: true,
+                changeYear: true
+        });
+    });
+    </script>
+
+    <input type="hidden" id="success" value="@TempData["success"]" />
+    <input type="hidden" id="info" value="@TempData["info"]" />
+    <input type="hidden" id="warning" value="@TempData["warning"]" />
+    <input type="hidden" id="error" value="@TempData["error"]" />
+</body>
+</html>

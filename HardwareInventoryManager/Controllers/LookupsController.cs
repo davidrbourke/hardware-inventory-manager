@@ -10,10 +10,11 @@ using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services;
 using HardwareInventoryManager.HIResources;
+using HardwareInventoryManager.Filters;
 
 namespace HardwareInventoryManager.Controllers
 {
-    [Authorize]
+    [CustomAuthorize]
     public class LookupsController : AppController
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();

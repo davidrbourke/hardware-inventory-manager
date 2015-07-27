@@ -192,6 +192,7 @@
     <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\LookupTypesController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CustomApplicationDbContext.cs" />
     <Compile Include="Filters\CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
@@ -201,14 +202,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507231131155_RoleToPermissions.cs" />
-    <Compile Include="Migrations\201507231131155_RoleToPermissions.Designer.cs">
-      <DependentUpon>201507231131155_RoleToPermissions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507231258462_RolePermissionIsAllowed.cs" />
-    <Compile Include="Migrations\201507231258462_RolePermissionIsAllowed.Designer.cs">
-      <DependentUpon>201507231258462_RolePermissionIsAllowed.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -228,12 +221,17 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Services\CustomHelpers.cs" />
     <Compile Include="Services\EnumHelper.cs" />
+    <Compile Include="Services\User\AdminUserService.cs" />
+    <Compile Include="Services\User\IUserService.cs" />
     <Compile Include="Services\PermissionHelper.cs" />
     <Compile Include="Services\SeedService.cs" />
+    <Compile Include="Services\User\UserService.cs" />
+    <Compile Include="Services\User\UserTypeFactory.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -359,6 +357,11 @@
     <Content Include="Views\Tenants\Edit.cshtml" />
     <Content Include="Views\Tenants\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapSiteMapPathHelperModel.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -374,12 +377,6 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507231131155_RoleToPermissions.resx">
-      <DependentUpon>201507231131155_RoleToPermissions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507231258462_RolePermissionIsAllowed.resx">
-      <DependentUpon>201507231258462_RolePermissionIsAllowed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

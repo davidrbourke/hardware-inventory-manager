@@ -21,7 +21,7 @@ namespace HardwareInventoryManager.Controllers
     {
         CustomApplicationDbContext db = new CustomApplicationDbContext();
         private IRepository<Asset> _assetRepository;
-
+        
         public AssetsController()
         {
             _assetRepository = new Repository<Asset>();

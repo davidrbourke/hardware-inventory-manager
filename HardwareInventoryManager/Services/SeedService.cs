@@ -125,6 +125,36 @@ namespace HardwareInventoryManager.Services
                 _context.RolePermissions.Add(authorRolePermission);
                 _context.SaveChanges();
             }
+
+            if (!_context.RolePermissions.Any(r => r.Role.Equals(EnumHelper.Roles.Author.ToString()) &&
+                r.Controller.Equals("Tenants")))
+            {
+                RolePermission authorRolePermission = new RolePermission
+                {
+                    Role = EnumHelper.Roles.Author.ToString(),
+                    Controller = "Tenants",
+                    IsAllowed = false,
+                    CreatedDate = DateTime.Now
+                };
+
+                _context.RolePermissions.Add(authorRolePermission);
+                _context.SaveChanges();
+            }
+
+            if (!_context.RolePermissions.Any(r => r.Role.Equals(EnumHelper.Roles.Viewer.ToString()) &&
+                r.Controller.Equals("Tenants")))
+            {
+                RolePermission authorRolePermission = new RolePermission
+                {
+                    Role = EnumHelper.Roles.Viewer.ToString(),
+                    Controller = "Tenants",
+                    IsAllowed = false,
+                    CreatedDate = DateTime.Now
+                };
+
+                _context.RolePermissions.Add(authorRolePermission);
+                _context.SaveChanges();
+            }
         }
 
         /// <summary>

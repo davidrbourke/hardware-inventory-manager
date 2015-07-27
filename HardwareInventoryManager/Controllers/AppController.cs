@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 
 
 namespace HardwareInventoryManager.Controllers
@@ -58,6 +59,23 @@ namespace HardwareInventoryManager.Controllers
                 }
             }
             return tenantContextId;
+        }
+
+        public EnumHelper.Roles GetUserRole()
+        {
+
+            var store = new UserStore<ApplicationUser>(_context);
+            var manager = new UserManager<ApplicationUser>(store);
+            EnumHelper.Roles userRole = EnumHelper.Roles.Viewer;
+            if(manager.IsInRole(User.Identity.GetUserId(), EnumHelper.Roles.Admin.ToString()))
+            {
+                return EnumHelper.Roles.Admin;
+            }
+            else if (manager.IsInRole(User.Identity.GetUserId(), EnumHelper.Roles.Author.ToString()))
+            {
+                return EnumHelper.Roles.Author;
+            }
+            return userRole;
         }
     }
 }

@@ -11,11 +11,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Filters;
+using HardwareInventoryManager.ViewModels;
 
 namespace HardwareInventoryManager.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : AppController
     {
         private ApplicationUserManager _userManager;
 
@@ -97,8 +100,10 @@ namespace HardwareInventoryManager.Controllers
                 };
                 IList<Tenant> tenants = new List<Tenant>();//
                 tenants.Add(tenant);
+                
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, UserTenants = tenants };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                result = await UserManager.AddToRoleAsync(user.Id, EnumHelper.Roles.Author.ToString());
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
@@ -228,6 +233,41 @@ namespace HardwareInventoryManager.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //
+        // POST: /Account/ResetPassword
+        [HttpPost]
+        [CustomAuthorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(UserListViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByNameAsync(model.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError("", "No user found.");
+                    return View();
+                }
+                string resetToken = UserManager.GeneratePasswordResetToken(user.Id);
+                IdentityResult result = await UserManager.ResetPasswordAsync(user.Id, resetToken, model.Password);
+                if (result.Succeeded)
+                {
+                    Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
+                    return RedirectToAction("Index", "Users");
+                }
+                else
+                {
+                    Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+                    AddErrors(result);
+                    return View();
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+            return RedirectToAction("Index", "Users");
         }
 
         //

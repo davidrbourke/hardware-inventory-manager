@@ -1,4 +1,5 @@
-﻿using HardwareInventoryManager.Models;
+﻿using HardwareInventoryManager.Filters;
+using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Services;
 using HardwareInventoryManager.ViewModels;
@@ -35,6 +36,7 @@ namespace HardwareInventoryManager.Controllers
             return View();
         }
 
+        [CustomAuthorize]
         public ActionResult Dashboard()
         {
             IRepository<Asset> rep;

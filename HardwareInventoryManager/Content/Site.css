@@ -190,3 +190,9 @@ select.ui-datepicker-month {
 select.ui-datepicker-year {
     color:#333333;
 }
+
+body.modal-open,
+.modal-open .navbar-fixed-top,
+.modal-open .navbar-fixed-bottom {
+  margin-right: 0px !important;
+}

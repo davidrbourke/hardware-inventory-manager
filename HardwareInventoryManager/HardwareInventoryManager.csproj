@@ -219,6 +219,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Services\Account\AccountResponse.cs" />
+    <Compile Include="Services\Account\AccountService.cs" />
+    <Compile Include="Services\Account\AspNetAccountProvider.cs" />
+    <Compile Include="Services\Account\IAccountProvider.cs" />
     <Compile Include="Services\CustomHelpers.cs" />
     <Compile Include="Services\EnumHelper.cs" />
     <Compile Include="Services\User\AdminUserService.cs" />
@@ -231,6 +235,7 @@
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\UserListViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

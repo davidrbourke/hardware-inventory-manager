@@ -14,6 +14,7 @@ using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.ViewModels;
+using HardwareInventoryManager.Services.Account;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -31,7 +32,8 @@ namespace HardwareInventoryManager.Controllers
             UserManager = userManager;
         }
 
-        public ApplicationUserManager UserManager {
+        public ApplicationUserManager UserManager
+        {
             get
             {
                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -60,18 +62,21 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.Email, model.Password);
-                if (user != null)
+                IAccountProvider accountProvider = new AspNetAccountProvider(
+                    UserManager, AuthenticationManager);
+
+                AccountService accountService = new AccountService(accountProvider);
+                AccountResponse result = await accountService.Login(model.Email, model.Password);
+
+                if (result.Success)
                 {
-                    await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", result.Message);
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -96,11 +101,11 @@ namespace HardwareInventoryManager.Controllers
 
                 Tenant tenant = new Tenant
                 {
-                        Name = model.OrganisationName
+                    Name = model.OrganisationName
                 };
                 IList<Tenant> tenants = new List<Tenant>();//
                 tenants.Add(tenant);
-                
+
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, UserTenants = tenants };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 result = await UserManager.AddToRoleAsync(user.Id, EnumHelper.Roles.Author.ToString());
@@ -131,7 +136,7 @@ namespace HardwareInventoryManager.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            if (userId == null || code == null) 
+            if (userId == null || code == null)
             {
                 return View("Error");
             }
@@ -191,13 +196,13 @@ namespace HardwareInventoryManager.Controllers
         {
             return View();
         }
-	
+
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            if (code == null) 
+            if (code == null)
             {
                 return View("Error");
             }
@@ -268,6 +273,61 @@ namespace HardwareInventoryManager.Controllers
             // If we got this far, something failed, redisplay form
             Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
             return RedirectToAction("Index", "Users");
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> LockAccount(string emailLock)
+        {
+            var user = await UserManager.FindByNameAsync(emailLock);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "No user found");
+                Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+                return View();
+            }
+            IdentityResult result = await UserManager.SetLockoutEnabledAsync(user.Id, true);
+            if (result.Succeeded)
+            {
+                IdentityResult dateResult = await UserManager.SetLockoutEndDateAsync(user.Id, DateTime.MaxValue);
+                Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
+                return RedirectToAction("Index", "Users");
+            }
+            else
+            {
+                Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+                AddErrors(result);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [CustomAuthorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UnlockAccount(string emailUnlock)
+        {
+            var user = await UserManager.FindByNameAsync(emailUnlock);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "No user found");
+                Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+                return View();
+            }
+            IdentityResult resultCountReset = await UserManager.ResetAccessFailedCountAsync(user.Id);
+            IdentityResult dateResult = await UserManager.SetLockoutEndDateAsync(user.Id, DateTime.Now);
+            IdentityResult result = await UserManager.SetLockoutEnabledAsync(user.Id, false);
+            if (result.Succeeded)
+            {
+                Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
+                return RedirectToAction("Index", "Users");
+            }
+            else
+            {
+                Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+                AddErrors(result);
+                return View();
+            }
         }
 
         //
@@ -460,13 +520,13 @@ namespace HardwareInventoryManager.Controllers
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);
-                        
+
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // SendEmail(user.Email, callbackUrl, "Confirm your account", "Please confirm your account by clicking this link");
-                        
+
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -523,7 +583,7 @@ namespace HardwareInventoryManager.Controllers
             {
                 return HttpContext.GetOwinContext().Authentication;
             }
-        }
+         }
 
         private async Task SignInAsync(ApplicationUser user, bool isPersistent)
         {
@@ -576,7 +636,8 @@ namespace HardwareInventoryManager.Controllers
 
         private class ChallengeResult : HttpUnauthorizedResult
         {
-            public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
             {
             }
 

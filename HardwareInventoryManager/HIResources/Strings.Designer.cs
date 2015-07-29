@@ -158,5 +158,14 @@ namespace HardwareInventoryManager.HIResources {
                 return ResourceManager.GetString("Delete_Organisation_Error", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid username or password..
+        /// </summary>
+        public static string Login_Error {
+            get {
+                return ResourceManager.GetString("Login_Error", resourceCulture);
+            }
+        }
     }
 }

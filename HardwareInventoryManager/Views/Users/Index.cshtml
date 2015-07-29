@@ -104,16 +104,91 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="lockAccountModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4>Lock User Account for...</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("LockAccount", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @*@Html.HiddenFor(model => model.Code)*@
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmailLock, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.EmailLock, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Lock</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="unlockAccountModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4>Unlock User Account for...</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UnlockAccount", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @*@Html.HiddenFor(model => model.Code)*@
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EmailUnlock, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.EmailUnlock, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Unlock</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
 
         var funcv = function (v) {
-            $('#selectedValue').text(this.value);
-            $('#Email').val(this.parentNode.parentNode.childNodes[1].innerText);
-            $('#Email').text(this.parentNode.parentNode.childNodes[1].innerText);
-            $('#resetPasswordModal').modal('show');
+            var selectedValue = this.value;
+            if (selectedValue === "2") {
+                $('#Email').val(this.parentNode.parentNode.childNodes[1].innerText);
+                $('#Email').text(this.parentNode.parentNode.childNodes[1].innerText);
+                $('#resetPasswordModal').modal('show');
+            } else if (selectedValue === "3") {
+                $('#EmailLock').val(this.parentNode.parentNode.childNodes[1].innerText);
+                $('#EmailLock').text(this.parentNode.parentNode.childNodes[1].innerText);
+                $('#lockAccountModal').modal('show');
+            } else if (selectedValue === "4") {
+                $('#EmailUnlock').val(this.parentNode.parentNode.childNodes[1].innerText);
+                $('#EmailUnlock').text(this.parentNode.parentNode.childNodes[1].innerText);
+                $('#unlockAccountModal').modal('show');
+            }
+            this.value = "1";
         };
 
         $('select').change(funcv);

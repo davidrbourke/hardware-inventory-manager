@@ -150,4 +150,7 @@
   <data name="Delete_Organisation_Error" xml:space="preserve">
     <value>The organisation cannot be deleted as it is being used.</value>
   </data>
+  <data name="Login_Error" xml:space="preserve">
+    <value>Invalid username or password.</value>
+  </data>
 </root>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HardwareInventoryManager.Models;
 
-namespace HardwareInventoryManager.Services.User
+namespace HardwareInventoryManager.Helpers.User
 {
     public interface IUserService
     {

@@ -5,7 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using HardwareInventoryManager.Models;
 
-namespace HardwareInventoryManager.Services.User
+namespace HardwareInventoryManager.Helpers.User
 {
     public class AdminUserService : IUserService
     {

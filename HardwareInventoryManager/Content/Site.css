@@ -196,3 +196,11 @@ body.modal-open,
 .modal-open .navbar-fixed-bottom {
   margin-right: 0px !important;
 }
+
+/* For bootstrap to work properly with DataTables Responsive extension. */
+body { font-size: 140% }
+ 
+    table.dataTable th,
+    table.dataTable td {
+        white-space: nowrap;
+    }

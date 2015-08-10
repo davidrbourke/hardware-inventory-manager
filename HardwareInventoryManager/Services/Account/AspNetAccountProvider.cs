@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using Microsoft.Owin;
 
-namespace HardwareInventoryManager.Services.Account
+namespace HardwareInventoryManager.Helpers.Account
 {
     /// <summary>
     /// Implementation of IAccountProvider using ASP.NET Identity 2.0

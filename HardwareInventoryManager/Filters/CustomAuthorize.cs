@@ -1,5 +1,5 @@
 ﻿using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;

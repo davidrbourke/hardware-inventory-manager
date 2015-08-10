@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title @HardwareInventoryManager.HIResources.Strings.AppName </title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/datatablescss")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -47,6 +48,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/datatables")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
         $(document).ready(function () {

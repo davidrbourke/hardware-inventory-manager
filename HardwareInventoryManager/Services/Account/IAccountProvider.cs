@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HardwareInventoryManager.Services.Account
+namespace HardwareInventoryManager.Helpers.Account
 {
     /// <summary>
     /// Interface for Account Providers, implement this Interface to change the 3rd party 

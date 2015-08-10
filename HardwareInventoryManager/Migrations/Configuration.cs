@@ -1,6 +1,6 @@
 namespace HardwareInventoryManager.Migrations
 {
-    using HardwareInventoryManager.Services;
+    using HardwareInventoryManager.Helpers;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;

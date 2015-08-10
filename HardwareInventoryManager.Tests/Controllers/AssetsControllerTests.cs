@@ -1,7 +1,7 @@
 ﻿using HardwareInventoryManager.Controllers;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

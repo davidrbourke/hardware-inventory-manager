@@ -31,6 +31,14 @@ namespace HardwareInventoryManager.ViewModels
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? PurchaseDate { get; set; }
 
+        public string PurchaseDateFormatted
+        {
+            get 
+            { 
+                return PurchaseDate.HasValue ? PurchaseDate.Value.ToString("dd/MM/yyyy") : string.Empty ;
+            }
+        }
+
         public int WarrantyPeriodId { get; set; }
 
         [Display(Name = "Warranty Period")]
@@ -39,6 +47,14 @@ namespace HardwareInventoryManager.ViewModels
         [Display(Name = "Obsolescense Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ObsolescenseDate { get; set; }
+
+        public string ObsolescenceDateFormatted
+        {
+            get
+            {
+                return ObsolescenseDate.HasValue ? ObsolescenseDate.Value.ToString("dd/MM/yyyy") : string.Empty;
+            }
+        }
 
         [Display(Name = "Price Paid")]
         public Decimal? PricePaid { get; set; }

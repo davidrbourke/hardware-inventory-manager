@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Mvc;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
-using HardwareInventoryManager.Services.Account;
+using HardwareInventoryManager.Helpers.Account;
 
 
 namespace HardwareInventoryManager.Tests.Controllers

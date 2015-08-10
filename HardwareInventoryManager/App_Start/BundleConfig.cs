@@ -36,6 +36,15 @@ namespace HardwareInventoryManager
                       "~/Content/jquery-ui.css",
                       "~/Content/jquery-ui.theme.css"));
 
+            // Datatables Bundles
+            bundles.Add(new StyleBundle("~/Content/datatablescss").Include(
+                       "~/Content/jquery.dataTables.css",
+                       "~/Content/dataTables.responsive.css"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/dataTables").Include(
+                        "~/Scripts/jquery.dataTables.js",
+                        "~/Scripts/dataTables.responsive.js"));
+
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
             BundleTable.EnableOptimizations = true;

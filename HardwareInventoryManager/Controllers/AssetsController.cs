@@ -8,11 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.Repository;
 using AutoMapper;
 using HardwareInventoryManager.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -45,7 +47,20 @@ namespace HardwareInventoryManager.Controllers
             Mapper.CreateMap<Asset, AssetViewModel>();
             var l = Mapper.Map<IList<Asset>, IList<AssetViewModel>>(assets);
 
-            return View(l);
+
+            JObject o = JObject.FromObject(
+                new
+                {
+                    Table = l
+                });
+
+            AssetIndexViewModel vm = new AssetIndexViewModel
+            {
+                AssetListJson = o
+            };
+
+
+            return View(vm);
         }
 
         // GET: Assets/Details/5

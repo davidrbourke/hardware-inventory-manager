@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Models;
 using System.Collections.Generic;
 using System.Linq;

@@ -53,5 +53,6 @@ namespace HardwareInventoryManager.Models
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<DashboardUpdates> DashboardUpdates { get; set; }
+        public DbSet<Email> Emails { get; set; }
     }
 }

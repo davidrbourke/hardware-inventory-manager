@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Services.Messaging;
 
 namespace HardwareInventoryManager
 {
@@ -58,9 +59,23 @@ namespace HardwareInventoryManager
 
     public class EmailService : IIdentityMessageService
     {
+        private IEmailService _emailService;
+
+        public EmailService()
+        {
+            //_emailService = new CustomEmailService();
+            //_emailService = new OfflineEmailService();
+        }
+
+        public EmailService(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
+
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+            _emailService.SendEmail(message.Destination, message.Subject, message.Body);
             return Task.FromResult(0);
         }
     }

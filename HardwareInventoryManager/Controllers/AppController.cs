@@ -40,11 +40,16 @@ namespace HardwareInventoryManager.Controllers
         {
             if (User != null)
             {
-                var user = _userManager.FindByName(User.Identity.Name);
-                ApplicationUser uu = _context.Users.Include(x => x.UserTenants).First(u => u.UserName == User.Identity.Name) as ApplicationUser;
-                return user;
+                return GetCurrentUser(User.Identity.Name);
             }
             return null;
+        }
+
+        public ApplicationUser GetCurrentUser(string email)
+        {
+            var user = _userManager.FindByName(email);
+            ApplicationUser uu = _context.Users.Include(x => x.UserTenants).First(u => u.UserName == email) as ApplicationUser;
+            return user;
         }
 
         public int GetTenantContextId()
@@ -57,6 +62,17 @@ namespace HardwareInventoryManager.Controllers
                 {
                     return uu.UserTenants.First().TenantId;
                 }
+            }
+            return tenantContextId;
+        }
+
+        public int GetTenantIdFromEmail(string userEmailAddress)
+        {
+            int tenantContextId = 0;
+            ApplicationUser uu = _context.Users.Include(x => x.UserTenants).First(u => u.UserName == userEmailAddress) as ApplicationUser;
+            if (uu.UserTenants != null && uu.UserTenants.Count > 0)
+            {
+                return uu.UserTenants.First().TenantId;
             }
             return tenantContextId;
         }

@@ -15,6 +15,8 @@ using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.ViewModels;
 using HardwareInventoryManager.Helpers.Account;
+using HardwareInventoryManager.Services.Messaging;
+using HardwareInventoryManager.Repository;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -179,10 +181,20 @@ namespace HardwareInventoryManager.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                string subject = "Reset Password";
+                string body = "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>";
+
+                string recipientEmail = UserManager.GetEmail(user.Id);
+                ApplicationUser applicationUser = GetCurrentUser(recipientEmail);
+                IRepository<Email> repository = new Repository<Email>();
+                repository.SetCurrentUser(applicationUser);
+                IEmailService emailService = new OfflineEmailService(repository);
+                emailService.TenantId = GetTenantIdFromEmail(recipientEmail);
+                emailService.SendEmail(recipientEmail, subject, body);
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -583,7 +595,7 @@ namespace HardwareInventoryManager.Controllers
             {
                 return HttpContext.GetOwinContext().Authentication;
             }
-         }
+        }
 
         private async Task SignInAsync(ApplicationUser user, bool isPersistent)
         {

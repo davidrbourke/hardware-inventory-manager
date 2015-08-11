@@ -57,3 +57,5 @@ C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\Ha
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.WebPages.xml
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\SendGridMail.dll
+C:\Users\David\documents\visual studio 2013\Projects\HardwareInventoryManager\HardwareInventoryManager.Tests\bin\Debug\SendGrid.SmtpApi.dll

@@ -9,7 +9,7 @@ using System.Web.Mvc.Html;
 
 namespace HardwareInventoryManager.Helpers
 {
-    public static class CustomHelpers
+    public static class CustomViewHelpers
     {
         /// <summary>
         /// Returns the table row Edit | Details | Delete links which the user in scope has permission to.

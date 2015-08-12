@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace HardwareInventoryManager.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : AppController
     {
         public ActionResult Index()

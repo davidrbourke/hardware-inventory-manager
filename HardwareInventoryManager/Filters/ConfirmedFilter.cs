@@ -43,7 +43,8 @@ namespace HardwareInventoryManager.Filters
 
         private bool IsActionAnonymous(ActionExecutingContext filterContext)
         {
-            return filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true);
+            return filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true)
+                || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true);
         }
 
         private bool IsActionRequiredWithoutEmailConfirmation(ActionExecutingContext filterContext)

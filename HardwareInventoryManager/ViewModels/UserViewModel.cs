@@ -1,9 +1,11 @@
-﻿using HardwareInventoryManager.Models;
+﻿using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace HardwareInventoryManager.ViewModels
 {
@@ -11,7 +13,9 @@ namespace HardwareInventoryManager.ViewModels
     {
         public string Id { get; set; }
 
-        [Display(Name="Email Address")]
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email Address")]
         public string Email { get; set; }
 
         [Display(Name = "Phone Number")]
@@ -27,5 +31,9 @@ namespace HardwareInventoryManager.ViewModels
         public string UserName { get; set; }
 
         public ICollection<Tenant> UserTenants { get; set; }
+
+        public string Role { get; set; }
+
+        public SelectList RoleSelectList { get; set; }
     }
 }

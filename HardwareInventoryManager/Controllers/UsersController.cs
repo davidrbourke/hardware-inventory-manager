@@ -17,6 +17,7 @@ using HardwareInventoryManager.Helpers;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using HardwareInventoryManager.Helpers.Account;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -64,7 +65,10 @@ namespace HardwareInventoryManager.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            UserViewModel userViewModel = new UserViewModel();
+            PopulateUserDropDowns(userViewModel);
+
+            return View(userViewModel);
         }
 
         // POST: Users/Create
@@ -72,16 +76,29 @@ namespace HardwareInventoryManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Create([Bind(Include = "Email,PhoneNumber,Role,LockoutEnabled")] UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(applicationUser);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                UtilityHelper utilityHelper = new UtilityHelper();
+                ApplicationUser applicationUser = new ApplicationUser
+                {
+                    Email = userViewModel.Email,
+                    PhoneNumber = userViewModel.PhoneNumber,
+                    UserName = userViewModel.Email
+                };
+                IdentityResult createUser = userManager.Create(applicationUser, utilityHelper.GeneratePassword());
+                
+                if(createUser.Succeeded)
+                {
+                    Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
+                    return RedirectToAction("Index");
+                }
             }
-
-            return View(applicationUser);
+            Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+            PopulateUserDropDowns(userViewModel);
+            return View(userViewModel);
         }
 
         // GET: Users/Edit/5
@@ -165,6 +182,27 @@ namespace HardwareInventoryManager.Controllers
             {
                 ModelState.AddModelError("", error);
             }
+        }
+
+        /// <summary>
+        /// Populates the user view model with the required dropdowns
+        /// </summary>
+        /// <param name="userViewModel"></param>
+        private void PopulateUserDropDowns(UserViewModel userViewModel)
+        {
+            IList<EnumHelper.Roles> roles = Enum.GetValues(typeof(EnumHelper.Roles)).Cast<EnumHelper.Roles>().ToList();
+            IList<SelectListItemObject> roleObjects = new List<SelectListItemObject>();
+            foreach (var role in roles)
+            {
+                roleObjects.Add(
+                    new SelectListItemObject
+                    {
+                        Id = role.ToString(),
+                        Value = role.ToString()
+                    });
+            }
+            SelectList roleSelectList = new SelectList(roleObjects, "Id", "Value");
+            userViewModel.RoleSelectList = roleSelectList;
         }
     }
 }

@@ -206,6 +206,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\UtilityHelper.cs" />
     <Compile Include="HIResources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -225,6 +226,7 @@
     <Compile Include="Models\LookupType.cs" />
     <Compile Include="Models\ModelEntity.cs" />
     <Compile Include="Models\RolePermission.cs" />
+    <Compile Include="Models\SelectListItemObject.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Repository.cs" />

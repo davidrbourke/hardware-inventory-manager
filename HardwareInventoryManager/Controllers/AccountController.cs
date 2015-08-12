@@ -173,27 +173,17 @@ namespace HardwareInventoryManager.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null) // Removed check for email confirmed
                 {
-                    ModelState.AddModelError("", "The user either does not exist or is not confirmed.");
-                    return View();
+                    // Remove this message at it confirms a user exists on the DB which is a security risk
+                    //ModelState.AddModelError("", "The user either does not exist or is not confirmed.");
+                    return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
-
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 string subject = "Reset Password";
                 string body = "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>";
-
-                string recipientEmail = UserManager.GetEmail(user.Id);
-                ApplicationUser applicationUser = GetCurrentUser(recipientEmail);
-                IRepository<Email> repository = new Repository<Email>();
-                repository.SetCurrentUser(applicationUser);
-                IEmailService emailService = new OfflineEmailService(repository);
-                emailService.TenantId = GetTenantIdFromEmail(recipientEmail);
-                emailService.SendEmail(recipientEmail, subject, body);
+                SendEmail(user, subject, body);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -237,6 +227,9 @@ namespace HardwareInventoryManager.Controllers
                     return View();
                 }
                 IdentityResult result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+                IdentityResult lockoutEnableResult = await UserManager.SetLockoutEnabledAsync(user.Id, false);
+                IdentityResult lockedEndDateResult = await UserManager.SetLockoutEndDateAsync(user.Id, DateTime.MaxValue);
+                IdentityResult resetAccessFailedCount = await UserManager.ResetAccessFailedCountAsync(user.Id);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -567,6 +560,29 @@ namespace HardwareInventoryManager.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Returns a view to request the user to confirm their email address
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> EmailNotConfirmed()
+        {
+            if(User == null)
+            {
+                return View();
+            }
+            string userEmail = User.Identity.Name;
+            ApplicationUser user = await UserManager.FindByNameAsync(userEmail);
+            EmailNotConfirmedViewModel vm = new EmailNotConfirmedViewModel
+            {
+                EmailAddress = userEmail
+            };
+            string emailConfirmationToken = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            string callback = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = emailConfirmationToken }, protocol: Request.Url.Scheme);
+            SendEmail(user, "Confirm Email Address", string.Format("Please go to <a href=\"{0}\">{0}</a> to confirm your email address", callback));
+            return View(vm);
+        }
+
         [ChildActionOnly]
         public ActionResult RemoveAccountList()
         {
@@ -621,9 +637,21 @@ namespace HardwareInventoryManager.Controllers
             return false;
         }
 
-        private void SendEmail(string email, string callbackUrl, string subject, string message)
+        /// <summary>
+        /// Find the recipients email address from the user record and initiates sending the email
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
+        private void SendEmail(ApplicationUser user, string subject, string body)
         {
-            // For information on sending mail, please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            string recipientEmail = UserManager.GetEmail(user.Id);
+            ApplicationUser applicationUser = GetCurrentUser(recipientEmail);
+            IRepository<Email> repository = new Repository<Email>();
+            repository.SetCurrentUser(applicationUser);
+            IEmailService emailService = new OfflineEmailService(repository);
+            emailService.TenantId = GetTenantIdFromEmail(recipientEmail);
+            emailService.SendEmail(recipientEmail, subject, body);
         }
 
         public enum ManageMessageId

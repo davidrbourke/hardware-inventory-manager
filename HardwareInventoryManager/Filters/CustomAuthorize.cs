@@ -17,7 +17,7 @@ namespace HardwareInventoryManager.Filters
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
-
+            
             EnumHelper.Roles role = EnumHelper.Roles.Viewer;
             if(HttpContext.Current.User.IsInRole(EnumHelper.Roles.Author.ToString()))
             {

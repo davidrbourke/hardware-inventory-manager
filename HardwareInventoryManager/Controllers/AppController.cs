@@ -10,10 +10,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using HardwareInventoryManager.Filters;
 
 
 namespace HardwareInventoryManager.Controllers
 {
+    [ConfirmedFilter]
     public class AppController : Controller
     {
         private CustomApplicationDbContext _context;
@@ -21,7 +23,6 @@ namespace HardwareInventoryManager.Controllers
 
         public AppController()
         {
-           
         }
 
         protected override void Initialize(RequestContext requestContext)

@@ -22,6 +22,10 @@ namespace HardwareInventoryManager.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            // Ignore partial views
+            if (filterContext.IsChildAction)
+                return;
+
             // Ignore Anonymous actions
             if (IsActionAnonymous(filterContext))
             {
@@ -37,6 +41,14 @@ namespace HardwareInventoryManager.Filters
             {
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new { controller = "Account", action = "EmailNotConfirmed" }));
+                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+            }
+
+            // Check if user should reset their password
+            if (IsUserForcePasswordReset(filterContext))
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary(new { controller = "Account", action = "Manage" }));
                 filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
             }
         }
@@ -57,7 +69,8 @@ namespace HardwareInventoryManager.Filters
                 (
                 action.Equals("EmailNotConfirmed", StringComparison.CurrentCultureIgnoreCase) ||
                 action.Equals("ConfirmEMail", StringComparison.CurrentCultureIgnoreCase) ||
-                action.Equals("LogOff", StringComparison.CurrentCultureIgnoreCase)
+                action.Equals("LogOff", StringComparison.CurrentCultureIgnoreCase) ||
+                action.Equals("Manage", StringComparison.CurrentCultureIgnoreCase)
                 ))
             {
                 return true;
@@ -75,6 +88,18 @@ namespace HardwareInventoryManager.Filters
                 Task<bool> confirmEmailTask = appManager.IsEmailConfirmedAsync(user.Id);
                 bool isUserEmailConfirmed = confirmEmailTask.Result;
                 return isUserEmailConfirmed;
+            }
+            return false;
+        }
+
+        private bool IsUserForcePasswordReset(ActionExecutingContext filterContext)
+        {
+            ApplicationUserManager appManager = filterContext.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            Task<ApplicationUser> findUserTask = appManager.FindByEmailAsync(filterContext.HttpContext.User.Identity.Name);
+            ApplicationUser user = findUserTask.Result as ApplicationUser;
+            if (user != null)
+            {
+                return user.ForcePasswordReset;
             }
             return false;
         }

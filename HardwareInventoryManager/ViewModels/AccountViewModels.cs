@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HardwareInventoryManager.Models
+namespace HardwareInventoryManager.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

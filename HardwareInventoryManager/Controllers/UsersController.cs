@@ -98,7 +98,8 @@ namespace HardwareInventoryManager.Controllers
                     UserTenants = new List<Tenant>
                     {
                         tenant
-                    }
+                    },
+                    ForcePasswordReset = true
                 };
                 string temporaryCode = utilityHelper.GeneratePassword();
                 IdentityResult createUser = userManager.Create(applicationUser, temporaryCode);

@@ -393,14 +393,19 @@ namespace HardwareInventoryManager.Controllers
                 if (ModelState.IsValid)
                 {
                     IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                    ApplicationUser applicationUser = UserManager.FindByName(User.Identity.Name);
+                    applicationUser.ForcePasswordReset = false;
+                    UserManager.Update(applicationUser);
                     if (result.Succeeded)
                     {
                         var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                         await SignInAsync(user, isPersistent: false);
+                        Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
                     }
                     else
                     {
+                        Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
                         AddErrors(result);
                     }
                 }

@@ -68,9 +68,17 @@ namespace HardwareInventoryManager.Controllers
         public ActionResult Create()
         {
             UserViewModel userViewModel = new UserViewModel();
-            PopulateUserDropDowns(userViewModel);
+            userViewModel.IsCurrentUserRoleAdmin = User.IsInRole("Admin");
+            if (User.IsInRole("Admin"))
+            {
 
-            return View(userViewModel);
+                PopulateUserDropDowns(userViewModel);
+                return View(userViewModel);
+            } else
+            {
+                PopulateFixedValues(userViewModel);
+                return View("", userViewModel);
+            }
         }
 
         // POST: Users/Create
@@ -95,14 +103,16 @@ namespace HardwareInventoryManager.Controllers
                     PhoneNumber = userViewModel.PhoneNumber,
                     UserName = userViewModel.Email,
                     LockoutEnabled = userViewModel.LockoutEnabled,
-                    UserTenants = new List<Tenant>
-                    {
-                        tenant
-                    },
                     ForcePasswordReset = true
                 };
                 string temporaryCode = utilityHelper.GeneratePassword();
                 IdentityResult createUser = userManager.Create(applicationUser, temporaryCode);
+
+                applicationUser.UserTenants = new List<Tenant>
+                    {
+                        tenant
+                    };
+                userManager.Update(applicationUser);
 
                 // Check if they can ad admin
                 // find role
@@ -214,19 +224,8 @@ namespace HardwareInventoryManager.Controllers
         private void PopulateUserDropDowns(UserViewModel userViewModel)
         {
             // Roles
-            IList<EnumHelper.Roles> roles = Enum.GetValues(typeof(EnumHelper.Roles)).Cast<EnumHelper.Roles>().ToList();
-            IList<SelectListItemObject> roleObjects = new List<SelectListItemObject>();
-            foreach (var role in roles)
-            {
-                roleObjects.Add(
-                    new SelectListItemObject
-                    {
-                        Id = role.ToString(),
-                        Value = role.ToString()
-                    });
-            }
-            SelectList roleSelectList = new SelectList(roleObjects, "Id", "Value");
-            userViewModel.RoleSelectList = roleSelectList;
+            string[] excludedRoles = {};
+            userViewModel.RoleSelectList = userViewModel.RoleSelectList = BuildRolesSelectList(excludedRoles); 
 
             // Tenants
             IRepositoryNoTenant<Tenant> tenantRepository = new RepositoryNoTenant<Tenant>();
@@ -235,6 +234,43 @@ namespace HardwareInventoryManager.Controllers
             userViewModel.TenantSelectList = tenantSelectList;
         }
 
+        private void PopulateFixedValues(UserViewModel userSimpleViewModel)
+        {
+
+            ApplicationUserManager applicationUserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            CustomApplicationDbContext customApplicationDbContext = new CustomApplicationDbContext();
+            IUserService userService = new UserService(customApplicationDbContext);
+            ITenantUtility tenantUtility = new TenantUtility();
+            int tenantId = tenantUtility.GetTenantIdFromEmail(User.Identity.Name);
+            ApplicationUser user = userService.GetUserByEmail(tenantId, User.Identity.Name);
+
+            userSimpleViewModel.TenantObj = user.UserTenants.FirstOrDefault();
+            userSimpleViewModel.TenantId = userSimpleViewModel.TenantObj.TenantId.ToString();
+
+            string[] excludedRoles = { "Admin" };
+            userSimpleViewModel.RoleSelectList = BuildRolesSelectList(excludedRoles);
+        }
+
+
+        public SelectList BuildRolesSelectList(string[] excludedRoles)
+        {
+            // Roles
+            IList<EnumHelper.Roles> roles = Enum.GetValues(typeof(EnumHelper.Roles)).Cast<EnumHelper.Roles>().ToList();
+            IList<SelectListItemObject> roleObjects = new List<SelectListItemObject>();
+            foreach (var role in roles)
+            {
+                if (excludedRoles.Contains(role.ToString()))
+                    continue;
+                roleObjects.Add(
+                    new SelectListItemObject
+                    {
+                        Id = role.ToString(),
+                        Value = role.ToString()
+                    });
+            }
+            SelectList roleSelectList = new SelectList(roleObjects, "Id", "Value");
+            return roleSelectList;
+        }
         /// <summary>
         /// Find the recipients email address from the user record and initiates sending the email
         /// </summary>

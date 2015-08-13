@@ -34,6 +34,9 @@ namespace HardwareInventoryManager.ViewModels
         [Display(Name = "Tenant/Organisation")]
         public string TenantId { get; set; }
 
+        [Display(Name = "Tenant/Organisation")]
+        public Tenant TenantObj { get; set; }
+        
         public SelectList TenantSelectList { get; set; }
 
         public ICollection<Tenant> UserTenants { get; set; }
@@ -41,5 +44,7 @@ namespace HardwareInventoryManager.ViewModels
         public string Role { get; set; }
 
         public SelectList RoleSelectList { get; set; }
+
+        public bool IsCurrentUserRoleAdmin { get; set; }
     }
 }

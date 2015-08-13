@@ -25,15 +25,26 @@ namespace HardwareInventoryManager.Helpers.User
         }
 
 
-        public ApplicationUser GetUser(int tenantId, string id)
+        public ApplicationUser GetUser(int tenantId, string userId)
         {
             ApplicationUser applicationUser = 
-                _context.Users.Include(u => u.UserTenants).FirstOrDefault(x => x.Id == id
+                _context.Users.Include(u => u.UserTenants).FirstOrDefault(x => x.Id == userId
                     &&
                     x.UserTenants.Any(t => t.TenantId == tenantId)
                 );
             return applicationUser;
         }
+
+        public ApplicationUser GetUserByEmail(int tenantId, string email)
+        {
+            ApplicationUser applicationUser =
+                _context.Users.Include(u => u.UserTenants).FirstOrDefault(x => x.Email == email
+                    &&
+                    x.UserTenants.Any(t => t.TenantId == tenantId)
+                );
+            return applicationUser;
+        }
+
 
 
         public ApplicationUser EditUser(int tenantId, ApplicationUser user)

@@ -10,6 +10,7 @@ namespace HardwareInventoryManager.Services.User
     {
         IQueryable<Models.ApplicationUser> GetUsers(int tenantId);
         Models.ApplicationUser GetUser(int tenantId, string id);
+        ApplicationUser GetUserByEmail(int tenantId, string email);
         ApplicationUser EditUser(int tenantId, ApplicationUser user);
     }
 }

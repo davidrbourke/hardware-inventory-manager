@@ -34,5 +34,11 @@ namespace HardwareInventoryManager.Helpers.User
             _context.SaveChanges();
             return user;
         }
+
+
+        public ApplicationUser GetUserByEmail(int tenantId, string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

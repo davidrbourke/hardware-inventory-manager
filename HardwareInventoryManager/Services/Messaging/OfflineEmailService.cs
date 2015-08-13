@@ -18,11 +18,11 @@ namespace HardwareInventoryManager.Services.Messaging
 
         public int TenantId { get; set; }
         
-        public void SendEmail(string recipient, string subject, string body)
+        public void SendEmail(string sender, string recipient, string subject, string body)
         {
             Email email = new Email
             {
-                SenderEmailAddress = "david@drbtechnology.com",
+                SenderEmailAddress = sender,
                 RecipientsEmailAddress = recipient,
                 Subject = subject,
                 Body = body,

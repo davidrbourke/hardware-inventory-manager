@@ -38,17 +38,15 @@ namespace HardwareInventoryManager.Controllers
         }
 
         [CustomAuthorize]
+        [ConfirmedFilter]
         public ActionResult Dashboard()
         {
-            IRepository<Asset> rep;
-
-            rep = new Repository<Asset>();
+            IRepository<Asset> rep = new Repository<Asset>();
             rep.SetCurrentUser(GetCurrentUser());
             CustomApplicationDbContext context = new CustomApplicationDbContext();
             DashboardViewModel dashboad = new DashboardViewModel();
             dashboad.DashboardUpdates = context.DashboardUpdates;
-
-            var filteredAssets = rep.GetAll();
+            IQueryable<Asset> filteredAssets = rep.GetAll();
             dashboad.TotalAssets = filteredAssets.Count();
             return View(dashboad);
         }

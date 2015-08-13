@@ -150,6 +150,18 @@
   <data name="Delete_Organisation_Error" xml:space="preserve">
     <value>The organisation cannot be deleted as it is being used.</value>
   </data>
+  <data name="EmailBody_ConfirmUserEmail" xml:space="preserve">
+    <value>Please go to &lt;a href="{0}"&gt;{0}&lt;/a&gt; to confirm your email address</value>
+  </data>
+  <data name="EmailBody_PasswordReset" xml:space="preserve">
+    <value>Please reset your password by clicking &lt;a href="{0}"&gt;here&lt;/a&gt;</value>
+  </data>
+  <data name="EmailSubject_ConfirmUserEmail" xml:space="preserve">
+    <value>Confirm Email Address</value>
+  </data>
+  <data name="EmailSubject_PasswordReset" xml:space="preserve">
+    <value>Password Reset</value>
+  </data>
   <data name="Login_Error" xml:space="preserve">
     <value>Invalid username or password.</value>
   </data>

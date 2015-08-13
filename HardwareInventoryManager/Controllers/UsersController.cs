@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using HardwareInventoryManager.Helpers.Account;
+using HardwareInventoryManager.Services.Messaging;
+using HardwareInventoryManager.Services.User;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -86,10 +88,15 @@ namespace HardwareInventoryManager.Controllers
                 {
                     Email = userViewModel.Email,
                     PhoneNumber = userViewModel.PhoneNumber,
-                    UserName = userViewModel.Email
+                    UserName = userViewModel.Email,
+                    LockoutEnabled = userViewModel.LockoutEnabled
                 };
                 IdentityResult createUser = userManager.Create(applicationUser, utilityHelper.GeneratePassword());
-                
+
+                // Check if they can ad admin
+                // find role
+                EnumHelper.Roles role = (EnumHelper.Roles)Enum.Parse(typeof(EnumHelper.Roles), userViewModel.Role);
+                userManager.AddToRole(applicationUser.Id, role.ToString());
                 if(createUser.Succeeded)
                 {
                     Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
@@ -203,6 +210,25 @@ namespace HardwareInventoryManager.Controllers
             }
             SelectList roleSelectList = new SelectList(roleObjects, "Id", "Value");
             userViewModel.RoleSelectList = roleSelectList;
+        }
+
+        /// <summary>
+        /// Find the recipients email address from the user record and initiates sending the email
+        /// </summary>
+        /// <param name="recipientUser"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
+        private void SendEmail(ApplicationUser recipientUser, string subject, string body)
+        {
+            IRepository<Email> emailRepository = new Repository<Email>();
+            IEmailService emailService = new OfflineEmailService(emailRepository);
+            IUserUtility userUtility = new UserUtility();
+            ITenantUtility tenantUtility = new TenantUtility();
+            IProcessEmail processEmail = new ProcessEmail(emailService, userUtility, tenantUtility);
+
+            // TODO: Get the email of the sender from the database
+            string sender = "david@drbtechnology.com";
+            emailService.SendEmail(sender, recipientUser.Email, subject, body);
         }
     }
 }

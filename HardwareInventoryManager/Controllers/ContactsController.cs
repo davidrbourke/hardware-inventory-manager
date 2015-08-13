@@ -12,6 +12,7 @@ using HardwareInventoryManager.Helpers;
 
 namespace HardwareInventoryManager.Controllers
 {
+    [AllowAnonymous]
     public class ContactsController : AppController
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();

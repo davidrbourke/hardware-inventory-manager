@@ -10,10 +10,10 @@ namespace HardwareInventoryManager.Services.Messaging
 {
     public class CustomEmailService : IEmailService
     {
-        public void SendEmail(string recipient, string subject, string body)
+        public void SendEmail(string sender, string recipient, string subject, string body)
         {
             var message = new SendGridMessage();
-            message.From = new MailAddress("david@solidcsharp.com");
+            message.From = new MailAddress(sender);
 
             IList<string> recipients = new List<string>
             {

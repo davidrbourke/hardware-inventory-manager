@@ -21,14 +21,12 @@ namespace HardwareInventoryManager.Helpers.User
             return _context.Users.Include(t => t.UserTenants);
         }
 
-
-        public Models.ApplicationUser GetUser(int tenantId, string id)
+                public Models.ApplicationUser GetUser(int tenantId, string id)
         {
             ApplicationUser applicationUser = _context.Users.Include(u => u.UserTenants).FirstOrDefault(x => x.Id == id);
             return applicationUser;
         }
-
-
+        
         public ApplicationUser EditUser(int tenantId, ApplicationUser user)
         {
             _context.Entry(user).State = EntityState.Modified;

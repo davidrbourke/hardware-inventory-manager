@@ -7,7 +7,7 @@ namespace HardwareInventoryManager.Services.Messaging
 {
     public interface IEmailService
     {
-        void SendEmail(string recipient, string subject, string body);
+        void SendEmail(string sender, string recipient, string subject, string body);
         int TenantId { get; set; }
     }
 }

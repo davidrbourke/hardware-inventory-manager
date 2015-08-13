@@ -75,7 +75,9 @@ namespace HardwareInventoryManager
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            _emailService.SendEmail(message.Destination, message.Subject, message.Body);
+            // TODO: Get the email of the sender from the database
+            string sender = "david@drbtechnology.com";
+            _emailService.SendEmail(sender, message.Destination, message.Subject, message.Body);
             return Task.FromResult(0);
         }
     }

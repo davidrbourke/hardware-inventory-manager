@@ -229,8 +229,10 @@
     <Compile Include="Models\SelectListItemObject.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IRepositoryNoTenant.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\RepositoryNoTenant.cs" />
     <Compile Include="Services\Account\AccountResponse.cs" />
     <Compile Include="Services\Account\AccountService.cs" />
     <Compile Include="Services\Account\AspNetAccountProvider.cs" />
@@ -244,9 +246,9 @@
     <Compile Include="Services\Messaging\ProcessEmail.cs" />
     <Compile Include="Services\User\AdminUserService.cs" />
     <Compile Include="Services\User\ITenantUtility.cs" />
-    <Compile Include="Services\User\IUserService.cs" />
     <Compile Include="Helpers\PermissionHelper.cs" />
     <Compile Include="Services\SeedService.cs" />
+    <Compile Include="Services\User\IUserService.cs" />
     <Compile Include="Services\User\IUserUtility.cs" />
     <Compile Include="Services\User\TenantUtility.cs" />
     <Compile Include="Services\User\UserService.cs" />

@@ -30,6 +30,12 @@ namespace HardwareInventoryManager.ViewModels
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
+        [Required]
+        [Display(Name = "Tenant/Organisation")]
+        public string TenantId { get; set; }
+
+        public SelectList TenantSelectList { get; set; }
+
         public ICollection<Tenant> UserTenants { get; set; }
 
         public string Role { get; set; }

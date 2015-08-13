@@ -9,8 +9,8 @@ namespace HardwareInventoryManager.Services.Messaging
     public interface IProcessEmail
     {
         void SendPasswordResetEmail(ApplicationUser recipientUser, string callbackUrl);
-        void SendEmailConfirmationEmail(ApplicationUser recipient, string callbackUrl);
-        void SendNewAccountSetupEmail(string recipient, ApplicationUserManager applicationUserManager);
+        void SendEmailConfirmationEmail(ApplicationUser recipientUser, string callbackUrl);
+        void SendNewAccountSetupEmail(ApplicationUser recipientUser, ApplicationUserManager applicationUserManager, string temporaryCode);
         void SendEmail(string senderEmailAddress, string[] recipientsEmailAddresses, string subject, string body);
     }
 }

@@ -33,14 +33,12 @@ namespace HardwareInventoryManager.Services.Messaging
 
         public void SendEmail(string senderEmailAddress, string[] recipientsEmailAddresses, string subject, string body)
         {
-            //IEmailService emailService = new OfflineEmailService(repository);
             foreach (string recipientEmail in recipientsEmailAddresses)
             {
                 _emailService.TenantId = _tenantUtility.GetTenantIdFromEmail(recipientEmail);
                 _emailService.SendEmail(senderEmailAddress, recipientEmail, subject, body);
             }
         }
-
 
         public void SendPasswordResetEmail(ApplicationUser recipientUser, string callbackUrl)
         {
@@ -58,9 +56,12 @@ namespace HardwareInventoryManager.Services.Messaging
             SendEmail(AdminEmailAddress(), new string[] { recipientUser.Email }, HIResources.Strings.EmailSubject_ConfirmUserEmail, body);    
         }
 
-        public void SendNewAccountSetupEmail(string recipient, ApplicationUserManager applicationUserManager)
+        public void SendNewAccountSetupEmail(ApplicationUser recipientUser, ApplicationUserManager applicationUserManager, string temporaryCode)
         {
-            throw new NotImplementedException();
+            recipientUser = _userUtility.GetUserById(recipientUser.Id);
+            _emailRepository.SetCurrentUser(recipientUser);
+            string body = string.Format(HIResources.Strings.EmailBody_NewAccount, recipientUser.Email, temporaryCode);
+            SendEmail(AdminEmailAddress(), new string[] { recipientUser.Email }, HIResources.Strings.EmailSubject_NewAccount, body);    
         }
 
         private string AdminEmailAddress()

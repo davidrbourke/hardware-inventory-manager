@@ -153,11 +153,17 @@
   <data name="EmailBody_ConfirmUserEmail" xml:space="preserve">
     <value>Please go to &lt;a href="{0}"&gt;{0}&lt;/a&gt; to confirm your email address</value>
   </data>
+  <data name="EmailBody_NewAccount" xml:space="preserve">
+    <value>A new account has been created for you, your username is {0} and your password is {1}. The password must be changed the first time you log in.</value>
+  </data>
   <data name="EmailBody_PasswordReset" xml:space="preserve">
     <value>Please reset your password by clicking &lt;a href="{0}"&gt;here&lt;/a&gt;</value>
   </data>
   <data name="EmailSubject_ConfirmUserEmail" xml:space="preserve">
     <value>Confirm Email Address</value>
+  </data>
+  <data name="EmailSubject_NewAccount" xml:space="preserve">
+    <value>New Account Created</value>
   </data>
   <data name="EmailSubject_PasswordReset" xml:space="preserve">
     <value>Password Reset</value>

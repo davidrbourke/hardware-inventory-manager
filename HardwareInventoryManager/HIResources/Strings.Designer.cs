@@ -169,6 +169,15 @@ namespace HardwareInventoryManager.HIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A new account has been created for you, your username is {0} and your password is {1}. The password must be changed the first time you log in..
+        /// </summary>
+        public static string EmailBody_NewAccount {
+            get {
+                return ResourceManager.GetString("EmailBody_NewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please reset your password by clicking &lt;a href=&quot;{0}&quot;&gt;here&lt;/a&gt;.
         /// </summary>
         public static string EmailBody_PasswordReset {
@@ -183,6 +192,15 @@ namespace HardwareInventoryManager.HIResources {
         public static string EmailSubject_ConfirmUserEmail {
             get {
                 return ResourceManager.GetString("EmailSubject_ConfirmUserEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Account Created.
+        /// </summary>
+        public static string EmailSubject_NewAccount {
+            get {
+                return ResourceManager.GetString("EmailSubject_NewAccount", resourceCulture);
             }
         }
         

@@ -78,20 +78,30 @@ namespace HardwareInventoryManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Email,PhoneNumber,Role,LockoutEnabled")] UserViewModel userViewModel)
+        public ActionResult Create([Bind(Include = "Email,PhoneNumber,Role,LockoutEnabled,TenantId")] UserViewModel userViewModel)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 UtilityHelper utilityHelper = new UtilityHelper();
+
+                IRepositoryNoTenant<Tenant> tenantRepository = new RepositoryNoTenant<Tenant>();
+                int tenantId = int.Parse(userViewModel.TenantId);
+                Tenant tenant = tenantRepository.Single(t => t.TenantId == tenantId);
+
                 ApplicationUser applicationUser = new ApplicationUser
                 {
                     Email = userViewModel.Email,
                     PhoneNumber = userViewModel.PhoneNumber,
                     UserName = userViewModel.Email,
-                    LockoutEnabled = userViewModel.LockoutEnabled
+                    LockoutEnabled = userViewModel.LockoutEnabled,
+                    UserTenants = new List<Tenant>
+                    {
+                        tenant
+                    }
                 };
-                IdentityResult createUser = userManager.Create(applicationUser, utilityHelper.GeneratePassword());
+                string temporaryCode = utilityHelper.GeneratePassword();
+                IdentityResult createUser = userManager.Create(applicationUser, temporaryCode);
 
                 // Check if they can ad admin
                 // find role
@@ -100,6 +110,11 @@ namespace HardwareInventoryManager.Controllers
                 if(createUser.Succeeded)
                 {
                     Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
+
+                    IProcessEmail processEmail = new ProcessEmail();
+                    processEmail.SendNewAccountSetupEmail(applicationUser,
+                        userManager, temporaryCode);
+
                     return RedirectToAction("Index");
                 }
             }
@@ -197,6 +212,7 @@ namespace HardwareInventoryManager.Controllers
         /// <param name="userViewModel"></param>
         private void PopulateUserDropDowns(UserViewModel userViewModel)
         {
+            // Roles
             IList<EnumHelper.Roles> roles = Enum.GetValues(typeof(EnumHelper.Roles)).Cast<EnumHelper.Roles>().ToList();
             IList<SelectListItemObject> roleObjects = new List<SelectListItemObject>();
             foreach (var role in roles)
@@ -210,6 +226,12 @@ namespace HardwareInventoryManager.Controllers
             }
             SelectList roleSelectList = new SelectList(roleObjects, "Id", "Value");
             userViewModel.RoleSelectList = roleSelectList;
+
+            // Tenants
+            IRepositoryNoTenant<Tenant> tenantRepository = new RepositoryNoTenant<Tenant>();
+            IQueryable<Tenant> tenants = tenantRepository.GetAll();
+            SelectList tenantSelectList = new SelectList(tenants, "TenantId", "Name");
+            userViewModel.TenantSelectList = tenantSelectList;
         }
 
         /// <summary>

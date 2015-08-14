@@ -1,5 +1,6 @@
 ﻿using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
+using HardwareInventoryManager.Services.ApplicationSettings;
 using HardwareInventoryManager.Services.User;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ namespace HardwareInventoryManager.Services.Messaging
     public class ProcessEmail : IProcessEmail
     {
         private IRepository<Email> _emailRepository;
-        private IEmailService _emailService;
+        private SendEmailTemplate _emailService;
         private IUserUtility _userUtility;
         private ITenantUtility _tenantUtility;
 
-        public ProcessEmail(IEmailService emailService, IUserUtility userUtility, ITenantUtility tenantUtility)
+        public ProcessEmail(SendEmailTemplate emailService, IUserUtility userUtility, ITenantUtility tenantUtility)
         {
             _emailService = emailService;
             _userUtility = userUtility;
@@ -26,7 +27,7 @@ namespace HardwareInventoryManager.Services.Messaging
         public ProcessEmail()
         {
             _emailRepository = new Repository<Email>();
-            _emailService = new OfflineEmailService(_emailRepository);
+            _emailService = CreateSendEmailService();
             _userUtility = new UserUtility();
             _tenantUtility = new TenantUtility();
         }
@@ -36,7 +37,7 @@ namespace HardwareInventoryManager.Services.Messaging
             foreach (string recipientEmail in recipientsEmailAddresses)
             {
                 _emailService.TenantId = _tenantUtility.GetTenantIdFromEmail(recipientEmail);
-                _emailService.SendEmail(senderEmailAddress, recipientEmail, subject, body);
+                _emailService.PrepareEmail(senderEmailAddress, recipientEmail, subject, body);
             }
         }
 
@@ -66,8 +67,13 @@ namespace HardwareInventoryManager.Services.Messaging
 
         private string AdminEmailAddress()
         {
-            // TODO: Return from database
-            return "david@drbtechnology.com";
+            IApplicationSettingsService applicationSettings = new ApplicationSettingsService();
+            return applicationSettings.GetEmailServiceSenderEmailAddress();
+        }
+
+        private SendEmailTemplate CreateSendEmailService()
+        {
+            return SendEmailFactory.GetSendEmailType(_emailRepository);
         }
     }
 }

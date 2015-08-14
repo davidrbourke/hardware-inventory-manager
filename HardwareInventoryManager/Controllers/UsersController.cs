@@ -90,9 +90,15 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                if(!User.IsInRole(EnumHelper.Roles.Admin.ToString()) && userViewModel.Role.Equals(EnumHelper.Roles.Admin.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                {
+                    throw new Exception("Illegal privilege escalation");
+                }
+
                 ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 UtilityHelper utilityHelper = new UtilityHelper();
 
+                // TODO: Make sure a user cannot create a user for a tenant they do not have permission to.
                 IRepositoryNoTenant<Tenant> tenantRepository = new RepositoryNoTenant<Tenant>();
                 int tenantId = int.Parse(userViewModel.TenantId);
                 Tenant tenant = tenantRepository.Single(t => t.TenantId == tenantId);
@@ -280,14 +286,14 @@ namespace HardwareInventoryManager.Controllers
         private void SendEmail(ApplicationUser recipientUser, string subject, string body)
         {
             IRepository<Email> emailRepository = new Repository<Email>();
-            IEmailService emailService = new OfflineEmailService(emailRepository);
+            SendEmailTemplate emailService = new SendEmailOffline(emailRepository);
             IUserUtility userUtility = new UserUtility();
             ITenantUtility tenantUtility = new TenantUtility();
             IProcessEmail processEmail = new ProcessEmail(emailService, userUtility, tenantUtility);
 
             // TODO: Get the email of the sender from the database
             string sender = "david@drbtechnology.com";
-            emailService.SendEmail(sender, recipientUser.Email, subject, body);
+            emailService.PrepareEmail(sender, recipientUser.Email, subject, body);
         }
     }
 }

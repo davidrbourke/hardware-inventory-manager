@@ -59,7 +59,7 @@ namespace HardwareInventoryManager
 
     public class EmailService : IIdentityMessageService
     {
-        private IEmailService _emailService;
+        private SendEmailTemplate _emailService;
 
         public EmailService()
         {
@@ -67,7 +67,7 @@ namespace HardwareInventoryManager
             //_emailService = new OfflineEmailService();
         }
 
-        public EmailService(IEmailService emailService)
+        public EmailService(SendEmailTemplate emailService)
         {
             _emailService = emailService;
         }
@@ -77,7 +77,7 @@ namespace HardwareInventoryManager
             // Plug in your email service here to send an email.
             // TODO: Get the email of the sender from the database
             string sender = "david@drbtechnology.com";
-            _emailService.SendEmail(sender, message.Destination, message.Subject, message.Body);
+            _emailService.PrepareEmail(sender, message.Destination, message.Subject, message.Body);
             return Task.FromResult(0);
         }
     }

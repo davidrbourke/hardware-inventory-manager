@@ -7,18 +7,24 @@ using HardwareInventoryManager.Models;
 
 namespace HardwareInventoryManager.Services.Messaging
 {
-    public class OfflineEmailService : IEmailService
+    /// <summary>
+    /// This class does not send an email, it only logs the email to the database
+    /// </summary>
+    public class SendEmailOffline : SendEmailTemplate
     {
         private IRepository<Email> _repository;
 
-        public OfflineEmailService(IRepository<Email> repository)
+        public SendEmailOffline(IRepository<Email> repository)
         {
             _repository = repository;
         }
 
-        public int TenantId { get; set; }
-        
-        public void SendEmail(string sender, string recipient, string subject, string body)
+        protected override void SendEmail(string sender, string recipient, string subject, string body)
+        {
+            // Offline - nothing to send to
+        }
+
+        protected override void LogEmail(string sender, string recipient, string subject, string body)
         {
             Email email = new Email
             {

@@ -217,6 +217,9 @@
       <DependentUpon>201508131411598_ForcePasswordResetr.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Services\ApplicationSettings\IApplicationSettingsService.cs" />
+    <Compile Include="Services\ApplicationSettings\ApplicationSettingsService.cs" />
+    <Compile Include="Services\Messaging\SendEmailFactory.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -243,10 +246,10 @@
     <Compile Include="Services\Account\IAccountProvider.cs" />
     <Compile Include="Helpers\CustomViewHelpers.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Services\Messaging\CustomEmailService.cs" />
-    <Compile Include="Services\Messaging\IEmailService.cs" />
+    <Compile Include="Services\Messaging\SendEmailSendGrid.cs" />
+    <Compile Include="Services\Messaging\SendEmailTemplate.cs" />
     <Compile Include="Services\Messaging\IProcessEmail.cs" />
-    <Compile Include="Services\Messaging\OfflineEmailService.cs" />
+    <Compile Include="Services\Messaging\SendEmailOffline.cs" />
     <Compile Include="Services\Messaging\ProcessEmail.cs" />
     <Compile Include="Services\User\AdminUserService.cs" />
     <Compile Include="Services\User\ITenantUtility.cs" />

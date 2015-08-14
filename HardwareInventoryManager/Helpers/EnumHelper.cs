@@ -40,5 +40,25 @@ namespace HardwareInventoryManager.Helpers
             Author,
             Viewer
         }
+
+        /// <summary>
+        /// Application Setting Keys
+        /// </summary>
+        public enum ApplicationSettingKeys
+        {
+            EmailServiceUserName,
+            EmailServiceKeyCode,
+            EmailServiceSenderEmailAddress,
+            EmailServiceOnlineType
+        }
+
+        /// <summary>
+        /// Types of email services
+        /// </summary>
+        public enum EmailServiceTypes
+        {
+            Offline,
+            OnlineSendGrid
+        }
     }
 }

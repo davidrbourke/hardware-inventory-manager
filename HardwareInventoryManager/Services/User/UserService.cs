@@ -5,58 +5,76 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using HardwareInventoryManager.Services.User;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using HardwareInventoryManager.Repository;
+using HardwareInventoryManager.Services.Messaging;
 
 namespace HardwareInventoryManager.Helpers.User
 {
     public class UserService : IUserService
     {
         private readonly CustomApplicationDbContext _context;
+        private IRepository<ApplicationUser> _userRepository;
 
-        public UserService(CustomApplicationDbContext context)
+        public UserService(CustomApplicationDbContext context, IRepository<ApplicationUser> userRepository)
         {
             _context = context;
-        }
-        
-        public IQueryable<ApplicationUser> GetUsers(int tenantId)
-        {
-            return _context.Users.Include(t => t.UserTenants)
-                .Where(t => t.UserTenants.Where(x => x.TenantId == tenantId)
-                .Any());
+            _userRepository = userRepository;
         }
 
-
-        public ApplicationUser GetUser(int tenantId, string userId)
+        public IQueryable<ApplicationUser> GetUsers()
         {
-            ApplicationUser applicationUser = 
-                _context.Users.Include(u => u.UserTenants).FirstOrDefault(x => x.Id == userId
-                    &&
-                    x.UserTenants.Any(t => t.TenantId == tenantId)
-                );
-            return applicationUser;
+            return _userRepository.GetAll();
         }
 
-        public ApplicationUser GetUserByEmail(int tenantId, string email)
+        public ApplicationUser GetUserById(string userId)
         {
-            ApplicationUser applicationUser =
-                _context.Users.Include(u => u.UserTenants).FirstOrDefault(x => x.Email == email
-                    &&
-                    x.UserTenants.Any(t => t.TenantId == tenantId)
-                );
-            return applicationUser;
+            return _userRepository.Single(u => u.Id == userId);
         }
 
-
-
-        public ApplicationUser EditUser(int tenantId, ApplicationUser user)
+        public ApplicationUser GetUserByEmail(string emailAddress)
         {
+            return _userRepository.Single(u => u.Email == emailAddress);
+        }
 
-            IList<Tenant> tenants = _context.Users.Include(t => t.UserTenants).FirstOrDefault(x => x.Id == user.Id).UserTenants.ToList();
-            if (tenants.Any(x => x.TenantId == tenantId))
+        public ApplicationUser EditUser(ApplicationUser user)
+        {
+            _userRepository.Edit(user);
+            return user;
+        }
+
+        public EnumHelper.Roles GetCurrentUserRoleById(string userId)
+        {
+            var store = new UserStore<ApplicationUser>(_context);
+            var manager = new UserManager<ApplicationUser>(store);
+            EnumHelper.Roles userRole = EnumHelper.Roles.Viewer;
+            if (manager.IsInRole(userId, EnumHelper.Roles.Admin.ToString()))
             {
-                _context.Entry(user).State = EntityState.Modified;
-                _context.SaveChanges();
+                return EnumHelper.Roles.Admin;
+            }
+            else if (manager.IsInRole(userId, EnumHelper.Roles.Author.ToString()))
+            {
+                return EnumHelper.Roles.Author;
+            }
+            return userRole;
+        }
+
+
+        public ApplicationUser CreateUser(ApplicationUser user)
+        {
+            UtilityHelper utilityHelper = new UtilityHelper();
+            string temporaryCode = utilityHelper.GeneratePassword();
+            user.TemporaryCode = temporaryCode;
+            user = _userRepository.Create(user);
+
+            if (!string.IsNullOrWhiteSpace(user.Id))
+            {
+                IProcessEmail processEmail = new ProcessEmail();
+                processEmail.SendNewAccountSetupEmail(user);
             }
             return user;
         }
     }
+
 }

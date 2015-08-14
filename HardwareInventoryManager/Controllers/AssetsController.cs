@@ -72,7 +72,7 @@ namespace HardwareInventoryManager.Controllers
             }
             int tenantId = GetTenantContextId();
             _assetRepository.SetCurrentUser(GetCurrentUser());
-            Asset asset = _assetRepository.Find(tenantId, x => x.AssetId == id)
+            Asset asset = _assetRepository.Find(x => x.AssetId == id)
                 .Include(x => x.AssetMake)
                 .Include(x => x.Category)
                 .Include(x => x.WarrantyPeriod)
@@ -109,7 +109,7 @@ namespace HardwareInventoryManager.Controllers
                 Mapper.CreateMap<AssetViewModel, Asset>();
                 Asset asset = Mapper.Map<AssetViewModel, Asset>(createAssetViewModel);
                 _assetRepository.SetCurrentUser(GetCurrentUser());
-                _assetRepository.Create(asset, GetTenantContextId());
+                _assetRepository.Create(asset);
                 _assetRepository.Save();
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                 return RedirectToAction("Index");
@@ -128,7 +128,7 @@ namespace HardwareInventoryManager.Controllers
             }
 
             _assetRepository.SetCurrentUser(GetCurrentUser());
-            Asset asset =_assetRepository.Find(GetTenantContextId(), x => x.AssetId == id)
+            Asset asset =_assetRepository.Find(x => x.AssetId == id)
                 .Include(x => x.AssetMake)
                 .Include(x => x.Category)
                 .Include(x => x.WarrantyPeriod)
@@ -157,7 +157,7 @@ namespace HardwareInventoryManager.Controllers
                 Mapper.CreateMap<AssetViewModel, Asset>();
                 Asset asset = Mapper.DynamicMap<AssetViewModel, Asset>(editAssetViewModel);
                 _assetRepository.SetCurrentUser(GetCurrentUser());
-                _assetRepository.Edit(asset, GetTenantContextId());
+                _assetRepository.Edit(asset);
                 _assetRepository.Save();
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                 return RedirectToAction("Index");
@@ -176,8 +176,8 @@ namespace HardwareInventoryManager.Controllers
             }
             _assetRepository.SetCurrentUser(GetCurrentUser());
             int tenantContextId = GetTenantContextId();
-            var assets = _assetRepository.Find(tenantContextId, x => x.AssetId == id);
-            Asset asset =_assetRepository.Find(tenantContextId, x => x.AssetId == id)
+            var assets = _assetRepository.Find(x => x.AssetId == id);
+            Asset asset =_assetRepository.Find(x => x.AssetId == id)
                 .Include(x => x.AssetMake)
                 .Include(x => x.Category)
                 .Include(x => x.WarrantyPeriod)
@@ -199,8 +199,8 @@ namespace HardwareInventoryManager.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _assetRepository.SetCurrentUser(GetCurrentUser());
-            Asset asset = _assetRepository.Find(GetTenantContextId(), x => x.AssetId == id).First();
-            _assetRepository.Delete(asset, GetTenantContextId());
+            Asset asset = _assetRepository.Find(x => x.AssetId == id).First();
+            _assetRepository.Delete(asset);
             _assetRepository.Save();
             Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
             return RedirectToAction("Index");

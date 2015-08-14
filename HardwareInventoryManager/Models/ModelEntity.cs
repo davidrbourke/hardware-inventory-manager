@@ -9,9 +9,6 @@ namespace HardwareInventoryManager.Models
 {
     public class ModelEntity
     {
-        [NotMapped]
-        public int TenantContextId { get; set; }
-
         public DateTime? CreatedDate { get; set; }
 
         public DateTime? UpdatedDate { get; set; }

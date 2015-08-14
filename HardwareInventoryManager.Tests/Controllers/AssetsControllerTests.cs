@@ -58,7 +58,7 @@ namespace HardwareInventoryManager.Tests.Controllers
             // ARRANGE
             var mock = new Mock<Repository<Asset>>();
      
-            mock.Setup(r => r.Find(It.IsAny<int>(), It.IsAny<Expression<Func<Asset, bool>>>())).Returns(
+            mock.Setup(r => r.Find(It.IsAny<Expression<Func<Asset, bool>>>())).Returns(
                 MultipleAssets());
 
             AssetsController controller = new AssetsController(mock.Object);
@@ -78,7 +78,7 @@ namespace HardwareInventoryManager.Tests.Controllers
             // ARRANGE
             var mock = new Mock<Repository<Asset>>();
 
-            mock.Setup(r => r.Create(It.IsAny<Asset>(), It.IsAny<int>())).
+            mock.Setup(r => r.Create(It.IsAny<Asset>())).
                 Returns(new Asset
                 {
                     AssetId = 1,

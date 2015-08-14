@@ -27,22 +27,22 @@ namespace HardwareInventoryManager.Controllers
     public class UsersController : AppController
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();
-      
+        
         // GET: Users
         public ActionResult Index()
         {
             Mapper.CreateMap<ApplicationUser, UserViewModel>();
-            int tenantId = GetTenantContextId();
+            IAccountProvider accountProvider = new AspNetAccountProvider(
+                HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(),
+                HttpContext.GetOwinContext().Authentication);
 
-            var factory = UserTypeFactory.GetUserService(GetUserRole(), db);
-            var l = Mapper.Map<IList<ApplicationUser>, IList<UserViewModel>>(
-                factory.GetUsers(tenantId).ToList());
-
-            UserListViewModel u = new UserListViewModel { 
-                Users = l
+            IUserService userService = UserTypeFactory.GetUserService(new UserServiceUoW(User.Identity.GetUserId(), accountProvider));
+            IList<UserViewModel> listOfUsers = Mapper.Map<IList<ApplicationUser>, IList<UserViewModel>>(
+                userService.GetUsers().ToList());
+            UserListViewModel userListViewModel = new UserListViewModel { 
+                Users = listOfUsers
             };
-
-            return View(u);
+            return View(userListViewModel);
         }
 
         // GET: Users/Details/5
@@ -52,8 +52,8 @@ namespace HardwareInventoryManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var factory = UserTypeFactory.GetUserService(GetUserRole(), db);
-            ApplicationUser applicationUser = factory.GetUser(GetTenantContextId(), id);
+            IUserService userService = GetUserService();
+            ApplicationUser applicationUser = userService.GetUserById(User.Identity.GetUserId());
                 
             if (applicationUser == null)
             {
@@ -71,7 +71,6 @@ namespace HardwareInventoryManager.Controllers
             userViewModel.IsCurrentUserRoleAdmin = User.IsInRole("Admin");
             if (User.IsInRole("Admin"))
             {
-
                 PopulateUserDropDowns(userViewModel);
                 return View(userViewModel);
             } else
@@ -90,48 +89,32 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(!User.IsInRole(EnumHelper.Roles.Admin.ToString()) && userViewModel.Role.Equals(EnumHelper.Roles.Admin.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                if (!User.IsInRole(EnumHelper.Roles.Admin.ToString()) && userViewModel.Role.Equals(EnumHelper.Roles.Admin.ToString(), StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new Exception("Illegal privilege escalation");
                 }
 
-                ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                UtilityHelper utilityHelper = new UtilityHelper();
-
-                // TODO: Make sure a user cannot create a user for a tenant they do not have permission to.
-                IRepositoryNoTenant<Tenant> tenantRepository = new RepositoryNoTenant<Tenant>();
-                int tenantId = int.Parse(userViewModel.TenantId);
-                Tenant tenant = tenantRepository.Single(t => t.TenantId == tenantId);
-
+                IUserService userService = GetUserService();
                 ApplicationUser applicationUser = new ApplicationUser
                 {
                     Email = userViewModel.Email,
                     PhoneNumber = userViewModel.PhoneNumber,
                     UserName = userViewModel.Email,
                     LockoutEnabled = userViewModel.LockoutEnabled,
-                    ForcePasswordReset = true
-                };
-                string temporaryCode = utilityHelper.GeneratePassword();
-                IdentityResult createUser = userManager.Create(applicationUser, temporaryCode);
-
-                applicationUser.UserTenants = new List<Tenant>
+                    ForcePasswordReset = true,
+                    UserTenants = new List<Tenant>
                     {
-                        tenant
-                    };
-                userManager.Update(applicationUser);
-
-                // Check if they can ad admin
-                // find role
-                EnumHelper.Roles role = (EnumHelper.Roles)Enum.Parse(typeof(EnumHelper.Roles), userViewModel.Role);
-                userManager.AddToRole(applicationUser.Id, role.ToString());
-                if(createUser.Succeeded)
+                        new Tenant
+                        {
+                            TenantId = int.Parse(userViewModel.TenantId)
+                        }
+                    },
+                    TemporaryRole = userViewModel.Role
+                };
+                applicationUser = userService.CreateUser(applicationUser);
+                if(!string.IsNullOrWhiteSpace(applicationUser.Id))
                 {
                     Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
-
-                    IProcessEmail processEmail = new ProcessEmail();
-                    processEmail.SendNewAccountSetupEmail(applicationUser,
-                        userManager, temporaryCode);
-
                     return RedirectToAction("Index");
                 }
             }
@@ -147,8 +130,8 @@ namespace HardwareInventoryManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var factory = UserTypeFactory.GetUserService(GetUserRole(), db);
-            ApplicationUser applicationUser = factory.GetUser(GetTenantContextId(), id);
+            IUserService userService = GetUserService();
+            ApplicationUser applicationUser = userService.GetUserById(User.Identity.GetUserId());
 
             if (applicationUser == null)
             {
@@ -168,11 +151,10 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                var factory = UserTypeFactory.GetUserService(GetUserRole(), db);
+                IUserService userService = GetUserService();
                 Mapper.CreateMap<UserViewModel, ApplicationUser>();
                 ApplicationUser editUser = Mapper.Map<UserViewModel, ApplicationUser>(userViewModel);
-                editUser = factory.EditUser(GetTenantContextId(), editUser);
+                editUser = userService.EditUser(editUser); ;
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                 return RedirectToAction("Index");
             }
@@ -234,7 +216,7 @@ namespace HardwareInventoryManager.Controllers
             userViewModel.RoleSelectList = userViewModel.RoleSelectList = BuildRolesSelectList(excludedRoles); 
 
             // Tenants
-            IRepositoryNoTenant<Tenant> tenantRepository = new RepositoryNoTenant<Tenant>();
+            IRepository<Tenant> tenantRepository = new RepositoryWithoutTenant<Tenant>();
             IQueryable<Tenant> tenants = tenantRepository.GetAll();
             SelectList tenantSelectList = new SelectList(tenants, "TenantId", "Name");
             userViewModel.TenantSelectList = tenantSelectList;
@@ -242,13 +224,10 @@ namespace HardwareInventoryManager.Controllers
 
         private void PopulateFixedValues(UserViewModel userSimpleViewModel)
         {
-
-            ApplicationUserManager applicationUserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            CustomApplicationDbContext customApplicationDbContext = new CustomApplicationDbContext();
-            IUserService userService = new UserService(customApplicationDbContext);
+            IUserService userService = GetUserService();
             ITenantUtility tenantUtility = new TenantUtility();
             int tenantId = tenantUtility.GetTenantIdFromEmail(User.Identity.Name);
-            ApplicationUser user = userService.GetUserByEmail(tenantId, User.Identity.Name);
+            ApplicationUser user = userService.GetUserByEmail(User.Identity.Name);
 
             userSimpleViewModel.TenantObj = user.UserTenants.FirstOrDefault();
             userSimpleViewModel.TenantId = userSimpleViewModel.TenantObj.TenantId.ToString();
@@ -287,13 +266,26 @@ namespace HardwareInventoryManager.Controllers
         {
             IRepository<Email> emailRepository = new Repository<Email>();
             SendEmailTemplate emailService = new SendEmailOffline(emailRepository);
-            IUserUtility userUtility = new UserUtility();
             ITenantUtility tenantUtility = new TenantUtility();
-            IProcessEmail processEmail = new ProcessEmail(emailService, userUtility, tenantUtility);
+            IProcessEmail processEmail = new ProcessEmail(emailService, tenantUtility);
 
             // TODO: Get the email of the sender from the database
             string sender = "david@drbtechnology.com";
             emailService.PrepareEmail(sender, recipientUser.Email, subject, body);
+        }
+
+        /// <summary>
+        /// Gets the user service
+        /// </summary>
+        /// <returns></returns>
+        private IUserService GetUserService()
+        {
+            IAccountProvider accountProvider = new AspNetAccountProvider(
+               HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(),
+               HttpContext.GetOwinContext().Authentication);
+
+            IUserService userService = UserTypeFactory.GetUserService(new UserServiceUoW(User.Identity.GetUserId(), accountProvider));
+            return userService;
         }
     }
 }

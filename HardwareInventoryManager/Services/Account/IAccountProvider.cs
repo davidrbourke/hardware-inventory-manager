@@ -21,5 +21,8 @@ namespace HardwareInventoryManager.Helpers.Account
         Task<bool> LockUserAccount(string userId, DateTime? lockedOutTillDate);
         Task<bool> LoginFailed(string userId);
         Task<bool> SignIn(ApplicationUser user, bool isPermanent);
+        bool Create(ApplicationUser applicationUser, string password);
+        bool AddToRole(string userId, string role);
+
     }
 }

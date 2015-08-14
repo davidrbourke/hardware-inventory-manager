@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using Microsoft.Owin;
+using System.Data.Entity.Validation;
 
 namespace HardwareInventoryManager.Helpers.Account
 {
@@ -71,6 +72,18 @@ namespace HardwareInventoryManager.Helpers.Account
             _authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             _authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(_userManager));
             return true;
+        }
+
+        public bool Create(ApplicationUser applicationUser, string password)
+        {
+            IdentityResult result = _userManager.Create(applicationUser, password);
+            return result.Succeeded;
+        }
+
+        public bool AddToRole(string userId, string role)
+        {
+            IdentityResult result = _userManager.AddToRole(userId, role);
+            return result.Succeeded;
         }
     }
 }

@@ -13,7 +13,6 @@ namespace HardwareInventoryManager.Services.ApplicationSettings
     /// </summary>
     public class ApplicationSettingsService : IApplicationSettingsService
     {
-
         string IApplicationSettingsService.GetEmailServiceUsername()
         {
             return string.Empty;
@@ -26,7 +25,7 @@ namespace HardwareInventoryManager.Services.ApplicationSettings
 
         string IApplicationSettingsService.GetEmailServiceSenderEmailAddress()
         {
-            return string.Empty;
+            return "admin@dabtechnology.co.uk";
         }
 
         EnumHelper.EmailServiceTypes IApplicationSettingsService.GetEmailServiceOnlineType()

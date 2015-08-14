@@ -6,6 +6,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HardwareInventoryManager.Models
 {
@@ -13,6 +15,12 @@ namespace HardwareInventoryManager.Models
     public class ApplicationUser : IdentityUser
     {
         public ICollection<Tenant> UserTenants { get; set; }
+
+        [NotMapped]
+        public string TemporaryCode { get; set; }
+
+        [NotMapped]
+        public string TemporaryRole { get; set; }
 
         /// <summary>
         /// Used to force a password reset when a user logs in

@@ -1,4 +1,6 @@
-﻿using HardwareInventoryManager.Services.User;
+﻿using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Repository;
+using HardwareInventoryManager.Services.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +10,16 @@ namespace HardwareInventoryManager.Helpers.User
 {
     public class UserTypeFactory
     {
-        public static IUserService GetUserService(EnumHelper.Roles role, CustomApplicationDbContext context)
+        public static IUserService GetUserService(UserServiceUoW userServiceUoW)
         {
-            switch (role)
+            switch (userServiceUoW.UserRole)
             {
                 case EnumHelper.Roles.Admin:
-                    return new AdminUserService(context);
+                    return new AdminUserService(userServiceUoW.DbContext, userServiceUoW.TenantId);
                 case EnumHelper.Roles.Author:
                 case EnumHelper.Roles.Viewer:
                 default:
-                    return new UserService(context);
+                    return new UserService(userServiceUoW.DbContext, userServiceUoW.UserRepository);
             }
         }
     }

@@ -45,12 +45,12 @@ namespace HardwareInventoryManager.Repository
         /// <param name="entity"></param>
         /// <param name="tenantId"></param>
         /// <returns></returns>
-        public virtual T Create(T entity, int tenantId)
+        public virtual T Create(T entity)
         {
             IList<int> tenants = GetTenantIds();
-            if (tenants.Contains(tenantId))
+            if (tenants.Contains(entity.TenantId))
             {
-                entity.TenantId = tenantId;
+                entity.TenantId = entity.TenantId;
                 _db.Set<T>().Add(entity);
             }
             return entity;
@@ -62,12 +62,12 @@ namespace HardwareInventoryManager.Repository
         /// <param name="entity"></param>
         /// <param name="tenantId"></param>
         /// <returns></returns>
-        public T Edit(T entity, int tenantId)
+        public T Edit(T entity)
         {
             IList<int> tenants = GetTenantIds();
             if (tenants.Contains(entity.TenantId))
             {
-                entity.TenantId = tenantId;
+                entity.TenantId = entity.TenantId;
                 _db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
             }
             return entity;
@@ -80,7 +80,7 @@ namespace HardwareInventoryManager.Repository
         /// <param name="tenantId"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public virtual IQueryable<T> Find(int tenantId, Expression<Func<T, bool>> predicate)
+        public virtual IQueryable<T> Find(Expression<Func<T, bool>> predicate)
         {
             IList<int> tenants = GetTenantIds();
             return _db.Set<T>().Where(predicate).Where(x => tenants.Contains(x.TenantId));
@@ -91,13 +91,26 @@ namespace HardwareInventoryManager.Repository
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="tenantId"></param>
-        public void Delete(T entity, int tenantId)
+        public void Delete(T entity)
         {
             IList<int> tenants = GetTenantIds();
             if (GetTenantIds().Contains(entity.TenantId))
             {
                 _db.Set<T>().Remove(entity);
             }
+        }
+
+        /// <summary>
+        /// Returns entities with given filter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public virtual T Single(Expression<Func<T, bool>> predicate)
+        {
+            IList<int> tenants = GetTenantIds();
+            return _db.Set<T>().Where(predicate)
+                .Where(x => tenants.Contains(x.TenantId)).FirstOrDefault();
         }
 
         /// <summary>
@@ -118,9 +131,24 @@ namespace HardwareInventoryManager.Repository
             {
                 throw new Exception("Application User has not been set");
             }
-            IList<int> tenantIdList = _applicationUser.UserTenants.Select(x => x.TenantId).ToList();
-            if (tenantIdList.Count() == 0)
-                throw new Exception("No tenant id has been found for the user");
+            IList<int> tenantIdList = new List<int>();
+            if (_applicationUser.UserTenants == null)
+            {
+                ApplicationUser reloadedUser = _db.Users.Include(u => u.UserTenants).FirstOrDefault(u => u.Id == _applicationUser.Id);
+                tenantIdList = reloadedUser.UserTenants.Select(x => x.TenantId).ToList();
+                if (tenantIdList.Count() == 0)
+                {
+                    throw new Exception("No tenant id has been found for the user");
+                }
+            } 
+            else
+            {
+                tenantIdList = _applicationUser.UserTenants.Select(x => x.TenantId).ToList();
+                if (tenantIdList.Count() == 0)
+                {
+                    throw new Exception("No tenant id has been found for the user");
+                }
+            }
             return tenantIdList;
         }
 

@@ -15,11 +15,12 @@ namespace HardwareInventoryManager.Repository
     public interface IRepository<T>
     {
         IQueryable<T> GetAll();
-        T Create(T t, int tenantId);
-        T Edit(T t, int tenantId);
-        IQueryable<T> Find(int tenantId, Expression<Func<T, bool>> predicate);
-        void Delete(T t, int tenantId);
+        T Create(T t);
+        T Edit(T t);
+        IQueryable<T> Find(Expression<Func<T, bool>> predicate);
+        void Delete(T t);
         void Save();
         void SetCurrentUser(ApplicationUser user);
+        T Single(Expression<Func<T, bool>> predicate);   
     }
 }

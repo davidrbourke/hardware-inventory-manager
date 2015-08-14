@@ -32,9 +32,9 @@ namespace HardwareInventoryManager.Services.Messaging
                 RecipientsEmailAddress = recipient,
                 Subject = subject,
                 Body = body,
-                TenantContextId = TenantId
+                TenantId = TenantId
             };
-            _repository.Create(email, TenantId);
+            _repository.Create(email);
             _repository.Save();
         }
     }

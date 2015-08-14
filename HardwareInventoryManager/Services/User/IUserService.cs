@@ -1,4 +1,5 @@
-﻿using HardwareInventoryManager.Models;
+﻿using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,12 @@ namespace HardwareInventoryManager.Services.User
 {
     public interface IUserService
     {
-        IQueryable<Models.ApplicationUser> GetUsers(int tenantId);
-        Models.ApplicationUser GetUser(int tenantId, string id);
-        ApplicationUser GetUserByEmail(int tenantId, string email);
-        ApplicationUser EditUser(int tenantId, ApplicationUser user);
+        IQueryable<Models.ApplicationUser> GetUsers();
+        Models.ApplicationUser GetUserById(string id);
+        ApplicationUser GetUserByEmail(string email);
+        ApplicationUser EditUser(ApplicationUser user);
+        EnumHelper.Roles GetCurrentUserRoleById(string userId);
+        ApplicationUser CreateUser(ApplicationUser user);
+
     }
 }

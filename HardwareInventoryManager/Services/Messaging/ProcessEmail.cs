@@ -14,13 +14,11 @@ namespace HardwareInventoryManager.Services.Messaging
     {
         private IRepository<Email> _emailRepository;
         private SendEmailTemplate _emailService;
-        private IUserUtility _userUtility;
         private ITenantUtility _tenantUtility;
 
-        public ProcessEmail(SendEmailTemplate emailService, IUserUtility userUtility, ITenantUtility tenantUtility)
+        public ProcessEmail(SendEmailTemplate emailService, ITenantUtility tenantUtility)
         {
             _emailService = emailService;
-            _userUtility = userUtility;
             _tenantUtility = tenantUtility;
         }
 
@@ -28,7 +26,6 @@ namespace HardwareInventoryManager.Services.Messaging
         {
             _emailRepository = new Repository<Email>();
             _emailService = CreateSendEmailService();
-            _userUtility = new UserUtility();
             _tenantUtility = new TenantUtility();
         }
 
@@ -43,7 +40,6 @@ namespace HardwareInventoryManager.Services.Messaging
 
         public void SendPasswordResetEmail(ApplicationUser recipientUser, string callbackUrl)
         {
-            recipientUser = _userUtility.GetUserById(recipientUser.Id);
             _emailRepository.SetCurrentUser(recipientUser);
             string body = string.Format(HIResources.Strings.EmailBody_PasswordReset, callbackUrl);
             SendEmail(AdminEmailAddress(), new string[] { recipientUser.Email }, HIResources.Strings.EmailSubject_PasswordReset, body);    
@@ -51,17 +47,15 @@ namespace HardwareInventoryManager.Services.Messaging
 
         public void SendEmailConfirmationEmail(ApplicationUser recipientUser, string callbackUrl)
         {
-            recipientUser = _userUtility.GetUserById(recipientUser.Id);
             _emailRepository.SetCurrentUser(recipientUser);
             string body = string.Format(HIResources.Strings.EmailBody_ConfirmUserEmail, callbackUrl);
             SendEmail(AdminEmailAddress(), new string[] { recipientUser.Email }, HIResources.Strings.EmailSubject_ConfirmUserEmail, body);    
         }
 
-        public void SendNewAccountSetupEmail(ApplicationUser recipientUser, ApplicationUserManager applicationUserManager, string temporaryCode)
+        public void SendNewAccountSetupEmail(ApplicationUser recipientUser)
         {
-            recipientUser = _userUtility.GetUserById(recipientUser.Id);
             _emailRepository.SetCurrentUser(recipientUser);
-            string body = string.Format(HIResources.Strings.EmailBody_NewAccount, recipientUser.Email, temporaryCode);
+            string body = string.Format(HIResources.Strings.EmailBody_NewAccount, recipientUser.Email, recipientUser.TemporaryCode);
             SendEmail(AdminEmailAddress(), new string[] { recipientUser.Email }, HIResources.Strings.EmailSubject_NewAccount, body);    
         }
 

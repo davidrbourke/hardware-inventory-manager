@@ -1,0 +1,65 @@
+﻿
+<div ng-view id="#/QuoteList/">
+
+</div>
+
+
+
+
+@*@model IEnumerable<HardwareInventoryManager.Models.QuoteRequest>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.QuoteResponse.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateRequired)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpecificationDetails)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuoteResponseId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuoteResponse.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateRequired)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecificationDetails)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuoteResponseId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.QuoteRequestId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.QuoteRequestId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.QuoteRequestId })
+        </td>
+    </tr>
+}
+
+</table>*@

@@ -191,6 +191,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\QuoteRequestsController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
@@ -198,6 +199,8 @@
     <Compile Include="Controllers\IAppController.cs" />
     <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\LookupTypesController.cs" />
+    <Compile Include="Controllers\QuoteRequestsController.cs" />
+    <Compile Include="Controllers\QuoteResponsesController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CustomApplicationDbContext.cs" />
@@ -212,11 +215,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508131411598_ForcePasswordResetr.cs" />
-    <Compile Include="Migrations\201508131411598_ForcePasswordResetr.Designer.cs">
-      <DependentUpon>201508131411598_ForcePasswordResetr.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\QuoteRequest.cs" />
+    <Compile Include="Models\QuoteResponse.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\ApplicationSettings\IApplicationSettingsService.cs" />
     <Compile Include="Services\ApplicationSettings\ApplicationSettingsService.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="ViewModels\AssetViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\EmailNotConfirmedViewModel.cs" />
+    <Compile Include="ViewModels\QuoteRequestViewModel.cs" />
     <Compile Include="ViewModels\UserListViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
@@ -283,6 +285,7 @@
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -304,6 +307,36 @@
     <Content Include="Content\Images\ui-icons_ef8c08_256x240.png" />
     <Content Include="Content\Images\ui-icons_ffd27a_256x240.png" />
     <Content Include="Content\Images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\angular-animate.js" />
+    <Content Include="Scripts\angular-animate.min.js" />
+    <Content Include="Scripts\angular-aria.js" />
+    <Content Include="Scripts\angular-aria.min.js" />
+    <Content Include="Scripts\angular-cookies.js" />
+    <Content Include="Scripts\angular-cookies.min.js" />
+    <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-loader.js" />
+    <Content Include="Scripts\angular-loader.min.js" />
+    <Content Include="Scripts\angular-message-format.js" />
+    <Content Include="Scripts\angular-message-format.min.js" />
+    <Content Include="Scripts\angular-messages.js" />
+    <Content Include="Scripts\angular-messages.min.js" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-resource.js" />
+    <Content Include="Scripts\angular-resource.min.js" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular-sanitize.js" />
+    <Content Include="Scripts\angular-sanitize.min.js" />
+    <Content Include="Scripts\angular-scenario.js" />
+    <Content Include="Scripts\angular-touch.js" />
+    <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\Views\Quotes\edit.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Mvc.sitemap" />
@@ -314,6 +347,22 @@
     </None>
     <None Include="Properties\PublishProfiles\dbinventory - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\dbinventory - Web Deploy.pubxml" />
+    <Content Include="Scripts\DataTables\angular-datatables.js" />
+    <Content Include="Scripts\DataTables\angular-datatables.min.js" />
+    <Content Include="Scripts\DataTables\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\errors.json" />
+    <Content Include="Scripts\angular-touch.min.js.map" />
+    <Content Include="Scripts\angular-sanitize.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Scripts\angular-resource.min.js.map" />
+    <Content Include="Scripts\angular-messages.min.js.map" />
+    <Content Include="Scripts\angular-message-format.min.js.map" />
+    <Content Include="Scripts\angular-loader.min.js.map" />
+    <Content Include="Scripts\angular-cookies.min.js.map" />
+    <Content Include="Scripts\angular-aria.min.js.map" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.responsive.js" />
     <Content Include="Scripts\dataTables.responsive.min.js" />
@@ -334,6 +383,11 @@
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\App\app.js" />
+    <Content Include="Scripts\App\Controllers\quoteControllers.js" />
+    <Content Include="Scripts\App\Services\customFilters.js" />
+    <Content Include="Scripts\App\Services\quoteRepository.js" />
+    <Content Include="Scripts\App\Views\Quotes\list.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -406,10 +460,20 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
+    <Content Include="Views\QuoteRequests\Create.cshtml" />
+    <Content Include="Views\QuoteRequests\Delete.cshtml" />
+    <Content Include="Views\QuoteRequests\Details.cshtml" />
+    <Content Include="Views\QuoteRequests\Edit.cshtml" />
+    <Content Include="Views\QuoteRequests\Index.cshtml" />
+    <Content Include="Views\QuoteResponses\Create.cshtml" />
+    <Content Include="Views\QuoteResponses\Delete.cshtml" />
+    <Content Include="Views\QuoteResponses\Details.cshtml" />
+    <Content Include="Views\QuoteResponses\Edit.cshtml" />
+    <Content Include="Views\QuoteResponses\Index.cshtml" />
+    <Content Include="Scripts\version.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\App\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -421,9 +485,6 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508131411598_ForcePasswordResetr.resx">
-      <DependentUpon>201508131411598_ForcePasswordResetr.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

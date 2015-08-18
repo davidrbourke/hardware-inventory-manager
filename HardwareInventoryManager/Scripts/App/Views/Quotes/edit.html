@@ -1,0 +1,47 @@
+﻿<div class="modal-content">
+    <form name="createQuoteForm" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Quote Request</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-10">
+
+                    <div class="form-group">
+                        <label>Item Type</label>
+                        <select class="form-control" ng-options="itemType.Description for itemType in quoteRequestViewModel.ItemTypes track by itemType.LookupId" ng-model="quoteRequestViewModel.SelectedItemType"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Quantity
+                        </label>
+                        <input type="text" name="quoteQuantity" ng-model="quoteRequestViewModel.Quantity" class="form-control" required />
+                        <div class="text-danger" ng-show="createQuoteForm.quoteQuantity.$error.required && createQuoteForm.quoteQuantity.$touched">Enter a quantity</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Specification
+                        </label>
+                        <!--<input type="text" ng-model="asset.notes" class="form-control" />-->
+                        <textarea class="form-control" rows="2" name="quoteSpecification" ng-model="quoteRequestViewModel.SpecificationDetails"></textarea>
+                        <div class="text-danger" ng-show="createQuoteForm.quoteSpecification.$error.required && createQuoteForm.quoteSpecification.$touched">Enter some specification details</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div ng-show="errors.length > 0" ng-repeat="error in errors">{{error}}</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+            <button type="button" class="btn btn-primary" ng-disabled="createQuoteForm.$invalid" ng-click="postQuote(quoteRequestViewModel)">Save changes</button>
+        </div>
+    </form>
+</div>
+

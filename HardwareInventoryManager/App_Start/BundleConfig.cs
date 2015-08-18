@@ -28,6 +28,20 @@ namespace HardwareInventoryManager
             bundles.Add(new ScriptBundle("~/bundles/toastr").Include(
                       "~/Scripts/toastr.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                "~/Scripts/angular.js",
+                "~/Scripts/angular-route.js",
+                "~/Scripts/angular-resource.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angulardatatables").Include(
+                "~/Scripts/DataTables/angular-datatables.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularbootstrap").Include(
+                "~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularMods").Include(
+                "~/Scripts/App/app.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
@@ -44,6 +58,9 @@ namespace HardwareInventoryManager
             bundles.Add(new ScriptBundle("~/bundles/dataTables").Include(
                         "~/Scripts/jquery.dataTables.js",
                         "~/Scripts/dataTables.responsive.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/app").IncludeDirectory(
+                        "~/Scripts/App/", "*.js", true));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

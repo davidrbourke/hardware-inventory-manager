@@ -1,0 +1,57 @@
+﻿@model IEnumerable<HardwareInventoryManager.Models.QuoteResponse>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.QuoteRequest.SpecificationDetails)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuoteCostPerItem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuoteCostTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuoteRequestId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuoteRequest.SpecificationDetails)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuoteCostPerItem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuoteCostTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuoteRequestId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.QuoteReposonseId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.QuoteReposonseId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.QuoteReposonseId })
+        </td>
+    </tr>
+}
+
+</table>

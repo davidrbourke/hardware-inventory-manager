@@ -23,16 +23,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 @*<ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>*@
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>*@
                 @Html.MvcSiteMap().Menu("BootstrapMenuHelperModel")
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" ng-app="inventoryManagerApp">
         <div class="row">
             <div class="col-md-12">
                 @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
@@ -49,6 +49,12 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/toastr")
     @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/angulardatatables")
+    @Scripts.Render("~/bundles/angularbootstrap")
+    @Scripts.Render("~/bundles/angularMods")
+    @Scripts.Render("~/bundles/app")
+
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
         $(document).ready(function () {
@@ -68,18 +74,18 @@
 
         var displayMessage = function (message, msgType) {
             toastr.options = {
-            'closeButton': false,
-            'debug': false,
-            'positionClass': 'toast-top-right',
-            'onClick': null,
-            'showDuration': '300',
-            'hideDuration': '1000',
-            'timeOut': '8000',
-            'extendedTimeOut': '1000',
-            'showEasing': 'swing',
-            'hideEasing': 'linear',
-            'showMethod': 'fadeIn',
-            'hideMethod': 'fadeOut'
+                'closeButton': false,
+                'debug': false,
+                'positionClass': 'toast-top-right',
+                'onClick': null,
+                'showDuration': '300',
+                'hideDuration': '1000',
+                'timeOut': '8000',
+                'extendedTimeOut': '1000',
+                'showEasing': 'swing',
+                'hideEasing': 'linear',
+                'showMethod': 'fadeIn',
+                'hideMethod': 'fadeOut'
             };
 
             toastr[msgType](message);
@@ -91,8 +97,8 @@
                 showButtonPanel: true,
                 changeMonth: true,
                 changeYear: true
+            });
         });
-    });
     </script>
 
     <input type="hidden" id="success" value="@TempData["success"]" />

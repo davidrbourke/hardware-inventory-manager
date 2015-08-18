@@ -1,0 +1,58 @@
+﻿@model HardwareInventoryManager.Models.QuoteRequest
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>QuoteRequest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.QuoteResponse.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuoteResponse.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateRequired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateRequired)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SpecificationDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpecificationDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuoteResponseId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuoteResponseId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.QuoteRequestId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

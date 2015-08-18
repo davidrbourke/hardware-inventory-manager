@@ -40,5 +40,7 @@ namespace HardwareInventoryManager.Models
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<DashboardUpdates> DashboardUpdates { get; set; }
         public DbSet<Email> Emails { get; set; }
+        public DbSet<QuoteRequest> QuoteRequests { get; set;}
+        public DbSet<QuoteResponse> QuoteResponses { get; set; }
     }
 }

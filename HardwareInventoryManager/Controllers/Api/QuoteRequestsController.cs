@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Helpers.User;
 using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+
 
 namespace HardwareInventoryManager.Controllers.Api
 {
@@ -43,17 +46,35 @@ namespace HardwareInventoryManager.Controllers.Api
         {
             CustomApplicationDbContext db = new CustomApplicationDbContext();
             IQueryable<Lookup> itemTypes = db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString());
-
+            IQueryable<Tenant> tenants = db.Tenants.Where(t => t.Users.Where(u => u.UserName == User.Identity.Name).Any());
+            
             var quoteRequestViewModel = new QuoteRequestViewModel
             {
-                ItemTypes = itemTypes
+                ItemTypes = itemTypes,
+                Tenants = tenants
             };
             return Ok(quoteRequestViewModel);
         }
 
         // POST: api/QuoteRequests
-        public void Post([FromBody]QuoteRequestViewModel value)
+        [ResponseType(typeof(Asset))]
+        public IHttpActionResult Post([FromBody]QuoteRequestViewModel value)
         {
+            if(ModelState.IsValid)
+            {
+                IRepository<QuoteRequest> quoteRepository = new Repository<QuoteRequest>();
+                Mapper.CreateMap<QuoteRequestViewModel, QuoteRequest>();
+                QuoteRequest quoteRequestToCreate = Mapper.Map<QuoteRequest>(value);
+                quoteRequestToCreate.TenantId = value.SelectedTenant.TenantId;
+                quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
+                quoteRepository.Create(quoteRequestToCreate);
+                quoteRepository.Save();
+            } 
+            else
+            {
+                return BadRequest(ModelState);
+            }
+            return CreatedAtRoute("DefaultApi", new { }, value);
         }
 
         // PUT: api/QuoteRequests/5

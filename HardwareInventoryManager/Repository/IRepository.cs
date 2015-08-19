@@ -21,6 +21,7 @@ namespace HardwareInventoryManager.Repository
         void Delete(T t);
         void Save();
         void SetCurrentUser(ApplicationUser user);
+        void SetCurrentUserByUsername(string userName);
         T Single(Expression<Func<T, bool>> predicate);   
     }
 }

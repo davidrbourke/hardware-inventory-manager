@@ -39,11 +39,16 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
         $scope.loadModalQuote = function () {
             quoteRepository.createAssetModal().$promise.then(
                 function (quote) {
-                    $scope.$parent.quoteRequestViewModel = quote;
+                    f(quote);
                 },
                 function () {
                 }
             );
+        };
+
+        var f = function (quote) {
+            $scope.$parent.quoteRequestViewModel = quote;
+            $scope.$parent.quoteRequestViewModel.SelectedTenant = $scope.$parent.quoteRequestViewModel.Tenants[0];
         };
 
         // GET existing asset - open in Modal
@@ -94,7 +99,7 @@ quoteControllers.controller('ModalInstanceCtrl',
             quote.providers = null;
             quoteRepository.postQuote(quote).$promise.then(
                 function () {
-                    $location.url('AssetList/');
+                    $location.url('QuoteList/');
                     $scope.saved = true;
                     $modalInstance.close();
                 },

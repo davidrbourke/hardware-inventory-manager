@@ -160,5 +160,14 @@ namespace HardwareInventoryManager.Repository
         {
             _applicationUser = user;
         }
+
+        /// <summary>
+        /// Set the user by email address/username
+        /// </summary>
+        /// <param name="userName"></param>
+        public void SetCurrentUserByUsername(string userName)
+        {
+            _applicationUser = _db.Users.FirstOrDefault(u => u.UserName == userName);
+        }
     }
 }

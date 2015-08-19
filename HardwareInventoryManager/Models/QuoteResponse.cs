@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HardwareInventoryManager.Models
 {
-    public class QuoteResponse
+    public class QuoteResponse : ModelEntity, ITenant
     {
         [Key, ForeignKey("QuoteRequest")]
         public int QuoteReposonseId { get; set; }
@@ -21,5 +21,7 @@ namespace HardwareInventoryManager.Models
         public int QuoteRequestId { get; set; }
         [ForeignKey("QuoteRequestId")]
         public QuoteRequest QuoteRequest { get; set; }
+
+        public int TenantId { get; set; }
     }
 }

@@ -144,5 +144,11 @@ namespace HardwareInventoryManager.Repository
         {
             throw new NotImplementedException();
         }
+
+
+        public void SetCurrentUserByUsername(string userName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

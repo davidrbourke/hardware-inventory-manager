@@ -16,7 +16,6 @@ namespace HardwareInventoryManager.Services.User
         public EnumHelper.Roles UserRole { get; set; }
         public CustomApplicationDbContext DbContext { get; set; }
         public IRepository<ApplicationUser> UserRepository { get; set; }
-        public IAccountProvider AccountProvider { get; set; }
         public int TenantId { get; set; }
 
         public UserServiceUoW(string userId, IAccountProvider accountProvider)
@@ -24,7 +23,6 @@ namespace HardwareInventoryManager.Services.User
             DbContext = new CustomApplicationDbContext();
             UserRole = GetUserRole(userId);
             UserRepository = new UserRepository(DbContext, userId, accountProvider);
-            AccountProvider = accountProvider;
         }
 
         protected EnumHelper.Roles GetUserRole(string userId)

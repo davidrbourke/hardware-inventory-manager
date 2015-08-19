@@ -102,9 +102,15 @@ quoteControllers.controller('ModalInstanceCtrl',
                     $location.url('QuoteList/');
                     $scope.saved = true;
                     $modalInstance.close();
+                    toastr["success"]("Saved");
                 },
                 function (response) {
-                    $scope.errors = response.data;
+                    var errors = Array();
+                    if (response.data.ModelState["value.Quantity"]) {
+                        errors.push(response.data.ModelState["value.Quantity"][0]);
+                    }
+                    $scope.errors = errors;
+                    toastr["error"]("Not saved");
                 });
         };
 

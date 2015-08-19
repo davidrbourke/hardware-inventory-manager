@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Helpers.User;
 using HardwareInventoryManager.Models;
@@ -13,8 +14,10 @@ using System.Web.Http;
 using System.Web.Http.Description;
 
 
+
 namespace HardwareInventoryManager.Controllers.Api
 {
+    [CustomAuthorize]
     public class QuoteRequestsController : ApiController
     {
         // GET: api/QuoteRequests
@@ -69,13 +72,19 @@ namespace HardwareInventoryManager.Controllers.Api
                 quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
                 quoteRepository.Create(quoteRequestToCreate);
                 quoteRepository.Save();
-            } 
+            }
             else
             {
+
+                //IEnumerable<string> errors = ModelState.Values.SelectMany(x => x.Errors.Select(e => e.ErrorMessage));
                 return BadRequest(ModelState);
             }
-            return CreatedAtRoute("DefaultApi", new { }, value);
+            return Ok("success");
+            //return CreatedAtRoute("DefaultApi", "success",  value);
         }
+
+
+
 
         // PUT: api/QuoteRequests/5
         public void Put(int id, [FromBody]string value)

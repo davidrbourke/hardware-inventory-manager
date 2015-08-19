@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Filters;
 
 namespace HardwareInventoryManager.Controllers
 {
+    [CustomAuthorize]
     public class QuoteRequestsController : Controller
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();

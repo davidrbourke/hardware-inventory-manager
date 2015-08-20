@@ -4,6 +4,7 @@ using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Helpers.User;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
+using HardwareInventoryManager.Services.Quotes;
 using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -17,30 +18,19 @@ using System.Web.Http.Description;
 
 namespace HardwareInventoryManager.Controllers.Api
 {
-    [CustomAuthorize]
+    [Authorize]
     public class QuoteRequestsController : ApiController
     {
         // GET: api/QuoteRequests
         public IEnumerable<QuoteRequestViewModel> Get()
         {
             IList<QuoteRequest> quoteRequests = new List<QuoteRequest>();
-
-            for(int i = 0; i < 100; i++)
-            {
-                quoteRequests.Add(
-                new QuoteRequest
-                {
-                    QuoteRequestId = i,
-                    DateRequired = DateTime.Now,
-                    SpecificationDetails = "A new computer",
-                    Quantity = i * 10
-                });
-            }
-
+            IRepository<QuoteRequest> quoteRepository = new Repository<QuoteRequest>();
+            quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
+            QuoteRequestService quoteRequestService = new QuoteRequestService(quoteRepository);
+            quoteRequests = quoteRequestService.GetAllQuote().ToList();
             Mapper.CreateMap<QuoteRequest, QuoteRequestViewModel>();
-            var l = Mapper.Map<IList<QuoteRequest>, IList<QuoteRequestViewModel>>(quoteRequests);
-
-            return l;
+            return Mapper.Map<IList<QuoteRequest>, IList<QuoteRequestViewModel>>(quoteRequests);
         }
 
         // GET: api/AssetsApi/5
@@ -50,17 +40,29 @@ namespace HardwareInventoryManager.Controllers.Api
             CustomApplicationDbContext db = new CustomApplicationDbContext();
             IQueryable<Lookup> itemTypes = db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString());
             IQueryable<Tenant> tenants = db.Tenants.Where(t => t.Users.Where(u => u.UserName == User.Identity.Name).Any());
-            
-            var quoteRequestViewModel = new QuoteRequestViewModel
+
+            if (id == -1)
             {
-                ItemTypes = itemTypes,
-                Tenants = tenants
-            };
+                QuoteRequestViewModel quoteRequestTemplate = new QuoteRequestViewModel();
+                quoteRequestTemplate.ItemTypes = itemTypes;
+                quoteRequestTemplate.Tenants = tenants;
+                return Ok(quoteRequestTemplate);
+            }
+            
+            IRepository<QuoteRequest> quoteRepository = new Repository<QuoteRequest>(db);
+            quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
+            QuoteRequestService quoteService = new QuoteRequestService(quoteRepository);
+            QuoteRequest quoteRequest = quoteService.GetSingleQuote(id);
+            Mapper.CreateMap<QuoteRequest, QuoteRequestViewModel>();
+            QuoteRequestViewModel quoteRequestViewModel = Mapper.Map<QuoteRequestViewModel>(quoteRequest);
+            //quoteRequestViewModel.ItemTypes = itemTypes.ToList();
+            //quoteRequestViewModel.Tenants = tenants.ToList();
             return Ok(quoteRequestViewModel);
+            //return Json<QuoteRequestViewModel>(quoteRequestViewModel);
         }
 
         // POST: api/QuoteRequests
-        [ResponseType(typeof(Asset))]
+        [ResponseType(typeof(QuoteRequest))]
         public IHttpActionResult Post([FromBody]QuoteRequestViewModel value)
         {
             if(ModelState.IsValid)
@@ -70,8 +72,9 @@ namespace HardwareInventoryManager.Controllers.Api
                 QuoteRequest quoteRequestToCreate = Mapper.Map<QuoteRequest>(value);
                 quoteRequestToCreate.TenantId = value.SelectedTenant.TenantId;
                 quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
-                quoteRepository.Create(quoteRequestToCreate);
-                quoteRepository.Save();
+
+                QuoteRequestService quoteRequestService = new QuoteRequestService(quoteRepository);
+                quoteRequestService.CreateQuoteRequest(quoteRequestToCreate);
             }
             else
             {
@@ -82,9 +85,6 @@ namespace HardwareInventoryManager.Controllers.Api
             return Ok("success");
             //return CreatedAtRoute("DefaultApi", "success",  value);
         }
-
-
-
 
         // PUT: api/QuoteRequests/5
         public void Put(int id, [FromBody]string value)

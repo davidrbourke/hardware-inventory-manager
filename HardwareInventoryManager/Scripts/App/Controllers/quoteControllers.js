@@ -51,27 +51,20 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
             $scope.$parent.quoteRequestViewModel.SelectedTenant = $scope.$parent.quoteRequestViewModel.Tenants[0];
         };
 
+        var errd = function (e) {
+
+        };
+
         // GET existing asset - open in Modal
         $scope.getQuote = function (id) {
-            var modalInstance = $modal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: '/Scripts/App/Views/Assets/edit.html',
-                controller: 'ModalInstanceCtrl',
-                resolve: {
-                    asset: function () {
-                        var result = quoteRepository.getQuote(id);
-                        return $scope.$parent.quoteRequestViewModel = result;
-                        //return $scope.items;
-                    }
+            quoteRepository.getQuote(id).$promise.then(
+                function (quote) {
+                    f(quote);
+                },
+                function (quote) {
+                    q(quote);
                 }
-            });
-
-            modalInstance.result.then(function (res) {
-                /*console.log('hit: ' + res);*/
-            }, function () {
-                console.log('Modal dismissed at: ' + new Date());
-            });
-
+            );
         };
 
         $scope.deleteQuote = function (assetId) {

@@ -19,7 +19,17 @@
                 return res;
             },
             getQuote: function (id) {
-                return $resource('/api/QuoteRequests/' + id).get();
+                var res = null;
+                var modalInstance = $modal.open({
+                    templateUrl: '/Scripts/App/Views/Quotes/edit.html',
+                    controller: 'ModalInstanceCtrl',
+                    resolve: {
+                        asset: function () {
+                            return res = $resource('/api/QuoteRequests/'+id).get();
+                        }
+                    }
+                });
+                return res;
             },
             postQuote: function (quote) {
                 return $resource('/api/QuoteRequests/').save(quote);

@@ -23,6 +23,14 @@ namespace HardwareInventoryManager.Services.Quotes
             _quoteRequestRepository.Save();
         }
 
-        
+        public IQueryable<QuoteRequest> GetAllQuote()
+        {
+            return _quoteRequestRepository.GetAll();
+        }
+
+        public QuoteRequest GetSingleQuote(int id)
+        {
+            return _quoteRequestRepository.Single(q => q.QuoteRequestId == id);
+        }
     }
 }

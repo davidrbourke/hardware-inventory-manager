@@ -29,7 +29,7 @@ namespace HardwareInventoryManager.ViewModels
         [Required]
         public Lookup SelectedItemType { get; set; }
 
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         
         public IEnumerable<Tenant> Tenants { get; set; }
         [Required]

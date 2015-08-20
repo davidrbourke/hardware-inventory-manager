@@ -205,6 +205,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CustomApplicationDbContext.cs" />
     <Compile Include="Filters\ConfirmedFilter.cs" />
+    <Compile Include="Filters\CustomApiAuthorize.cs" />
     <Compile Include="Filters\CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

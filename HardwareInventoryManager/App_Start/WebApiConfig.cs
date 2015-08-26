@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -20,6 +21,9 @@ namespace HardwareInventoryManager
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(
+             new IsoDateTimeConverter());
         }
     }
 }

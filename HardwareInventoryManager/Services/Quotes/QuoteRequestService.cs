@@ -17,10 +17,33 @@ namespace HardwareInventoryManager.Services.Quotes
             _quoteRequestRepository = quoteRequestRepository;
             
         }
+        
+        public void SaveQuoteRequest(QuoteRequest quoteRequest)
+        {
+            if(quoteRequest.QuoteRequestId != 0)
+            {
+                UpdateQuoteRequest(quoteRequest);
+                return;
+            }
+            CreateQuoteRequest(quoteRequest);
+        }
 
         public void CreateQuoteRequest(QuoteRequest quoteRequest)
         {
             _quoteRequestRepository.Create(quoteRequest);
+            _quoteRequestRepository.Save();
+        }
+
+        public void UpdateQuoteRequest(QuoteRequest quoteRequest)
+        {
+            _quoteRequestRepository.Edit(quoteRequest);
+            _quoteRequestRepository.Save();
+        }
+
+        public void DeleteQuoteRequest(int quoteRequestId)
+        {
+            QuoteRequest quoteRequestToDelete = GetSingleQuote(quoteRequestId);
+            _quoteRequestRepository.Delete(quoteRequestToDelete);
             _quoteRequestRepository.Save();
         }
 

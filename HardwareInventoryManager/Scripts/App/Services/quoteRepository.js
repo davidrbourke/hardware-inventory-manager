@@ -34,6 +34,19 @@
             postQuote: function (quote) {
                 return $resource('/api/QuoteRequests/').save(quote);
             },
+            getQuoteToDelete: function (id) {
+                var res = null;
+                var modalInstance = $modal.open({
+                    templateUrl: '/Scripts/App/Views/Quotes/delete.html',
+                    controller: 'ModalInstanceCtrl',
+                    resolve: {
+                        asset: function () {
+                            return res = $resource('/api/QuoteRequests/' + id).get();
+                        }
+                    }
+                });
+                return res;
+            },
             deleteQuote: function (quote) {
                 return $resource('/api/QuoteRequests/:id', { id: quote.QuoteRequestId }).delete();
             }

@@ -78,7 +78,7 @@ namespace HardwareInventoryManager.Controllers.Api
                 quoteRequestToCreate.CategoryId = value.SelectedItemType.LookupId;
                 quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
                 QuoteRequestService quoteRequestService = new QuoteRequestService(quoteRepository);
-                quoteRequestService.CreateQuoteRequest(quoteRequestToCreate);
+                quoteRequestService.SaveQuoteRequest(quoteRequestToCreate);
             }
             else
             {
@@ -96,8 +96,13 @@ namespace HardwareInventoryManager.Controllers.Api
         }
 
         // DELETE: api/QuoteRequests/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            IRepository<QuoteRequest> quoteRepository = new Repository<QuoteRequest>();
+            quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
+            QuoteRequestService quoteRequestService = new QuoteRequestService(quoteRepository);
+            quoteRequestService.DeleteQuoteRequest(id);
+            return Ok("success");
         }
     }
 }

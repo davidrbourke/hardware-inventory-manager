@@ -216,10 +216,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508251333262_Cateogry_added_to_QuoteRequest.cs" />
-    <Compile Include="Migrations\201508251333262_Cateogry_added_to_QuoteRequest.Designer.cs">
-      <DependentUpon>201508251333262_Cateogry_added_to_QuoteRequest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Models\QuoteResponse.cs" />
@@ -343,6 +339,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\Views\Quotes\delete.html" />
     <Content Include="Scripts\App\Views\Quotes\edit.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -493,9 +490,6 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251333262_Cateogry_added_to_QuoteRequest.resx">
-      <DependentUpon>201508251333262_Cateogry_added_to_QuoteRequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

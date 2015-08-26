@@ -75,16 +75,14 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
             );
         };
 
-        $scope.deleteQuote = function (assetId) {
-            var modalInstance = $modal.open({
-                templateUrl: '/Scripts/App/Views/Assets/delete.html',
-                controller: 'ModalInstanceCtrl',
-                resolve: {
-                    asset: function () {
-                        return $scope.$parent.assetViewModel = quoteRepository.getAsset(assetId);
-                    }
+        $scope.deleteQuote = function (id) {
+            quoteRepository.getQuoteToDelete(id).$promise.then(
+                function (quote) {
+                    f(quote);
+                },
+                function (quote) {
                 }
-            });
+            );
         };
 
     }]);
@@ -123,12 +121,14 @@ quoteControllers.controller('ModalInstanceCtrl',
             $scope.errors = [];
             quoteRepository.deleteQuote(quote).$promise.then(
                 function () {
-                    $location.url('AssetList/');
+                    $location.url('QuoteList/');
                     $scope.saved = true;
                     $modalInstance.close();
+                    toastr["success"]("Saved");
                 },
                 function (response) {
                     $scope.errors = response.data;
+                    toastr["error"]("Not saved");
                 });
         };
     });

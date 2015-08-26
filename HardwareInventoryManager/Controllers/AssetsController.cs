@@ -15,6 +15,7 @@ using AutoMapper;
 using HardwareInventoryManager.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using HardwareInventoryManager.Services.Assets;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -22,44 +23,39 @@ namespace HardwareInventoryManager.Controllers
     public class AssetsController : AppController
     {
         CustomApplicationDbContext db = new CustomApplicationDbContext();
-        private IRepository<Asset> _assetRepository;
-        
-        public AssetsController()
-        {
-            _assetRepository = new Repository<Asset>();
-        }
 
-        public AssetsController(IRepository<Asset> assetRepository)
+        private AssetService _assetService;
+        public AssetService AssetService
         {
-            _assetRepository = assetRepository;
+            get
+            {
+                if (_assetService == null)
+                {
+                    _assetService = new  AssetService(User.Identity.Name);
+                }
+                return _assetService;
+            }
+            set
+            {
+                _assetService = value;
+            }
         }
 
         // GET: Assets
         public ActionResult Index()
         {
-            _assetRepository.SetCurrentUser(GetCurrentUser());
-            IList<Asset> assets = _assetRepository.GetAll()
-                .Include(x => x.AssetMake)
-                .Include(x => x.Category)
-                .Include(x => x.WarrantyPeriod)
-                .ToList();
-
+            IList<Asset> assets = AssetService.GetAllAssets().ToList();
             Mapper.CreateMap<Asset, AssetViewModel>();
             var l = Mapper.Map<IList<Asset>, IList<AssetViewModel>>(assets);
-
-
             JObject o = JObject.FromObject(
                 new
                 {
                     Table = l
                 });
-
             AssetIndexViewModel vm = new AssetIndexViewModel
             {
                 AssetListJson = o
             };
-
-
             return View(vm);
         }
 
@@ -70,17 +66,9 @@ namespace HardwareInventoryManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            int tenantId = GetTenantContextId();
-            _assetRepository.SetCurrentUser(GetCurrentUser());
-            Asset asset = _assetRepository.Find(x => x.AssetId == id)
-                .Include(x => x.AssetMake)
-                .Include(x => x.Category)
-                .Include(x => x.WarrantyPeriod)
-                .FirstOrDefault();
-
+            Asset asset = AssetService.GetSingleAsset(id.Value);
             Mapper.CreateMap<Asset, AssetViewModel>();
             AssetViewModel detailAssetViewModel = Mapper.Map<Asset, AssetViewModel>(asset);
-            
             PopulateSelectLists(detailAssetViewModel);
             if (asset == null)
             {
@@ -108,9 +96,7 @@ namespace HardwareInventoryManager.Controllers
             {
                 Mapper.CreateMap<AssetViewModel, Asset>();
                 Asset asset = Mapper.Map<AssetViewModel, Asset>(createAssetViewModel);
-                _assetRepository.SetCurrentUser(GetCurrentUser());
-                _assetRepository.Create(asset);
-                _assetRepository.Save();
+                AssetService.SaveAsset(asset);
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                 return RedirectToAction("Index");
             }
@@ -126,21 +112,14 @@ namespace HardwareInventoryManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            _assetRepository.SetCurrentUser(GetCurrentUser());
-            Asset asset =_assetRepository.Find(x => x.AssetId == id)
-                .Include(x => x.AssetMake)
-                .Include(x => x.Category)
-                .Include(x => x.WarrantyPeriod)
-                .First();
-
+            Asset asset = AssetService.GetSingleAsset(id.Value);
             if (asset == null)
             {
                 return HttpNotFound();
             }
             Mapper.CreateMap<Asset, AssetViewModel>();
             AssetViewModel editAssetViewModel = Mapper.Map<Asset, AssetViewModel>(asset);
-            
+
             PopulateSelectLists(editAssetViewModel);
             return View(editAssetViewModel);
         }
@@ -156,9 +135,7 @@ namespace HardwareInventoryManager.Controllers
             {
                 Mapper.CreateMap<AssetViewModel, Asset>();
                 Asset asset = Mapper.DynamicMap<AssetViewModel, Asset>(editAssetViewModel);
-                _assetRepository.SetCurrentUser(GetCurrentUser());
-                _assetRepository.Edit(asset);
-                _assetRepository.Save();
+                AssetService.SaveAsset(asset);
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                 return RedirectToAction("Index");
             }
@@ -174,18 +151,9 @@ namespace HardwareInventoryManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            _assetRepository.SetCurrentUser(GetCurrentUser());
-            int tenantContextId = GetTenantContextId();
-            var assets = _assetRepository.Find(x => x.AssetId == id);
-            Asset asset =_assetRepository.Find(x => x.AssetId == id)
-                .Include(x => x.AssetMake)
-                .Include(x => x.Category)
-                .Include(x => x.WarrantyPeriod)
-                .FirstOrDefault();
-            
+            Asset asset = AssetService.GetSingleAsset(id.Value);
             Mapper.CreateMap<Asset, AssetViewModel>();
             AssetViewModel deleteAssetViewModel = Mapper.DynamicMap<Asset, AssetViewModel>(asset);
-            
             if (asset == null)
             {
                 return HttpNotFound();
@@ -198,10 +166,7 @@ namespace HardwareInventoryManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _assetRepository.SetCurrentUser(GetCurrentUser());
-            Asset asset = _assetRepository.Find(x => x.AssetId == id).First();
-            _assetRepository.Delete(asset);
-            _assetRepository.Save();
+            AssetService.Delete(id);
             Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
             return RedirectToAction("Index");
         }

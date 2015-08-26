@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HardwareInventoryManager.Services.Assets;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -41,14 +42,27 @@ namespace HardwareInventoryManager.Controllers
         [ConfirmedFilter]
         public ActionResult Dashboard()
         {
-            IRepository<Asset> rep = new Repository<Asset>();
-            rep.SetCurrentUser(GetCurrentUser());
-            CustomApplicationDbContext context = new CustomApplicationDbContext();
             DashboardViewModel dashboad = new DashboardViewModel();
-            dashboad.DashboardUpdates = context.DashboardUpdates;
-            IQueryable<Asset> filteredAssets = rep.GetAll();
+            IQueryable<Asset> filteredAssets = AssetService.GetAllAssets();
             dashboad.TotalAssets = filteredAssets.Count();
             return View(dashboad);
+        }
+
+        private AssetService _assetService;
+        public AssetService AssetService
+        {
+            get
+            {
+                if(_assetService == null)
+                {
+                    return new AssetService(User.Identity.Name);
+                }
+                return _assetService;
+            }
+            set
+            {
+                _assetService = value;
+            }
         }
     }
 }

@@ -23,6 +23,8 @@ namespace HardwareInventoryManager.Helpers.Account
         Task<bool> SignIn(ApplicationUser user, bool isPermanent);
         bool Create(ApplicationUser applicationUser, string password);
         bool AddToRole(string userId, string role);
+        Task<string> GeneratePasswordResetToken(string userId);
+        Task<string> GenerateEmailConfirmationToken(string userId);
 
     }
 }

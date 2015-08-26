@@ -85,5 +85,17 @@ namespace HardwareInventoryManager.Helpers.Account
             IdentityResult result = _userManager.AddToRole(userId, role);
             return result.Succeeded;
         }
+
+        public Task<string> GeneratePasswordResetToken(string userId)
+        {
+            Task<string> result = _userManager.GeneratePasswordResetTokenAsync(userId);
+            return result;
+        }
+
+        public Task<string> GenerateEmailConfirmationToken(string userId)
+        {
+            Task<string> result = _userManager.GenerateEmailConfirmationTokenAsync(userId);
+            return result;
+        }
     }
 }

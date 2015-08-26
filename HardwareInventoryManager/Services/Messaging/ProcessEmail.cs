@@ -12,19 +12,20 @@ namespace HardwareInventoryManager.Services.Messaging
 {
     public class ProcessEmail : IProcessEmail
     {
-        private IRepository<Email> _emailRepository;
         private SendEmailTemplate _emailService;
         private ITenantUtility _tenantUtility;
+        public string UserName { get; set; }
 
-        public ProcessEmail(SendEmailTemplate emailService, ITenantUtility tenantUtility)
+        public ProcessEmail(SendEmailTemplate emailService, ITenantUtility tenantUtility, string userName)
         {
+            UserName = userName;
             _emailService = emailService;
             _tenantUtility = tenantUtility;
         }
 
-        public ProcessEmail()
+        public ProcessEmail(string userName)        
         {
-            _emailRepository = new Repository<Email>();
+            UserName = userName;    
             _emailService = CreateSendEmailService();
             _tenantUtility = new TenantUtility();
         }
@@ -68,6 +69,23 @@ namespace HardwareInventoryManager.Services.Messaging
         private SendEmailTemplate CreateSendEmailService()
         {
             return SendEmailFactory.GetSendEmailType(_emailRepository);
+        }
+
+        private IRepository<Email> _emailRepository;
+        public IRepository<Email> EmailRepository
+        {
+            get
+            {
+                if(_emailRepository == null)
+                {
+                    _emailRepository = new Repository<Email>(UserName);
+                }
+                return EmailRepository;
+            }
+            set
+            {
+                EmailRepository = value;
+            }
         }
     }
 }

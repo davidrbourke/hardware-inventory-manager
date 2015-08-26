@@ -1,4 +1,5 @@
 ﻿using HardwareInventoryManager.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +16,7 @@ namespace HardwareInventoryManager.ViewModels
 
         public int TenantId { get; set; }
 
+        //[JsonIgnore]
         public Tenant Tenant { get; set; }
 
         public int AssetMakeId { get; set; }

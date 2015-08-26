@@ -10,12 +10,11 @@ namespace HardwareInventoryManager.Services.Quotes
 {
     public class QuoteRequestService
     {
-        private IRepository<QuoteRequest> _quoteRequestRepository;
+        public string UserName { get; set; }
 
-        public QuoteRequestService(IRepository<QuoteRequest> quoteRequestRepository)
+        public QuoteRequestService(string userName)
         {
-            _quoteRequestRepository = quoteRequestRepository;
-            
+            UserName = userName;
         }
         
         public void SaveQuoteRequest(QuoteRequest quoteRequest)
@@ -30,31 +29,48 @@ namespace HardwareInventoryManager.Services.Quotes
 
         public void CreateQuoteRequest(QuoteRequest quoteRequest)
         {
-            _quoteRequestRepository.Create(quoteRequest);
-            _quoteRequestRepository.Save();
+            Repository.Create(quoteRequest);
+            Repository.Save();
         }
 
         public void UpdateQuoteRequest(QuoteRequest quoteRequest)
         {
-            _quoteRequestRepository.Edit(quoteRequest);
-            _quoteRequestRepository.Save();
+            Repository.Edit(quoteRequest);
+            Repository.Save();
         }
 
         public void DeleteQuoteRequest(int quoteRequestId)
         {
             QuoteRequest quoteRequestToDelete = GetSingleQuote(quoteRequestId);
-            _quoteRequestRepository.Delete(quoteRequestToDelete);
-            _quoteRequestRepository.Save();
+            Repository.Delete(quoteRequestToDelete);
+            Repository.Save();
         }
 
-        public IQueryable<QuoteRequest> GetAllQuote()
+        public IQueryable<QuoteRequest> GetAllQuotes()
         {
-            return _quoteRequestRepository.GetAll();
+            return Repository.GetAll();
         }
 
         public QuoteRequest GetSingleQuote(int id)
         {
-            return _quoteRequestRepository.GetAll().Include(q => q.Category).FirstOrDefault(q => q.QuoteRequestId == id);
+            return Repository.GetAll().Include(q => q.Category).FirstOrDefault(q => q.QuoteRequestId == id);
+        }
+
+        private IRepository<QuoteRequest> _repository;
+        public IRepository<QuoteRequest> Repository
+        {
+            get
+            {
+                if(_repository == null)
+                {
+                    _repository = new Repository<QuoteRequest>(UserName);
+                }
+                return _repository;
+            }
+            set
+            {
+                _repository = value;
+            }
         }
     }
 }

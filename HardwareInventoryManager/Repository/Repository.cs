@@ -17,14 +17,15 @@ namespace HardwareInventoryManager.Repository
         private ApplicationUser _applicationUser;
         private CustomApplicationDbContext _db;
 
-        public Repository()
-            : this(new CustomApplicationDbContext())
+        public Repository(string userName)
+            : this(new CustomApplicationDbContext(), userName)
         {
         }
 
-        public Repository(CustomApplicationDbContext context)
+        public Repository(CustomApplicationDbContext context, string userName)
         {
-            _db = context;   
+            _db = context;
+            SetCurrentUserByUsername(userName);
         }
 
         /// <summary>

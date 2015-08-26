@@ -12,6 +12,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using HardwareInventoryManager.Services.Assets;
 
 namespace HardwareInventoryManager.Tests.Controllers
 {
@@ -24,9 +25,12 @@ namespace HardwareInventoryManager.Tests.Controllers
             // ARRANGE
             var mock = new Mock<IRepository<Asset>>();
             mock.Setup(r => r.GetAll()).Returns(new List<Asset>().AsQueryable());
-
-            AssetsController controller = new AssetsController(mock.Object);
-
+            AssetService assetService = new AssetService(string.Empty);
+            assetService.Repository = mock.Object;
+            
+            AssetsController controller = new AssetsController();
+            controller.AssetService = assetService;
+            
             // ACT
             ViewResult result = controller.Index() as ViewResult;
             var model = result.Model as IEnumerable<AssetViewModel>;
@@ -41,8 +45,10 @@ namespace HardwareInventoryManager.Tests.Controllers
             // ARRANGE
             var mock = new Mock<IRepository<Asset>>();
             mock.Setup(r => r.GetAll()).Returns(MultipleAssets());
-
-            AssetsController controller = new AssetsController(mock.Object);
+            AssetService assetService = new AssetService(string.Empty);
+            assetService.Repository = mock.Object;
+            AssetsController controller = new AssetsController();
+            controller.AssetService = assetService;
 
             // ACT
             ViewResult result = controller.Index() as ViewResult;
@@ -57,11 +63,12 @@ namespace HardwareInventoryManager.Tests.Controllers
         {
             // ARRANGE
             var mock = new Mock<Repository<Asset>>();
-     
             mock.Setup(r => r.Find(It.IsAny<Expression<Func<Asset, bool>>>())).Returns(
                 MultipleAssets());
-
-            AssetsController controller = new AssetsController(mock.Object);
+            AssetService assetService = new AssetService(string.Empty);
+            assetService.Repository = mock.Object;
+            AssetsController controller = new AssetsController();
+            controller.AssetService = assetService;
 
             // ACT
             ViewResult result = controller.Details(1) as ViewResult;
@@ -90,8 +97,10 @@ namespace HardwareInventoryManager.Tests.Controllers
                 AssetId = 1,
                 Model = "123"
             };
-
-            AssetsController controller = new AssetsController(mock.Object);
+            AssetService assetService = new AssetService(string.Empty);
+            assetService.Repository = mock.Object;
+            AssetsController controller = new AssetsController();
+            controller.AssetService = assetService;
 
             // ACT
             RedirectToRouteResult result = controller.Create(avm) as RedirectToRouteResult;
@@ -106,10 +115,14 @@ namespace HardwareInventoryManager.Tests.Controllers
         {
             // ARRANGE
             var mock = new Mock<Repository<Asset>>();
+            AssetService assetService = new AssetService(string.Empty);
+            assetService.Repository = mock.Object;
 
             AssetViewModel avm = new AssetViewModel();
             
-            AssetsController controller = new AssetsController(mock.Object);
+            AssetsController controller = new AssetsController();
+            controller.AssetService = assetService;
+
             controller.ModelState.Clear();
             controller.ModelState.AddModelError("Model is a required field", "Test Exception");
             // ACT

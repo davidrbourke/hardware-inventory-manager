@@ -70,7 +70,7 @@ namespace HardwareInventoryManager.Helpers.User
 
             if (!string.IsNullOrWhiteSpace(user.Id))
             {
-                IProcessEmail processEmail = new ProcessEmail();
+                IProcessEmail processEmail = new ProcessEmail(user.UserName);
                 processEmail.SendNewAccountSetupEmail(user);
             }
             return user;

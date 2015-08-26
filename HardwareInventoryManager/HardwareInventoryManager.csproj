@@ -222,6 +222,7 @@
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\ApplicationSettings\IApplicationSettingsService.cs" />
     <Compile Include="Services\ApplicationSettings\ApplicationSettingsService.cs" />
+    <Compile Include="Services\Assets\AssetService.cs" />
     <Compile Include="Services\Messaging\SendEmailFactory.cs" />
     <Compile Include="Services\Quotes\QuoteRequestService.cs" />
     <Compile Include="Services\User\UserServiceUoW.cs" />

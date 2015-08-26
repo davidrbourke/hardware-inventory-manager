@@ -24,11 +24,7 @@ namespace HardwareInventoryManager.Controllers.Api
         // GET: api/QuoteRequests
         public IEnumerable<QuoteRequestViewModel> Get()
         {
-            IList<QuoteRequest> quoteRequests = new List<QuoteRequest>();
-            IRepository<QuoteRequest> quoteRepository = new Repository<QuoteRequest>();
-            quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
-            QuoteRequestService quoteRequestService = new QuoteRequestService(quoteRepository);
-            quoteRequests = quoteRequestService.GetAllQuote().ToList();
+            IList<QuoteRequest> quoteRequests = QuoteRequestService.GetAllQuotes().ToList();
             Mapper.CreateMap<QuoteRequest, QuoteRequestViewModel>();
             return Mapper.Map<IList<QuoteRequest>, IList<QuoteRequestViewModel>>(quoteRequests);
         }
@@ -40,10 +36,8 @@ namespace HardwareInventoryManager.Controllers.Api
             CustomApplicationDbContext db = new CustomApplicationDbContext();
             IQueryable<Lookup> itemTypes = db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString());
             IQueryable<Tenant> tenants = db.Tenants.Where(t => t.Users.Where(u => u.UserName == User.Identity.Name).Any());
-
             Mapper.CreateMap<Tenant, TenantViewModel>();
             var listOfTenantViewModel = Mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantViewModel>>(tenants.ToList());
-
             if (id == -1)
             {
                 QuoteRequestViewModel quoteRequestTemplate = new QuoteRequestViewModel();
@@ -51,11 +45,7 @@ namespace HardwareInventoryManager.Controllers.Api
                 quoteRequestTemplate.Tenants = listOfTenantViewModel;
                 return Ok(quoteRequestTemplate);
             }
-            
-            IRepository<QuoteRequest> quoteRepository = new Repository<QuoteRequest>(db);
-            quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
-            QuoteRequestService quoteService = new QuoteRequestService(quoteRepository);
-            QuoteRequest quoteRequest = quoteService.GetSingleQuote(id);
+            QuoteRequest quoteRequest = QuoteRequestService.GetSingleQuote(id);
             Mapper.CreateMap<QuoteRequest, QuoteRequestViewModel>();
             QuoteRequestViewModel quoteRequestViewModel = Mapper.Map<QuoteRequestViewModel>(quoteRequest);
             quoteRequestViewModel.ItemTypes = itemTypes.ToList();
@@ -71,14 +61,11 @@ namespace HardwareInventoryManager.Controllers.Api
         {
             if(ModelState.IsValid)
             {
-                IRepository<QuoteRequest> quoteRepository = new Repository<QuoteRequest>();
                 Mapper.CreateMap<QuoteRequestViewModel, QuoteRequest>();
                 QuoteRequest quoteRequestToCreate = Mapper.Map<QuoteRequest>(value);
                 quoteRequestToCreate.TenantId = value.SelectedTenant.TenantId;
                 quoteRequestToCreate.CategoryId = value.SelectedItemType.LookupId;
-                quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
-                QuoteRequestService quoteRequestService = new QuoteRequestService(quoteRepository);
-                quoteRequestService.SaveQuoteRequest(quoteRequestToCreate);
+                QuoteRequestService.SaveQuoteRequest(quoteRequestToCreate);
             }
             else
             {
@@ -98,11 +85,25 @@ namespace HardwareInventoryManager.Controllers.Api
         // DELETE: api/QuoteRequests/5
         public IHttpActionResult Delete(int id)
         {
-            IRepository<QuoteRequest> quoteRepository = new Repository<QuoteRequest>();
-            quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
-            QuoteRequestService quoteRequestService = new QuoteRequestService(quoteRepository);
-            quoteRequestService.DeleteQuoteRequest(id);
+            QuoteRequestService.DeleteQuoteRequest(id);
             return Ok("success");
+        }
+
+        private QuoteRequestService _quoteRequestService;
+        public QuoteRequestService QuoteRequestService
+        {
+            get
+            {
+                if(_quoteRequestService == null)
+                {
+                    _quoteRequestService = new QuoteRequestService(User.Identity.Name);
+                }
+                return _quoteRequestService;
+            }
+            set
+            {
+                _quoteRequestService = value;
+            }
         }
     }
 }

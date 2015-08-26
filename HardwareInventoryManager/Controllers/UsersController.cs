@@ -256,23 +256,7 @@ namespace HardwareInventoryManager.Controllers
             SelectList roleSelectList = new SelectList(roleObjects, "Id", "Value");
             return roleSelectList;
         }
-        /// <summary>
-        /// Find the recipients email address from the user record and initiates sending the email
-        /// </summary>
-        /// <param name="recipientUser"></param>
-        /// <param name="subject"></param>
-        /// <param name="body"></param>
-        private void SendEmail(ApplicationUser recipientUser, string subject, string body)
-        {
-            IRepository<Email> emailRepository = new Repository<Email>();
-            SendEmailTemplate emailService = new SendEmailOffline(emailRepository);
-            ITenantUtility tenantUtility = new TenantUtility();
-            IProcessEmail processEmail = new ProcessEmail(emailService, tenantUtility);
 
-            // TODO: Get the email of the sender from the database
-            string sender = "david@drbtechnology.com";
-            emailService.PrepareEmail(sender, recipientUser.Email, subject, body);
-        }
 
         /// <summary>
         /// Gets the user service

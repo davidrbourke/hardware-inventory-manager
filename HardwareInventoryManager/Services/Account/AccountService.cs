@@ -1,8 +1,10 @@
-﻿using System;
+﻿using HardwareInventoryManager.Services.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace HardwareInventoryManager.Helpers.Account
 {
@@ -72,6 +74,42 @@ namespace HardwareInventoryManager.Helpers.Account
                     Message = HIResources.Strings.Login_Error
                 };
             }
+        }
+
+
+        public async Task<AccountResponse> ForgotPassword(string userName)
+        {
+
+            var userToReset = await _accountProvider.Find(userName);
+            
+            string code = await _accountProvider.GeneratePasswordResetToken(userToReset.Id);
+            UrlHelper h = new UrlHelper();
+            var callbackUrl = h.Action("ResetPassword", "Account", new { userId = userToReset.Id, code = code });
+
+            IProcessEmail processEmail = new ProcessEmail(userName);
+            processEmail.SendPasswordResetEmail(userToReset, callbackUrl);
+
+            return new AccountResponse
+            {
+                Success = true,
+            };
+
+        }
+
+        public async Task<AccountResponse> RequestEmailConfirmation(string userName)
+        {
+            var recipientUser = await _accountProvider.Find(userName);
+   
+            string emailConfirmationToken = await _accountProvider.GenerateEmailConfirmationToken(recipientUser.Id);
+            UrlHelper urlHelper = new UrlHelper();
+            string callback = urlHelper.Action("ConfirmEmail", "Account", new { userId = recipientUser.Id, code = emailConfirmationToken });
+            
+            IProcessEmail processEmail = new ProcessEmail(userName);
+            processEmail.SendEmailConfirmationEmail(recipientUser, callback);
+            return new AccountResponse
+            {
+                Success = true,
+            };
         }
     }
 }

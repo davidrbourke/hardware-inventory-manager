@@ -56,6 +56,7 @@ namespace HardwareInventoryManager.Controllers
             return View();
         }
 
+
         //
         // POST: /Account/Login
         [HttpPost]
@@ -173,17 +174,10 @@ namespace HardwareInventoryManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userToReset = await UserManager.FindByNameAsync(model.Email);
-                if (userToReset == null) // Removed check for email confirmed
-                {
-                    return RedirectToAction("ForgotPasswordConfirmation", "Account");
-                }
-                string code = await UserManager.GeneratePasswordResetTokenAsync(userToReset.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = userToReset.Id, code = code }, protocol: Request.Url.Scheme);
-                
-                IProcessEmail processEmail = new ProcessEmail();
-                processEmail.SendPasswordResetEmail(userToReset, callbackUrl);
-                
+                IAccountProvider accountProvider = new AspNetAccountProvider(
+                    UserManager, AuthenticationManager);
+                AccountService accountService = new AccountService(accountProvider);
+                AccountResponse result = await accountService.ForgotPassword(model.Email);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -576,17 +570,15 @@ namespace HardwareInventoryManager.Controllers
             {
                 return View();
             }
-            string userEmail = User.Identity.Name;
-            ApplicationUser recipientUser = await UserManager.FindByNameAsync(userEmail);
+            IAccountProvider accountProvider = new AspNetAccountProvider(
+                 UserManager, AuthenticationManager);
+            AccountService accountService = new AccountService(accountProvider);
+            AccountResponse result = await accountService.RequestEmailConfirmation(User.Identity.Name);
+
             EmailNotConfirmedViewModel vm = new EmailNotConfirmedViewModel
             {
-                EmailAddress = userEmail
+                EmailAddress = User.Identity.Name
             };
-            string emailConfirmationToken = await UserManager.GenerateEmailConfirmationTokenAsync(recipientUser.Id);
-            string callback = Url.Action("ConfirmEmail", "Account", new { userId = recipientUser.Id, code = emailConfirmationToken }, protocol: Request.Url.Scheme);
-            IProcessEmail processEmail = new ProcessEmail();
-            processEmail.SendEmailConfirmationEmail(recipientUser, callback);
-            
             return View(vm);
         }
 

@@ -13,7 +13,7 @@
             <label>Search: </label>
         </div>
         <div class="col-sm-4 form-group">
-            <input type="text" id="assetsListFilter" class="form-control" ng-model="search" />
+            <input type="text" id="quoteListFilter" class="form-control" ng-model="search" />
         </div>
     </div>
 </div>
@@ -28,7 +28,9 @@
                 <th>Quantity</th>
                 <th></th>
             </tr>
+                <!--<tr ng-repeat="quote in quotes | filter:search">-->
             <tr ng-repeat="quote in filtered = quotes | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                <!--<tr ng-repeat="quote in quotes">-->
                 <td>{{quote.QuoteRquestId}}</td>
                 <td>{{quote.FormattedDateRequired}}</td>
                 <td>{{quote.SpecificationDetails}}</td>
@@ -42,8 +44,8 @@
                     </button>
                 </td>
             </tr>
-        </table>
-        <div ng-show="filteredAssets.length === 0">
+</table>
+        <div ng-show="filteredQuotesLength === 0">
             No data to display.
         </div>
         <pagination ng-model="currentPage"

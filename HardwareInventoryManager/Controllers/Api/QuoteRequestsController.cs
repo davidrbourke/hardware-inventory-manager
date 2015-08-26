@@ -41,11 +41,14 @@ namespace HardwareInventoryManager.Controllers.Api
             IQueryable<Lookup> itemTypes = db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString());
             IQueryable<Tenant> tenants = db.Tenants.Where(t => t.Users.Where(u => u.UserName == User.Identity.Name).Any());
 
+            Mapper.CreateMap<Tenant, TenantViewModel>();
+            var listOfTenantViewModel = Mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantViewModel>>(tenants.ToList());
+
             if (id == -1)
             {
                 QuoteRequestViewModel quoteRequestTemplate = new QuoteRequestViewModel();
                 quoteRequestTemplate.ItemTypes = itemTypes;
-                quoteRequestTemplate.Tenants = tenants;
+                quoteRequestTemplate.Tenants = listOfTenantViewModel;
                 return Ok(quoteRequestTemplate);
             }
             
@@ -55,8 +58,9 @@ namespace HardwareInventoryManager.Controllers.Api
             QuoteRequest quoteRequest = quoteService.GetSingleQuote(id);
             Mapper.CreateMap<QuoteRequest, QuoteRequestViewModel>();
             QuoteRequestViewModel quoteRequestViewModel = Mapper.Map<QuoteRequestViewModel>(quoteRequest);
-            //quoteRequestViewModel.ItemTypes = itemTypes.ToList();
-            //quoteRequestViewModel.Tenants = tenants.ToList();
+            quoteRequestViewModel.ItemTypes = itemTypes.ToList();
+            quoteRequestViewModel.SelectedItemType = quoteRequest.Category;
+            quoteRequestViewModel.Tenants = listOfTenantViewModel;
             return Ok(quoteRequestViewModel);
             //return Json<QuoteRequestViewModel>(quoteRequestViewModel);
         }
@@ -71,8 +75,8 @@ namespace HardwareInventoryManager.Controllers.Api
                 Mapper.CreateMap<QuoteRequestViewModel, QuoteRequest>();
                 QuoteRequest quoteRequestToCreate = Mapper.Map<QuoteRequest>(value);
                 quoteRequestToCreate.TenantId = value.SelectedTenant.TenantId;
+                quoteRequestToCreate.CategoryId = value.SelectedItemType.LookupId;
                 quoteRepository.SetCurrentUserByUsername(User.Identity.Name);
-
                 QuoteRequestService quoteRequestService = new QuoteRequestService(quoteRepository);
                 quoteRequestService.CreateQuoteRequest(quoteRequestToCreate);
             }

@@ -31,8 +31,8 @@ namespace HardwareInventoryManager.ViewModels
 
         public int? Quantity { get; set; }
         
-        public IEnumerable<Tenant> Tenants { get; set; }
+        public IEnumerable<TenantViewModel> Tenants { get; set; }
         [Required]
-        public Tenant SelectedTenant { get; set; }
+        public TenantViewModel SelectedTenant { get; set; }
     }
 }

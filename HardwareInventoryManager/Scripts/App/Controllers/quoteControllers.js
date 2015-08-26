@@ -3,11 +3,21 @@
 quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$location', '$modal', 'filterFilter',
     function ($scope, quoteRepository, $location, $modal, filterFilter) {
 
+        
         // Get Asset List paging
-        $scope.quotes = quoteRepository.getQuoteList().$promise.then(
-            function (d) {
-                $scope.quotes = d;
-                $scope.totalItems = d.length;
+        $scope.quotes = [];
+        quoteRepository.getQuoteList().$promise.then(
+            function (result) {
+                $scope.quotes = result;
+                //$scope.totalItems = result.length;
+
+                $scope.$watch('search', function (newVal, oldVal) {
+                    $scope.filtered = filterFilter($scope.quotes, newVal);
+                    $scope.filteredQuotesLength = $scope.filtered.length;
+                    $scope.totalItems = $scope.filtered.length;
+                    $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+                    $scope.currentPage = 1;
+                }, true);
             },
             function () {
             }
@@ -15,23 +25,25 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
 
         $scope.search = '';
 
+        $scope.currentpage = 1;
+        $scope.totalItems = $scope.quotes.length;
+        $scope.entryLimit = 10; // items per page
+        $scope.noOfpages = Math.ceil($scope.totalitems / $scope.entryLimit);
+
+
+
+
         $scope.resetFilters = function () {
             // needs to be a function or it won't trigger a $watch
-            $scope.search = {};
+            $scope.search = null;
         };
 
         // pagination controls
-        $scope.currentPage = 1;
-        $scope.totalItems = $scope.quotes.length;
-        $scope.entryLimit = 10; // items per page
-        $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+        //$scope.currentpage = 1;
+        ////$scope.totalitems = $scope.quotes.length;
+        //$scope.entrylimit = 10; // items per page
+        //$scope.noofpages = Math.ceil($scope.totalitems / $scope.entrylimit);
 
-        $scope.$watch('search', function (newVal, oldVal) {
-            $scope.filtered = filterFilter($scope.quotes, newVal);
-            $scope.totalItems = $scope.filtered.length;
-            $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
-            $scope.currentPage = 1;
-        }, true);
 
 
 
@@ -49,10 +61,6 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
         var f = function (quote) {
             $scope.$parent.quoteRequestViewModel = quote;
             $scope.$parent.quoteRequestViewModel.SelectedTenant = $scope.$parent.quoteRequestViewModel.Tenants[0];
-        };
-
-        var errd = function (e) {
-
         };
 
         // GET existing asset - open in Modal

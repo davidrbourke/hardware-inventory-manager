@@ -216,6 +216,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508251333262_Cateogry_added_to_QuoteRequest.cs" />
+    <Compile Include="Migrations\201508251333262_Cateogry_added_to_QuoteRequest.Designer.cs">
+      <DependentUpon>201508251333262_Cateogry_added_to_QuoteRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Models\QuoteResponse.cs" />
@@ -270,6 +274,7 @@
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\EmailNotConfirmedViewModel.cs" />
     <Compile Include="ViewModels\QuoteRequestViewModel.cs" />
+    <Compile Include="ViewModels\TenantViewModel.cs" />
     <Compile Include="ViewModels\UserListViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
@@ -344,6 +349,7 @@
     <Content Include="Mvc.sitemap" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="MvcSiteMapSchema.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -487,6 +493,9 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508251333262_Cateogry_added_to_QuoteRequest.resx">
+      <DependentUpon>201508251333262_Cateogry_added_to_QuoteRequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

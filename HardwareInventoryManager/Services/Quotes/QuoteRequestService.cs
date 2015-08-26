@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace HardwareInventoryManager.Services.Quotes
 {
@@ -30,7 +31,7 @@ namespace HardwareInventoryManager.Services.Quotes
 
         public QuoteRequest GetSingleQuote(int id)
         {
-            return _quoteRequestRepository.Single(q => q.QuoteRequestId == id);
+            return _quoteRequestRepository.GetAll().Include(q => q.Category).FirstOrDefault(q => q.QuoteRequestId == id);
         }
     }
 }

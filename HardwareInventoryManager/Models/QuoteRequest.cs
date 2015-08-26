@@ -23,5 +23,9 @@ namespace HardwareInventoryManager.Models
         public QuoteResponse QuoteResponse { get; set; }
 
         public int TenantId { get; set; }
+
+        public int? CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Lookup Category { get; set; }
     }
 }

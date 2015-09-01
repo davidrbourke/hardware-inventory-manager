@@ -194,6 +194,7 @@
     <Compile Include="Controllers\Api\QuoteRequestsController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
+    <Compile Include="Controllers\BulkUploadsController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IAppController.cs" />
@@ -217,6 +218,7 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BulkImport.cs" />
     <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Models\QuoteResponse.cs" />
     <Compile Include="Repository\UserRepository.cs" />
@@ -340,6 +342,8 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\Controllers\bulkUploadControllers.js" />
+    <Content Include="Scripts\App\Views\BulkUploads\list.html" />
     <Content Include="Scripts\App\Views\Quotes\delete.html" />
     <Content Include="Scripts\App\Views\Quotes\edit.html" />
     <Content Include="Scripts\bootstrap.js" />
@@ -372,6 +376,9 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.responsive.js" />
     <Content Include="Scripts\dataTables.responsive.min.js" />
+    <Content Include="Scripts\FileAPI.flash.swf" />
+    <Content Include="Scripts\FileAPI.js" />
+    <Content Include="Scripts\FileAPI.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -384,6 +391,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ng-file-upload-all.js" />
+    <Content Include="Scripts\ng-file-upload-all.min.js" />
+    <Content Include="Scripts\ng-file-upload-shim.js" />
+    <Content Include="Scripts\ng-file-upload-shim.min.js" />
+    <Content Include="Scripts\ng-file-upload.js" />
+    <Content Include="Scripts\ng-file-upload.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
@@ -466,10 +479,6 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
-    <Content Include="Views\QuoteRequests\Create.cshtml" />
-    <Content Include="Views\QuoteRequests\Delete.cshtml" />
-    <Content Include="Views\QuoteRequests\Details.cshtml" />
-    <Content Include="Views\QuoteRequests\Edit.cshtml" />
     <Content Include="Views\QuoteRequests\Index.cshtml" />
     <Content Include="Views\QuoteResponses\Create.cshtml" />
     <Content Include="Views\QuoteResponses\Delete.cshtml" />
@@ -477,6 +486,7 @@
     <Content Include="Views\QuoteResponses\Edit.cshtml" />
     <Content Include="Views\QuoteResponses\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\BulkUploads\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

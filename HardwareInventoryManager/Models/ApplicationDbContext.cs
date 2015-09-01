@@ -42,5 +42,6 @@ namespace HardwareInventoryManager.Models
         public DbSet<Email> Emails { get; set; }
         public DbSet<QuoteRequest> QuoteRequests { get; set;}
         public DbSet<QuoteResponse> QuoteResponses { get; set; }
+        public DbSet<BulkImport> BulkImports { get; set; }
     }
 }

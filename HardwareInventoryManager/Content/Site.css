@@ -222,3 +222,8 @@ body { font-size: 140% }
 .angularTableTr.ng-enter-active {
     opacity: 1;
 }
+
+.file-upload-box {
+    height: 150px;
+    border: 1px dashed gray;
+}

@@ -48,12 +48,15 @@ namespace HardwareInventoryManager.Services.Quotes
 
         public IQueryable<QuoteRequest> GetAllQuotes()
         {
-            return Repository.GetAll();
+            return Repository.GetAll().Include(q => q.Category);
         }
 
         public QuoteRequest GetSingleQuote(int id)
         {
-            return Repository.GetAll().Include(q => q.Category).FirstOrDefault(q => q.QuoteRequestId == id);
+            return Repository.GetAll()
+                .Include(q => q.Category)
+                .Include(q => q.QuoteRequestStatus)
+                .FirstOrDefault(q => q.QuoteRequestId == id);
         }
 
         private IRepository<QuoteRequest> _repository;

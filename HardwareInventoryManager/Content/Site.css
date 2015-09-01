@@ -13,7 +13,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    /*max-width: 280px;*/
 }
 
 /*
@@ -204,3 +204,21 @@ body { font-size: 140% }
     table.dataTable td {
         white-space: nowrap;
     }
+
+
+
+/* Animate angular tables */
+
+.angularTableTr.ng-leave,
+.angularTableTr.ng-enter {
+    transition: opacity 100ms;
+}
+
+.angularTableTr.ng-leave-active,
+.angularTableTr.ng-enter {
+    opacity: 0;
+}
+
+.angularTableTr.ng-enter-active {
+    opacity: 1;
+}

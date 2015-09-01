@@ -17,7 +17,8 @@ namespace HardwareInventoryManager.Helpers
         {
             Make,
             Category,
-            WarrantyPeriod
+            WarrantyPeriod,
+            QuoteRequestStatus
         }
 
         /// <summary>

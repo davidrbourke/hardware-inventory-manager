@@ -31,7 +31,8 @@ namespace HardwareInventoryManager
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.js",
                 "~/Scripts/angular-route.js",
-                "~/Scripts/angular-resource.js"));
+                "~/Scripts/angular-resource.js",
+                "~/Scripts/angular-animate.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/angulardatatables").Include(
                 "~/Scripts/DataTables/angular-datatables.js"));

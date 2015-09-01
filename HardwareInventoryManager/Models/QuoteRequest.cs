@@ -27,5 +27,9 @@ namespace HardwareInventoryManager.Models
         public int? CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Lookup Category { get; set; }
+
+        public int? QuoteRequestStatusId { get; set; }
+        [ForeignKey("QuoteRequestStatusId")]
+        public Lookup QuoteRequestStatus { get; set; }
     }
 }

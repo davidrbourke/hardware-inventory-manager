@@ -34,5 +34,28 @@ namespace HardwareInventoryManager.ViewModels
         public IEnumerable<TenantViewModel> Tenants { get; set; }
         [Required]
         public TenantViewModel SelectedTenant { get; set; }
+
+        public Lookup Category { get; set; }
+
+        public string SpecificationSummary
+        {
+            get
+            {
+                string specificationSummary = string.Empty;
+                if (string.IsNullOrWhiteSpace(SpecificationDetails))
+                    return string.Empty;
+
+                return SpecificationDetails.Length <= 33 ?
+                    SpecificationDetails :
+                    string.Format("{0}...", SpecificationDetails.Substring(0, 30));
+            }
+        }
+
+        public IEnumerable<Lookup> QuoteRequestStatuses { get; set; }
+
+        [Required]
+        public Lookup SelectedQuoteRequestStatus { get; set; }
+
+        public bool CanChangeStatus { get; set; }
     }
 }

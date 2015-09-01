@@ -1,6 +1,7 @@
 ﻿var inventoryManagerApp = angular.module('inventoryManagerApp', [
     'ngRoute',
     'ngResource',
+    'ngAnimate',
     'datatables',
     'quoteControllers',
     'ui.bootstrap',

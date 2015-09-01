@@ -35,6 +35,7 @@ namespace HardwareInventoryManager.Controllers.Api
         {
             CustomApplicationDbContext db = new CustomApplicationDbContext();
             IQueryable<Lookup> itemTypes = db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString());
+            IQueryable<Lookup> quoteRequestStatusTypes = db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.QuoteRequestStatus.ToString());
             IQueryable<Tenant> tenants = db.Tenants.Where(t => t.Users.Where(u => u.UserName == User.Identity.Name).Any());
             Mapper.CreateMap<Tenant, TenantViewModel>();
             var listOfTenantViewModel = Mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantViewModel>>(tenants.ToList());
@@ -43,14 +44,19 @@ namespace HardwareInventoryManager.Controllers.Api
                 QuoteRequestViewModel quoteRequestTemplate = new QuoteRequestViewModel();
                 quoteRequestTemplate.ItemTypes = itemTypes;
                 quoteRequestTemplate.Tenants = listOfTenantViewModel;
+                quoteRequestTemplate.QuoteRequestStatuses = quoteRequestStatusTypes;
+                quoteRequestTemplate.SelectedQuoteRequestStatus = quoteRequestStatusTypes.FirstOrDefault(x => x.Description == "Pending");
                 return Ok(quoteRequestTemplate);
             }
             QuoteRequest quoteRequest = QuoteRequestService.GetSingleQuote(id);
             Mapper.CreateMap<QuoteRequest, QuoteRequestViewModel>();
             QuoteRequestViewModel quoteRequestViewModel = Mapper.Map<QuoteRequestViewModel>(quoteRequest);
             quoteRequestViewModel.ItemTypes = itemTypes.ToList();
+            quoteRequestViewModel.QuoteRequestStatuses = quoteRequestStatusTypes.ToList();
             quoteRequestViewModel.SelectedItemType = quoteRequest.Category;
+            quoteRequestViewModel.SelectedQuoteRequestStatus = quoteRequest.QuoteRequestStatus;
             quoteRequestViewModel.Tenants = listOfTenantViewModel;
+            quoteRequestViewModel.CanChangeStatus = User.IsInRole("Admin") ? true : false;
             return Ok(quoteRequestViewModel);
             //return Json<QuoteRequestViewModel>(quoteRequestViewModel);
         }
@@ -65,6 +71,7 @@ namespace HardwareInventoryManager.Controllers.Api
                 QuoteRequest quoteRequestToCreate = Mapper.Map<QuoteRequest>(value);
                 quoteRequestToCreate.TenantId = value.SelectedTenant.TenantId;
                 quoteRequestToCreate.CategoryId = value.SelectedItemType.LookupId;
+                quoteRequestToCreate.QuoteRequestStatusId = value.SelectedQuoteRequestStatus.LookupId;
                 QuoteRequestService.SaveQuoteRequest(quoteRequestToCreate);
             }
             else

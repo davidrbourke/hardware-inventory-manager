@@ -168,6 +168,36 @@ namespace HardwareInventoryManager.Helpers
                 SeedCategoryLookup();
                 SeedWarrantyPeriodLookup();
             }
+            if(!_context.LookupTypes.Any(x => x.Description == EnumHelper.LookupTypes.QuoteRequestStatus.ToString()))
+            {
+                SeedQuoteRequestStatus();
+            }
+        }
+
+        /// <summary>
+        /// Seed the Request Status Lookup for QuoteRequests
+        /// </summary>
+        private void SeedQuoteRequestStatus()
+        {
+            LookupType quoteRequestStatus = new LookupType
+            {
+                Description = EnumHelper.LookupTypes.QuoteRequestStatus.ToString()
+            };
+
+            _context.LookupTypes.Add(quoteRequestStatus);
+            _context.SaveChanges();
+
+            string[] quoteRequestStatusTypes = { "Pending", "Processing", "Supplied", "Complete" };
+            foreach(string quoteRequestStatusType in quoteRequestStatusTypes)
+            {
+                Lookup quoteRequestStatusLookup = new Lookup
+                {
+                    Description = quoteRequestStatusType,
+                    Type = quoteRequestStatus
+                };
+                _context.Lookups.Add(quoteRequestStatusLookup);
+            }
+            _context.SaveChanges();
         }
 
         /// <summary>

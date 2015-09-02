@@ -345,6 +345,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\Controllers\bulkUploadControllers.js" />
     <Content Include="Scripts\App\Views\BulkUploads\list.html" />
+    <Content Include="Scripts\App\Views\BulkUploads\review.html" />
     <Content Include="Scripts\App\Views\Quotes\delete.html" />
     <Content Include="Scripts\App\Views\Quotes\edit.html" />
     <Content Include="Scripts\bootstrap.js" />

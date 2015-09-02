@@ -1,8 +1,10 @@
 ﻿using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
+using HardwareInventoryManager.Services.Assets;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -105,13 +107,44 @@ namespace HardwareInventoryManager.Services.Import
             return asset;
         }
 
-        public void CommitAssets(IList<Asset> assets)
-        {
 
-            foreach(Asset asset in assets)
+        public IEnumerable<Asset> PrepareImport(HttpPostedFileBase importedCsv)
+        {
+            string csvRaw = ConvertCsvFileToString(importedCsv);
+            string[] csvLines = ProcessCsvLines(csvRaw);
+            string[] csvHeader = ProcessCsvHeader(csvLines[0]);
+            IList<Asset> assetsToCommit = new List<Asset>();
+            for (int i = 1; i < csvLines.Length; i++)
             {
-                
+                Asset asset = ProcessLineToAsset(csvHeader, csvLines[i]);
+                assetsToCommit.Add(asset);
+                asset.TenantId = 3; // TODO: REPLACE
+                asset.AssetMakeId = 1;
+                asset.CategoryId = 5;
+                asset.WarrantyPeriodId = asset.WarrantyPeriod.LookupId;
+            }
+            return assetsToCommit;
+        }
+
+        public string ConvertCsvFileToString(HttpPostedFileBase importedCsv)
+        {
+            BinaryReader reader = new BinaryReader(importedCsv.InputStream);
+            int csvLength = (int)importedCsv.InputStream.Length;
+            byte[] byteInput = reader.ReadBytes(csvLength);
+
+            string csvRaw = System.Text.Encoding.UTF8.GetString(byteInput);
+            return csvRaw;
+        }
+
+        public void CommitImport(IEnumerable<Asset> assets)
+        {
+            foreach (Asset asset in assets)
+            {
+                AssetService assetService = new AssetService(_userName);
+                assetService.SaveAsset(asset);
             }
         }
+
+
     }
 }

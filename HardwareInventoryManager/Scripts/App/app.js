@@ -18,6 +18,25 @@ inventoryManagerApp.config(['$routeProvider', '$locationProvider',
             when('/BulkUpload', {
                 templateUrl: '/Scripts/App/Views/BulkUploads/list.html',
                 controller: 'bulkUploadController'
+            }).
+            when('/BulkUploadReview', {
+                templateUrl: '/Scripts/App/Views/BulkUploads/review.html',
+                controller: 'reviewBulkUploadController'
             });
         /*$locationProvider.html5Mode(true);*/
     }]);
+
+inventoryManagerApp.factory('importService', function () {
+    var assetsToReview = {}
+    function set(data) {
+        assetsToReview = data;
+    }
+    function get() {
+        return assetsToReview;
+    }
+
+    return {
+        set: set,
+        get: get
+    }
+});

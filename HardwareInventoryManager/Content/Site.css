@@ -227,3 +227,22 @@ body { font-size: 140% }
     height: 150px;
     border: 1px dashed gray;
 }
+
+/* Animate switch angular views */
+ng-view.ng-enter {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+ng-view.ng-enter-active {
+    opacity: 1;
+}
+
+.myview.ng-enter {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.myview.ng-enter-active {
+    opacity: 1;
+}

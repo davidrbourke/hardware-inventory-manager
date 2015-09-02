@@ -29,23 +29,10 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
         $scope.totalItems = $scope.quotes.length;
         $scope.entryLimit = 10; // items per page
         $scope.noOfpages = Math.ceil($scope.totalitems / $scope.entryLimit);
-
-
-
-
         $scope.resetFilters = function () {
             // needs to be a function or it won't trigger a $watch
             $scope.search = null;
         };
-
-        // pagination controls
-        //$scope.currentpage = 1;
-        ////$scope.totalitems = $scope.quotes.length;
-        //$scope.entrylimit = 10; // items per page
-        //$scope.noofpages = Math.ceil($scope.totalitems / $scope.entrylimit);
-
-
-
 
         // Create Asset - Blank Form with Dropdowns
         $scope.loadModalQuote = function () {

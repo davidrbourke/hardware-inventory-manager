@@ -1,0 +1,48 @@
+﻿<h1>Review Import</h1>
+
+<div class="alert alert-info">
+    <div class="row">
+        <div class="col-md-7">
+            <p>Review the data below, this is as the data will be imported.</p>
+            <strong>Select the 'Import' button to import the data.</strong>
+        </div>
+        <div class="col-md-4 col-md-offset-1">
+            <button type="button" class="btn btn-danger">Import!</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group">
+        <div class="col-sm-offset-5 col-sm-1">
+            <label>Search: </label>
+        </div>
+        <div class="col-sm-4 form-group">
+            <input type="text" id="quoteListFilter" class="form-control" ng-model="search" />
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <tr>
+        <th>Model</th>
+        <th>Serial Number</th>
+        <th>Purchase Date</th>
+        <th>Warranty Period</th>
+    </tr>
+    <tr ng-repeat="asset in filtered = assets | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+        <td>{{ asset.Model }}</td>
+        <td>{{ asset.SerialNumber }}</td>
+        <td>{{ asset.PurchaseDate }}</td>
+        <td>{{ asset.WarrantyPeriod.Description }}</td>
+    </tr>
+</table>
+<pagination ng-model="currentPage"
+            total-items="totalItems"
+            max-size="noOfPages"
+            num-pages="numPages"
+            items-per-page="entryLimit"
+            boundary-links="true"
+            rotate="false"
+            class="pagination" boundary-links="true">
+</pagination>

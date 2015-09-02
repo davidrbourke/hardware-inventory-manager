@@ -36,6 +36,23 @@ namespace HardwareInventoryManager.Services.Import
             }
         }
 
+        private IRepository<BulkImport> _bulkImportRepository;
+        public IRepository<BulkImport> BulkImportRepository
+        {
+            get
+            {
+                if(_bulkImportRepository == null)
+                {
+                    _bulkImportRepository = new RepositoryWithoutTenant<BulkImport>();
+                }
+                return _bulkImportRepository;
+            }
+            set
+            {
+                _bulkImportRepository = value;
+            }
+        }
+
         /// <summary>
         /// Split the input by lines, including header and all lines
         /// First index in the returned array should be the header
@@ -107,10 +124,12 @@ namespace HardwareInventoryManager.Services.Import
             return asset;
         }
 
+        public string BatchId { get; set; }
 
         public IEnumerable<Asset> PrepareImport(HttpPostedFileBase importedCsv)
         {
             string csvRaw = ConvertCsvFileToString(importedCsv);
+            BatchId = BackupImport(csvRaw);
             string[] csvLines = ProcessCsvLines(csvRaw);
             string[] csvHeader = ProcessCsvHeader(csvLines[0]);
             IList<Asset> assetsToCommit = new List<Asset>();
@@ -136,6 +155,18 @@ namespace HardwareInventoryManager.Services.Import
             return csvRaw;
         }
 
+        public string BackupImport(string importCsvAsString)
+        {
+            BulkImport bulkImport = new BulkImport
+            {
+                ImportText = importCsvAsString,
+                TenantId = 3
+            };
+            BulkImportRepository.Create(bulkImport);
+            BulkImportRepository.Save();
+            return bulkImport.BulkImportId.ToString();
+        }
+
         public void CommitImport(IEnumerable<Asset> assets)
         {
             foreach (Asset asset in assets)
@@ -145,6 +176,24 @@ namespace HardwareInventoryManager.Services.Import
             }
         }
 
-
+        public int ProcessCommit(string batchId)
+        {
+            int bulkImportId = int.Parse(batchId);
+            BulkImport bulkImport = BulkImportRepository.Single(x => x.BulkImportId == bulkImportId);
+            string[] csvLines = ProcessCsvLines(bulkImport.ImportText);
+            string[] csvHeader = ProcessCsvHeader(csvLines[0]);
+            IList<Asset> assetsToCommit = new List<Asset>();
+            for (int i = 1; i < csvLines.Length; i++)
+            {
+                Asset asset = ProcessLineToAsset(csvHeader, csvLines[i]);
+                assetsToCommit.Add(asset);
+                asset.TenantId = 3; // TODO: REPLACE
+                asset.AssetMakeId = 1;
+                asset.CategoryId = 5;
+                asset.WarrantyPeriodId = asset.WarrantyPeriod.LookupId;
+            }
+            CommitImport(assetsToCommit);
+            return assetsToCommit.Count();
+        }
     }
 }

@@ -25,35 +25,46 @@ bulkUploadControllers.controller('bulkUploadController', ['$scope', 'Upload', '$
                 }
             }
         };
-
-
     }]
 );
 
-bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Upload', '$location', 'importService', 'filterFilter',
-    function ($scope, Upload, $location, importService, filterFilter) {
-        $scope.assets = importService.get();
+bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Upload', '$location', 'importService', 'filterFilter', 'bulkUploadRepository',
+    function ($scope, Upload, $location, importService, filterFilter, bulkUploadRepository) {
+        $scope.Batch = importService.get();
+        $scope.assets = $scope.Batch.Assets;
+        $scope.batchId = $scope.Batch.BatchId
 
         if ($scope.assets instanceof Array) {
             $scope.$watch('search', function (newVal, oldVal) {
                 $scope.filtered = filterFilter($scope.assets, newVal);
                 $scope.filteredAssetsLength = $scope.filtered.length;
                 $scope.totalItems = $scope.filtered.length;
-                $scope.noOfPages = 5;//Math.ceil($scope.totalItems / $scope.entryLimit);
-                //$scope.numPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+                $scope.noOfPages = 5;
                 $scope.currentPage = 1;
             }, true);
 
 
             $scope.currentPage = 1;
             $scope.totalItems = $scope.assets.length;
-            $scope.entryLimit = 10;
-            //$scope.noOfPages = 5;// Math.ceil($scope.totalItems / $scope.entryLimit);
+            $scope.entryLimit = 10;            
             $scope.numPages = Math.ceil($scope.totalItems / $scope.entryLimit);
         }
         $scope.resetFilters = function () {
             // needs to be a function or it won't trigger a $watch
             $scope.search = null;
+        };
+
+        $scope.confirmImport = function () {
+            $scope.BatchUpload = $scope.Batch;
+            $scope.BatchUpload.Assets = null;
+            bulkUploadRepository.confirmImport($scope.BatchUpload).$promise.then(
+                function (resp) {
+                    toastr.success(resp.Message);
+                },
+                function (respErr) {
+                    toastr.error("Import failed...");
+                }
+            );
         };
        
     }

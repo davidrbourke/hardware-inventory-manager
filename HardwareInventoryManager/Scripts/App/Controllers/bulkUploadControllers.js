@@ -11,7 +11,7 @@ bulkUploadControllers.controller('bulkUploadController', ['$scope', 'Upload',
             if (files !== null) {
                 if (!files.$error) {
                     Upload.upload({
-                        url: 'http://localhost:10862/BulkUploads/Upload',
+                        url: '/BulkUploads/Upload',
                         fileFormDataName: 'FileUpload',
                         file: mfile
                     })

@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AssetsControllerTests.cs" />
     <Compile Include="Controllers\AccountControllerTests.cs" />
+    <Compile Include="Services\ImportServiceTests.cs" />
     <Compile Include="Helpers\UtilityHelperTests.cs" />
     <Compile Include="Mappings\MappingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
-
+using System.IO;
 namespace HardwareInventoryManager.Controllers
 {
     public class BulkUploadsController : Controller
@@ -56,5 +56,18 @@ namespace HardwareInventoryManager.Controllers
                     JsonRequestBehavior.AllowGet);
             return result;
         }
+
+        [HttpGet]
+        public ActionResult DownloadCsvTemplate()
+        {
+            string path = string.Format(@"{0}{1}\{2}",
+                (HttpContext.Request).PhysicalApplicationPath,
+                @"Files",
+                "im_import_template.csv");
+            FileStream fileStream = System.IO.File.Open(path, FileMode.Open);
+            BinaryReader bin = new BinaryReader(fileStream);
+            byte[] bytes = bin.ReadBytes((int)fileStream.Length);
+            return File(bytes, "text/csv", "im_import_template.csv");
+        }   
     }
 }

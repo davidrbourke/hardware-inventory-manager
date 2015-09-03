@@ -146,6 +146,9 @@ namespace HardwareInventoryManager.Services.Import
                         asset.Category = category;
 
                         break;
+                    case "locationdescription":
+                        asset.LocationDescription = linesArray[i];
+                        break;
                     default:
                         break;
                 }

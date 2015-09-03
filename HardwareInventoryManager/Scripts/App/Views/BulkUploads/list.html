@@ -1,31 +1,44 @@
 ﻿<div class="container">
     <h1>Upload Assets</h1>
     <div class="row">
-        <div class="col-md-6">
-            <div ngf-drop ngf-select ng-model="files" class="panel panel-default" 
-                 ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
-                 ngf-pattern="'application/vnd.ms-excel'">
+        <div class="col-md-5">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     File Uploader
                 </div>
-                <div class="panel-body file-upload-box">
+                <div class="panel-body file-upload-box"
+                     ngf-drop ngf-select ng-model="files"
+                     ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+                     ngf-pattern="'application/vnd.ms-excel'">
                     <div class="row">
                         <div class="col-md-7">
                             Drop files here or click to upload
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="alert alert-info" role="alert" ng-show="files.length > 0">
                         <div ng-repeat="file in files">
                             <strong>{{file.name}}</strong>
                         </div>
                     </div>
                 </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" ng-click="uploadFile()"
+                            ng-disabled="files.length != 1">
+                        Submit
+                    </button>
+                </div>
             </div>
         </div>
-        
-    </div>
-    <div class="row">
-        <button type="button" class="btn btn-default" ng-click="uploadFile()">Submit</button>
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Download a csv template for your data
+                </div>
+                <div class="panel-body">
+                    <a href="\BulkUploads\DownloadCsvTemplate">im_import_template.csv</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -30,9 +30,9 @@ bulkUploadControllers.controller('bulkUploadController', ['$scope', 'Upload', '$
 
 bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Upload', '$location', 'importService', 'filterFilter', 'bulkUploadRepository',
     function ($scope, Upload, $location, importService, filterFilter, bulkUploadRepository) {
-        $scope.Batch = importService.get();
-        $scope.assets = $scope.Batch.Assets;
-        $scope.batchId = $scope.Batch.BatchId
+        $scope.batch = importService.get();
+        $scope.assets = $scope.batch.assets;
+        $scope.batchId = $scope.batch.batchId
 
         if ($scope.assets instanceof Array) {
             $scope.$watch('search', function (newVal, oldVal) {
@@ -55,11 +55,11 @@ bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Uploa
         };
 
         $scope.confirmImport = function () {
-            $scope.BatchUpload = $scope.Batch;
-            $scope.BatchUpload.Assets = null;
-            bulkUploadRepository.confirmImport($scope.BatchUpload).$promise.then(
+            $scope.batchUpload = $scope.batch;
+            $scope.batchUpload.assets = null;
+            bulkUploadRepository.confirmImport($scope.batchUpload).$promise.then(
                 function (resp) {
-                    toastr.success(resp.Message);
+                    toastr.success(resp.message);
                 },
                 function (respErr) {
                     toastr.error("Import failed...");

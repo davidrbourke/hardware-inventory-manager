@@ -12,24 +12,24 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Item Type</label>
-                            <select class="form-control" ng-options="itemType.Description for itemType in quoteRequestViewModel.ItemTypes track by itemType.LookupId" ng-model="quoteRequestViewModel.SelectedItemType"></select>
+                            <select class="form-control" ng-options="itemType.description for itemType in quoteRequestViewModel.itemTypes track by itemType.lookupId" ng-model="quoteRequestViewModel.selectedItemType"></select>
                         </div>
 
                         <div class="form-group">
                             <label>Organisation</label>
-                            <select class="form-control" ng-options="tenant.Name for tenant in quoteRequestViewModel.Tenants track by tenant.TenantId" ng-model="quoteRequestViewModel.SelectedTenant"></select>
+                            <select class="form-control" ng-options="tenant.name for tenant in quoteRequestViewModel.tenants track by tenant.tenantId" ng-model="quoteRequestViewModel.selectedTenant"></select>
                         </div>
 
                         <div class="form-group">
                             <label>Request Status</label>
-                            <select class="form-control" ng-options="status.Description for status in quoteRequestViewModel.QuoteRequestStatuses track by status.LookupId" ng-model="quoteRequestViewModel.SelectedQuoteRequestStatus" disabled></select>
+                            <select class="form-control" ng-options="status.description for status in quoteRequestViewModel.quoteRequestStatuses track by status.lookupId" ng-model="quoteRequestViewModel.selectedQuoteRequestStatus" disabled></select>
                         </div>
 
                         <div class="form-group">
                             <label>
                                 Quantity
                             </label>
-                            <input type="text" name="quoteQuantity" ng-model="quoteRequestViewModel.Quantity" class="form-control" required />
+                            <input type="text" name="quoteQuantity" ng-model="quoteRequestViewModel.quantity" class="form-control" required />
                             <div class="text-danger" ng-show="createQuoteForm.quoteQuantity.$error.required && createQuoteForm.quoteQuantity.$touched">Enter a quantity</div>
                         </div>
 
@@ -37,7 +37,7 @@
                             <label>
                                 Date Required
                             </label>
-                            <input type="text" name="quoteDateRequired" id="quoteRequiredDate" ng-model="quoteRequestViewModel.DateRequired" class="form-control" required />
+                            <input type="text" name="quoteDateRequired" id="quoteRequiredDate" ng-model="quoteRequestViewModel.dateRequired" class="form-control" required />
                             <div class="text-danger" ng-show="createQuoteForm.quoteDateRequired.$error.required && createQuoteForm.quoteDateRequired.$touched">Enter a date required</div>
                         </div>
 
@@ -45,10 +45,10 @@
                             <label>
                                 Specification
                             </label>
-                            <textarea class="form-control" rows="6" name="quoteSpecification" ng-model="quoteRequestViewModel.SpecificationDetails" required></textarea>
+                            <textarea class="form-control" rows="6" name="quoteSpecification" ng-model="quoteRequestViewModel.specificationDetails" required></textarea>
                             <div class="text-danger" ng-show="createQuoteForm.quoteSpecification.$error.required && createQuoteForm.quoteSpecification.$touched">Enter some specification details</div>
                         </div>
-                        <div class="status-change" ng-if="quoteRequestViewModel.CanChangeStatus">
+                        <div class="status-change" ng-if="quoteRequestViewModel.canChangeStatus">
                             <button type="button" class="btn btn-primary">Process Quote</button>
                         </div>
                         <div ng-show="errors.length > 0" ng-repeat="e in errors"><span class="text-danger">{{e}}</span></div>

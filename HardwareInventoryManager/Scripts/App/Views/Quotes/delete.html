@@ -8,37 +8,37 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-10 col-md-offset-1">
 
                     <div class="form-group">
                         <label>Item Type</label>
-                        <select class="form-control" ng-options="itemType.Description for itemType in quoteRequestViewModel.ItemTypes track by itemType.LookupId" ng-model="quoteRequestViewModel.SelectedItemType" disabled></select>
+                        <select class="form-control" ng-options="itemType.description for itemType in quoteRequestViewModel.itemTypes track by itemType.lookupId" ng-model="quoteRequestViewModel.selectedItemType" disabled></select>
                     </div>
 
                     <div class="form-group">
                         <label>Organisation</label>
-                        <select class="form-control" ng-options="tenant.Name for tenant in quoteRequestViewModel.Tenants track by tenant.TenantId" ng-model="quoteRequestViewModel.SelectedTenant" disabled></select>
+                        <select class="form-control" ng-options="tenant.name for tenant in quoteRequestViewModel.tenants track by tenant.tenantId" ng-model="quoteRequestViewModel.selectedTenant" disabled></select>
                     </div>
 
                     <div class="form-group">
                         <label>
                             Quantity
                         </label>
-                        <input type="text" name="quoteQuantity" ng-model="quoteRequestViewModel.Quantity" class="form-control" disabled />
+                        <input type="text" name="quoteQuantity" ng-model="quoteRequestViewModel.quantity" class="form-control" disabled />
                     </div>
 
                     <div class="form-group">
                         <label>
                             Date Required
                         </label>
-                        <input type="text" name="quoteDateRequired" id="quoteRequiredDate" ng-model="quoteRequestViewModel.DateRequired" class="form-control" disabled />
+                        <input type="text" name="quoteDateRequired" id="quoteRequiredDate" ng-model="quoteRequestViewModel.dateRequired" class="form-control" disabled />
                     </div>
 
                     <div class="form-group">
                         <label>
                             Specification
                         </label>
-                        <textarea class="form-control" rows="2" name="quoteSpecification" ng-model="quoteRequestViewModel.SpecificationDetails" disabled></textarea>
+                        <textarea class="form-control" rows="2" name="quoteSpecification" ng-model="quoteRequestViewModel.specificationDetails" disabled></textarea>
                     </div>
 
                 </div>

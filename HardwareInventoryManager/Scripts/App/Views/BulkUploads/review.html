@@ -31,10 +31,10 @@
         <th>Warranty Period</th>
     </tr>
     <tr ng-repeat="asset in filtered = assets | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-        <td>{{ asset.Model }}</td>
-        <td>{{ asset.SerialNumber }}</td>
-        <td>{{ asset.PurchaseDate }}</td>
-        <td>{{ asset.WarrantyPeriod.Description }}</td>
+        <td>{{ asset.model }}</td>
+        <td>{{ asset.serialNumber }}</td>
+        <td>{{ asset.purchaseDateFormatted }}</td>
+        <td>{{ asset.warrantyPeriod.description }}</td>
     </tr>
 </table>
 <pagination ng-model="currentPage"

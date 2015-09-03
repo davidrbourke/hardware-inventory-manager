@@ -1,7 +1,9 @@
-﻿using HardwareInventoryManager.Helpers;
+﻿using AutoMapper;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services.Assets;
 using HardwareInventoryManager.Services.Import;
+using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -23,34 +25,36 @@ namespace HardwareInventoryManager.Controllers
             ImportService importService = new ImportService(User.Identity.Name);
             IEnumerable<Asset> assets = importService.PrepareImport(FileUpload);
             string batchId = importService.BatchId;
-            JsonResult res = new JsonResult();
-            res.Data = new Batch
-            {
-                BatchId = batchId,
-                Assets = assets
-            };
-            return res;
+
+            Mapper.CreateMap<Asset, AssetViewModel>();
+            var assetsForView = Mapper.Map<IList<AssetViewModel>>(assets);
+
+            Utilities.JsonCamelCaseResult result =
+                new Utilities.JsonCamelCaseResult(
+                    new BulkUploadViewModel
+                    {
+                        BatchId = batchId,
+                        Assets = assetsForView
+                    },
+                    JsonRequestBehavior.AllowGet);
+            return result;
         }
 
         [HttpPost]
-        public ActionResult ConfirmImport(Batch batch)
+        public ActionResult ConfirmImport(BulkUploadViewModel batch)
         {
             ImportService importService = new ImportService(User.Identity.Name);
             int countOfAssetsAdded = importService.ProcessCommit(batch.BatchId);
-            JsonResult res = new JsonResult();
-            res.Data = new Batch{
-                Success = true,
-                Message = string.Format("{0} assets imported", countOfAssetsAdded)
-            };
-            return res;
-        }
-    }
 
-    public class Batch
-    {
-        public string BatchId { get; set; }
-        public IEnumerable<Asset> Assets { get; set; }
-        public bool Success { get; set; }
-        public string Message { get; set; }
+            Utilities.JsonCamelCaseResult result =
+                new Utilities.JsonCamelCaseResult(
+                    new BulkUploadViewModel
+                    {
+                        Success = true,
+                        Message = string.Format("{0} assets imported", countOfAssetsAdded)
+                    },
+                    JsonRequestBehavior.AllowGet);
+            return result;
+        }
     }
 }

@@ -47,7 +47,7 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
 
         var f = function (quote) {
             $scope.$parent.quoteRequestViewModel = quote;
-            $scope.$parent.quoteRequestViewModel.SelectedTenant = $scope.$parent.quoteRequestViewModel.Tenants[0];
+            $scope.$parent.quoteRequestViewModel.selectedTenant = $scope.$parent.quoteRequestViewModel.tenants[0];
         };
 
         // GET existing asset - open in Modal
@@ -92,8 +92,8 @@ quoteControllers.controller('ModalInstanceCtrl',
                 },
                 function (response) {
                     var errors = Array();
-                    if (response.data.ModelState["value.Quantity"]) {
-                        errors.push(response.data.ModelState["value.Quantity"][0]);
+                    if (response.data.modelState["value.quantity"]) {
+                        errors.push(response.data.modelState["value.quantity"][0]);
                     }
                     $scope.errors = errors;
                     toastr["error"]("Not saved");

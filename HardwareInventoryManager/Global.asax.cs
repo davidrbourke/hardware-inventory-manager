@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,21 @@ namespace HardwareInventoryManager
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             };
 
+            ApplyJsonSettings();
+
             #if DEBUG
                 BundleTable.EnableOptimizations = false;
             #endif
+        }
+
+        private void ApplyJsonSettings()
+        {
+            // Set Object to Json property names lowerCamelCase
+            // This only works for Web API
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            var jsonFormatters = formatters.JsonFormatter;
+            var settings = jsonFormatters.SerializerSettings;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

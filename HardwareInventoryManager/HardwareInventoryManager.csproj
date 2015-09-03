@@ -229,6 +229,7 @@
     <Compile Include="Services\Messaging\SendEmailFactory.cs" />
     <Compile Include="Services\Quotes\QuoteRequestService.cs" />
     <Compile Include="Services\User\UserServiceUoW.cs" />
+    <Compile Include="Utilities\JsonCamelCaseResult.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\AssetIndexViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModel.cs" />
+    <Compile Include="ViewModels\BulkUploadViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\EmailNotConfirmedViewModel.cs" />
     <Compile Include="ViewModels\QuoteRequestViewModel.cs" />

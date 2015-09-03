@@ -32,16 +32,16 @@
                 <!--<tr ng-repeat="quote in quotes | filter:search">-->
             <tr class="angularTableTr" ng-repeat="quote in filtered = quotes | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
                 <!--<tr ng-repeat="quote in quotes">-->
-                <td>{{quote.QuoteRequestId}}</td>
-                <td>{{quote.FormattedDateRequired}}</td>
-                <td>{{quote.SpecificationSummary}}</td>
-                <td>{{quote.Quantity}}</td>
-                <td>{{quote.Category.Description}}</td>
+                <td>{{quote.quoteRequestId}}</td>
+                <td>{{quote.formattedDateRequired}}</td>
+                <td>{{quote.specificationSummary}}</td>
+                <td>{{quote.quantity}}</td>
+                <td>{{quote.category.Description}}</td>
                 <td>
-                    <button type="button" class="btn btn-default btn-xs" ng-click="getQuote(quote.QuoteRequestId)">
+                    <button type="button" class="btn btn-default btn-xs" ng-click="getQuote(quote.quoteRequestId)">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-default btn-xs" ng-click="deleteQuote(quote.QuoteRequestId)">
+                    <button type="button" class="btn btn-default btn-xs" ng-click="deleteQuote(quote.quoteRequestId)">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </button>
                 </td>

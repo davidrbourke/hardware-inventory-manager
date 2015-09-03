@@ -14,6 +14,8 @@ namespace HardwareInventoryManager.Services.Import
     {
         private string _userName;
 
+        public delegate IList<Asset> BuildAssetsDelegate(string rawCsv);
+
         public ImportService(string userName)
         {
             _userName = userName;
@@ -158,7 +160,8 @@ namespace HardwareInventoryManager.Services.Import
         {
             string csvRaw = ConvertCsvFileToString(importedCsv);
             BatchId = BackupImport(csvRaw);
-            IList<Asset> assetsToCommit = BuildAssets(csvRaw, false);
+            BuildAssetsDelegate buildAssets = new BuildAssetsDelegate(BuildAssets);
+            IList<Asset> assetsToCommit = buildAssets(csvRaw);
             return assetsToCommit;
         }
 
@@ -197,14 +200,26 @@ namespace HardwareInventoryManager.Services.Import
         {
             int bulkImportId = int.Parse(batchId);
             BulkImport bulkImport = BulkImportRepository.Single(x => x.BulkImportId == bulkImportId);
-            IList<Asset> assetsToCommit = BuildAssets(bulkImport.ImportText, true);
+
+            BuildAssetsDelegate buildAssets = new BuildAssetsDelegate(BuildAssetsClearLookups);
+            IList<Asset> assetsToCommit = buildAssets(bulkImport.ImportText);
 
             CommitImport(assetsToCommit);
             return assetsToCommit.Count();
         }
 
-        // TO DO: DON'T USE INPUT PARAMETER HERE TO CLEARLOOKUPS
-        private IList<Asset> BuildAssets(string rawCsv, bool clearLookups)
+
+        private IList<Asset> BuildAssetsClearLookups(string rawCsv)
+        {
+            IList<Asset> assets = BuildAssets(rawCsv);
+            foreach(Asset asset in assets)
+            {
+                ClearLookups(asset);
+            }
+            return assets;
+        }
+
+        private IList<Asset> BuildAssets(string rawCsv)
         {
             string[] csvLines = ProcessCsvLines(rawCsv);
             string[] csvHeader = ProcessCsvHeader(csvLines[0]);
@@ -218,14 +233,16 @@ namespace HardwareInventoryManager.Services.Import
                 asset.AssetMakeId = asset.AssetMake.LookupId;
                 asset.CategoryId = asset.Category.LookupId;
                 asset.WarrantyPeriodId = asset.WarrantyPeriod.LookupId;
-                if(clearLookups)
-                {
-                    asset.AssetMake = null;
-                    asset.Category = null;
-                    asset.WarrantyPeriod = null;
-                }
+
             }
             return assets;
+        }
+
+        private void ClearLookups(Asset asset)
+        {
+            asset.AssetMake = null;
+            asset.Category = null;
+            asset.WarrantyPeriod = null;
         }
     }
 }

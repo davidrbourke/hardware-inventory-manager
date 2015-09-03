@@ -94,18 +94,18 @@ namespace HardwareInventoryManager.Services.Import
             Asset asset = new Asset();
             for (int i = 0; i < linesArray.Length; i++)
             {
-                switch (header[i])
+                switch (header[i].ToLower())
                 {
-                    case "Model":
+                    case "model":
                         asset.Model = linesArray[i];
                         break;
-                    case "SerialNumber":
+                    case "serialnumber":
                         asset.SerialNumber = linesArray[i];
                         break;
-                    case "PurchaseDate":
+                    case "purchasedate":
                         asset.PurchaseDate = DateTime.Parse(linesArray[i]);
                         break;
-                    case "WarrantyPeriod":
+                    case "warrantyperiod":
 
                         string warrantyPeriodDescription = linesArray[i];
 
@@ -115,6 +115,34 @@ namespace HardwareInventoryManager.Services.Import
                                 && x.Description.Equals(warrantyPeriodDescription, 
                                 StringComparison.InvariantCultureIgnoreCase));
                         asset.WarrantyPeriod = warrantyPeriod;
+                        break;
+                    case "obsolescencedate":
+                        asset.ObsolescenseDate = DateTime.Parse(linesArray[i]);
+                        break;
+                    case "pricepaid":
+                        asset.PricePaid = decimal.Parse(linesArray[i]);
+                        break;
+                    case "assetmake":
+                        string assetMakeDescription = linesArray[i];
+
+                        Lookup assetMake =
+                            LookupRepository.Single(
+                            x=> x.Type.Description == EnumHelper.LookupTypes.Make.ToString()
+                                && x.Description.Equals(assetMakeDescription,
+                                StringComparison.InvariantCultureIgnoreCase));
+                        asset.AssetMake = assetMake;
+
+                        break;
+                    case "category":
+                        string categoryDescription = linesArray[i];
+
+                        Lookup category =
+                            LookupRepository.Single(
+                            x => x.Type.Description == EnumHelper.LookupTypes.Category.ToString()
+                                && x.Description.Equals(categoryDescription,
+                                StringComparison.InvariantCultureIgnoreCase));
+                        asset.Category = category;
+
                         break;
                     default:
                         break;
@@ -130,18 +158,7 @@ namespace HardwareInventoryManager.Services.Import
         {
             string csvRaw = ConvertCsvFileToString(importedCsv);
             BatchId = BackupImport(csvRaw);
-            string[] csvLines = ProcessCsvLines(csvRaw);
-            string[] csvHeader = ProcessCsvHeader(csvLines[0]);
-            IList<Asset> assetsToCommit = new List<Asset>();
-            for (int i = 1; i < csvLines.Length; i++)
-            {
-                Asset asset = ProcessLineToAsset(csvHeader, csvLines[i]);
-                assetsToCommit.Add(asset);
-                asset.TenantId = 3; // TODO: REPLACE
-                asset.AssetMakeId = 1;
-                asset.CategoryId = 5;
-                asset.WarrantyPeriodId = asset.WarrantyPeriod.LookupId;
-            }
+            IList<Asset> assetsToCommit = BuildAssets(csvRaw, false);
             return assetsToCommit;
         }
 
@@ -180,20 +197,35 @@ namespace HardwareInventoryManager.Services.Import
         {
             int bulkImportId = int.Parse(batchId);
             BulkImport bulkImport = BulkImportRepository.Single(x => x.BulkImportId == bulkImportId);
-            string[] csvLines = ProcessCsvLines(bulkImport.ImportText);
+            IList<Asset> assetsToCommit = BuildAssets(bulkImport.ImportText, true);
+
+            CommitImport(assetsToCommit);
+            return assetsToCommit.Count();
+        }
+
+        // TO DO: DON'T USE INPUT PARAMETER HERE TO CLEARLOOKUPS
+        private IList<Asset> BuildAssets(string rawCsv, bool clearLookups)
+        {
+            string[] csvLines = ProcessCsvLines(rawCsv);
             string[] csvHeader = ProcessCsvHeader(csvLines[0]);
-            IList<Asset> assetsToCommit = new List<Asset>();
+
+            IList<Asset> assets = new List<Asset>();
             for (int i = 1; i < csvLines.Length; i++)
             {
                 Asset asset = ProcessLineToAsset(csvHeader, csvLines[i]);
-                assetsToCommit.Add(asset);
+                assets.Add(asset);
                 asset.TenantId = 3; // TODO: REPLACE
-                asset.AssetMakeId = 1;
-                asset.CategoryId = 5;
+                asset.AssetMakeId = asset.AssetMake.LookupId;
+                asset.CategoryId = asset.Category.LookupId;
                 asset.WarrantyPeriodId = asset.WarrantyPeriod.LookupId;
+                if(clearLookups)
+                {
+                    asset.AssetMake = null;
+                    asset.Category = null;
+                    asset.WarrantyPeriod = null;
+                }
             }
-            CommitImport(assetsToCommit);
-            return assetsToCommit.Count();
+            return assets;
         }
     }
 }

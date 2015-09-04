@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace HardwareInventoryManager.Tests.Services
                     Controller = "LookupTypes",
                     Action = "Detail",
                     Role = "Admin"
-                },
+                }
             };
             PermissionHelper permissionHelper = new PermissionHelper(rolePermissions.AsQueryable());
             

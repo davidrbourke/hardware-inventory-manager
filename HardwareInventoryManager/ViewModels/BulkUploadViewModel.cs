@@ -1,7 +1,6 @@
 ﻿using HardwareInventoryManager.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 
 namespace HardwareInventoryManager.ViewModels
@@ -12,5 +11,7 @@ namespace HardwareInventoryManager.ViewModels
         public IEnumerable<AssetViewModel> Assets { get; set; }
         public bool Success { get; set; }
         public string Message { get; set; }
+        public IEnumerable<TenantViewModel> Tenants { get; set; }
+        public TenantViewModel SelectedTenant { get; set; }
     }
 }

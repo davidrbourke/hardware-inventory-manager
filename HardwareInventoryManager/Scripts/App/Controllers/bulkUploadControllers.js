@@ -33,6 +33,8 @@ bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Uploa
         $scope.batch = importService.get();
         $scope.assets = $scope.batch.assets;
         $scope.batchId = $scope.batch.batchId
+        $scope.tenants = $scope.batch.tenants;
+        $scope.selectedTenant = $scope.batch.tenants[0];
 
         if ($scope.assets instanceof Array) {
             $scope.$watch('search', function (newVal, oldVal) {
@@ -57,6 +59,7 @@ bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Uploa
         $scope.confirmImport = function () {
             $scope.batchUpload = $scope.batch;
             $scope.batchUpload.assets = null;
+            $scope.batchUpload.selectedTenant = $scope.selectedTenant;
             bulkUploadRepository.confirmImport($scope.batchUpload).$promise.then(
                 function (resp) {
                     toastr.success(resp.message);

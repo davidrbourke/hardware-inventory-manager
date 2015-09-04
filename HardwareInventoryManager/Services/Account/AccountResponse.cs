@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Helpers.Account
+namespace HardwareInventoryManager.Services.Account
 {
     /// <summary>
     /// Class for returns login/account status messages from AccountService to client (e.g. controller)

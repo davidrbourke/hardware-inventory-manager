@@ -12,14 +12,13 @@ using HardwareInventoryManager.Filters;
 using AutoMapper;
 using HardwareInventoryManager.ViewModels;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Helpers.User;
-using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Services.User;
+using HardwareInventoryManager.Services;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
-using HardwareInventoryManager.Helpers.Account;
+using HardwareInventoryManager.Services.Account;
 using HardwareInventoryManager.Services.Messaging;
-using HardwareInventoryManager.Services.User;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -39,9 +38,11 @@ namespace HardwareInventoryManager.Controllers
             IUserService userService = UserTypeFactory.GetUserService(new UserServiceUoW(User.Identity.GetUserId(), accountProvider));
             IList<UserViewModel> listOfUsers = Mapper.Map<IList<ApplicationUser>, IList<UserViewModel>>(
                 userService.GetUsers().ToList());
-            UserListViewModel userListViewModel = new UserListViewModel { 
+            UserListViewModel userListViewModel = new UserListViewModel
+            {
                 Users = listOfUsers
             };
+            userService.UpdateUserTenants();
             return View(userListViewModel);
         }
 

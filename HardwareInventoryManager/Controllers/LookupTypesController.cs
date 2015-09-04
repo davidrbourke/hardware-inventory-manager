@@ -118,11 +118,11 @@ namespace HardwareInventoryManager.Controllers
                 LookupType lookupType = db.LookupTypes.Find(id);
                 db.LookupTypes.Remove(lookupType);
                 db.SaveChanges();
-                Alert(Helpers.EnumHelper.Alerts.Success, Strings.Change_Success);
+                Alert(Services.EnumHelper.Alerts.Success, Strings.Change_Success);
             }
             catch(System.Data.Entity.Infrastructure.DbUpdateException)
             {
-                Alert(Helpers.EnumHelper.Alerts.Error, Strings.Delete_Lookup_Type_Error);
+                Alert(Services.EnumHelper.Alerts.Error, Strings.Delete_Lookup_Type_Error);
             }
             return RedirectToAction("Index");
         }

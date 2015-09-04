@@ -1,7 +1,8 @@
-﻿using HardwareInventoryManager.Helpers;
+﻿using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Services.Assets;
+using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace HardwareInventoryManager.Services.Import
     {
         private string _userName;
 
-        public delegate IList<Asset> BuildAssetsDelegate(string rawCsv);
+        public delegate IList<Asset> BuildAssetsDelegate(string rawCsv, int tenantId);
 
         public ImportService(string userName)
         {
@@ -164,7 +165,7 @@ namespace HardwareInventoryManager.Services.Import
             string csvRaw = ConvertCsvFileToString(importedCsv);
             BatchId = BackupImport(csvRaw);
             BuildAssetsDelegate buildAssets = new BuildAssetsDelegate(BuildAssets);
-            IList<Asset> assetsToCommit = buildAssets(csvRaw);
+            IList<Asset> assetsToCommit = buildAssets(csvRaw, 0);
             return assetsToCommit;
         }
 
@@ -199,22 +200,22 @@ namespace HardwareInventoryManager.Services.Import
             }
         }
 
-        public int ProcessCommit(string batchId)
+        public int ProcessCommit(string batchId, TenantViewModel tenant)
         {
             int bulkImportId = int.Parse(batchId);
             BulkImport bulkImport = BulkImportRepository.Single(x => x.BulkImportId == bulkImportId);
 
             BuildAssetsDelegate buildAssets = new BuildAssetsDelegate(BuildAssetsClearLookups);
-            IList<Asset> assetsToCommit = buildAssets(bulkImport.ImportText);
+            IList<Asset> assetsToCommit = buildAssets(bulkImport.ImportText, tenant.TenantId);
 
             CommitImport(assetsToCommit);
             return assetsToCommit.Count();
         }
 
 
-        private IList<Asset> BuildAssetsClearLookups(string rawCsv)
+        private IList<Asset> BuildAssetsClearLookups(string rawCsv, int tenantId)
         {
-            IList<Asset> assets = BuildAssets(rawCsv);
+            IList<Asset> assets = BuildAssets(rawCsv, tenantId);
             foreach(Asset asset in assets)
             {
                 ClearLookups(asset);
@@ -222,7 +223,7 @@ namespace HardwareInventoryManager.Services.Import
             return assets;
         }
 
-        private IList<Asset> BuildAssets(string rawCsv)
+        private IList<Asset> BuildAssets(string rawCsv, int tenantId)
         {
             string[] csvLines = ProcessCsvLines(rawCsv);
             string[] csvHeader = ProcessCsvHeader(csvLines[0]);
@@ -232,11 +233,10 @@ namespace HardwareInventoryManager.Services.Import
             {
                 Asset asset = ProcessLineToAsset(csvHeader, csvLines[i]);
                 assets.Add(asset);
-                asset.TenantId = 3; // TODO: REPLACE
+                asset.TenantId = tenantId;
                 asset.AssetMakeId = asset.AssetMake.LookupId;
                 asset.CategoryId = asset.Category.LookupId;
                 asset.WarrantyPeriodId = asset.WarrantyPeriod.LookupId;
-
             }
             return assets;
         }

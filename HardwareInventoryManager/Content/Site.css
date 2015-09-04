@@ -252,3 +252,7 @@ ng-view.ng-enter-active {
 .myview.ng-enter-active {
     opacity: 1;
 }
+
+.btn.import-btn {
+    margin-top: 25px;
+}

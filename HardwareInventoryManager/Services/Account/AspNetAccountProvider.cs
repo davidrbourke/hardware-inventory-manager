@@ -11,7 +11,7 @@ using Owin;
 using Microsoft.Owin;
 using System.Data.Entity.Validation;
 
-namespace HardwareInventoryManager.Helpers.Account
+namespace HardwareInventoryManager.Services.Account
 {
     /// <summary>
     /// Implementation of IAccountProvider using ASP.NET Identity 2.0

@@ -8,7 +8,7 @@ using HardwareInventoryManager.Services.User;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 
-namespace HardwareInventoryManager.Helpers.User
+namespace HardwareInventoryManager.Services.User
 {
     public class AdminUserService : IUserService
     {
@@ -70,6 +70,48 @@ namespace HardwareInventoryManager.Helpers.User
         public ApplicationUser CreateUser(ApplicationUser user)
         {
             throw new NotImplementedException();
+        }
+
+
+        public void UpdateUserTenants()
+        {
+            var store = new UserStore<ApplicationUser>(_context);
+            var manager = new UserManager<ApplicationUser>(store);
+
+            var users = _context.Users.ToList();
+
+            var adminUsers = new List<ApplicationUser>();
+            foreach(var user in users)
+            {
+                if(manager.IsInRole(user.Id, EnumHelper.Roles.Admin.ToString()))
+                {
+                    adminUsers.Add(user);
+                }
+            }
+
+            var tenants = _context.Tenants;
+
+            foreach(var user in adminUsers)
+            {
+                IList<Tenant> missingTenants = new List<Tenant>();
+                foreach(var tenant in tenants)
+                {
+                    if(user.UserTenants.Contains(tenant))
+                    {
+
+                    }
+                    else
+                    {
+                        missingTenants.Add(tenant);
+                    }
+                }
+                foreach(var tenant in missingTenants)
+                {
+                    user.UserTenants.Add(tenant);
+                }
+                _context.Entry(user).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
         }
     }
 }

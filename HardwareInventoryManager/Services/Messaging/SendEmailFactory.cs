@@ -1,4 +1,4 @@
-﻿using HardwareInventoryManager.Helpers;
+﻿using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Services.ApplicationSettings;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Helpers
+namespace HardwareInventoryManager.Services
 {
     public class PermissionHelper
     {

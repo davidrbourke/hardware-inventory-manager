@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using HardwareInventoryManager.Filters;
-using HardwareInventoryManager.Helpers;
-using HardwareInventoryManager.Helpers.User;
+using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Services.User;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Services.Quotes;

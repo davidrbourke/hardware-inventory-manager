@@ -1,7 +1,7 @@
 ﻿using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Services;
 using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;

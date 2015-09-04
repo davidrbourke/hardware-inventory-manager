@@ -1,4 +1,4 @@
-﻿using HardwareInventoryManager.Helpers;
+﻿using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,6 @@ namespace HardwareInventoryManager.Services.User
         ApplicationUser EditUser(ApplicationUser user);
         EnumHelper.Roles GetCurrentUserRoleById(string userId);
         ApplicationUser CreateUser(ApplicationUser user);
-
+        void UpdateUserTenants();
     }
 }

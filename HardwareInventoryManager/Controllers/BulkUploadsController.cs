@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services.Assets;
 using HardwareInventoryManager.Services.Import;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using System.Linq;
 namespace HardwareInventoryManager.Controllers
 {
     public class BulkUploadsController : Controller
@@ -29,12 +30,15 @@ namespace HardwareInventoryManager.Controllers
             Mapper.CreateMap<Asset, AssetViewModel>();
             var assetsForView = Mapper.Map<IList<AssetViewModel>>(assets);
 
+            IEnumerable<TenantViewModel> listOfTenants = GetTenants();
+
             Utilities.JsonCamelCaseResult result =
                 new Utilities.JsonCamelCaseResult(
                     new BulkUploadViewModel
                     {
                         BatchId = batchId,
-                        Assets = assetsForView
+                        Assets = assetsForView,
+                        Tenants = listOfTenants
                     },
                     JsonRequestBehavior.AllowGet);
             return result;
@@ -44,7 +48,7 @@ namespace HardwareInventoryManager.Controllers
         public ActionResult ConfirmImport(BulkUploadViewModel batch)
         {
             ImportService importService = new ImportService(User.Identity.Name);
-            int countOfAssetsAdded = importService.ProcessCommit(batch.BatchId);
+            int countOfAssetsAdded = importService.ProcessCommit(batch.BatchId, batch.SelectedTenant);
 
             Utilities.JsonCamelCaseResult result =
                 new Utilities.JsonCamelCaseResult(
@@ -69,5 +73,15 @@ namespace HardwareInventoryManager.Controllers
             byte[] bytes = bin.ReadBytes((int)fileStream.Length);
             return File(bytes, "text/csv", "im_import_template.csv");
         }   
+
+
+        private IEnumerable<TenantViewModel> GetTenants()
+        {
+            CustomApplicationDbContext context = new CustomApplicationDbContext();
+            IQueryable<Tenant> tenants = context.Tenants.Where(t => t.Users.Where(u => u.UserName == User.Identity.Name).Any());
+            Mapper.CreateMap<Tenant, TenantViewModel>();
+            var listOfTenantViewModel = Mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantViewModel>>(tenants.ToList());
+            return listOfTenantViewModel;
+        }
     }
 }

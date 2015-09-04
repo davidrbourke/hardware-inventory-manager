@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace HardwareInventoryManager.Helpers
+namespace HardwareInventoryManager.Services
 {
     public class UtilityHelper
     {

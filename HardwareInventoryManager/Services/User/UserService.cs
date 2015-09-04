@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Services.Messaging;
 
-namespace HardwareInventoryManager.Helpers.User
+namespace HardwareInventoryManager.Services.User
 {
     public class UserService : IUserService
     {
@@ -60,6 +60,11 @@ namespace HardwareInventoryManager.Helpers.User
             return userRole;
         }
 
+
+        public void UpdateUserTenants()
+        {
+        
+        }
 
         public ApplicationUser CreateUser(ApplicationUser user)
         {

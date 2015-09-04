@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Services;
 using HardwareInventoryManager.HIResources;
 using HardwareInventoryManager.Filters;
 

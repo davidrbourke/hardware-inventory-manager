@@ -1,5 +1,5 @@
-﻿using HardwareInventoryManager.Helpers;
-using HardwareInventoryManager.Helpers.Account;
+﻿using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Services.Account;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
 using Microsoft.AspNet.Identity;

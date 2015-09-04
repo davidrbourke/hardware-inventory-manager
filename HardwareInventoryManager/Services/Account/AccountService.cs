@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HardwareInventoryManager.Helpers.Account
+namespace HardwareInventoryManager.Services.Account
 {
     /// <summary>
     /// Account Service class for account functionality

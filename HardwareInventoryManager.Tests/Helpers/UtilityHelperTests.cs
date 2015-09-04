@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Services;
 using System.Text.RegularExpressions;
 
 namespace HardwareInventoryManager.Tests.Helpers

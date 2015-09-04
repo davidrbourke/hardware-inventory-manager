@@ -1,4 +1,4 @@
-﻿using HardwareInventoryManager.Helpers;
+﻿using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Models;
 using System;
 using System.Collections.Generic;

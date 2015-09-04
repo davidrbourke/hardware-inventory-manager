@@ -153,14 +153,23 @@ namespace HardwareInventoryManager.Services.Import
                         break;
                     case "assetmake":
                         string assetMakeDescription = linesArray[i];
-
                         Lookup assetMake =
                             LookupRepository.Single(
                             x=> x.Type.Description == EnumHelper.LookupTypes.Make.ToString()
                                 && x.Description.Equals(assetMakeDescription,
                                 StringComparison.InvariantCultureIgnoreCase));
+                        if (assetMake == null)
+                        {
+                            LookupType type = LookupTypesRepository.Single(
+                                x => x.Description == EnumHelper.LookupTypes.Make.ToString());
+                            assetMake = new Lookup
+                            {
+                                Description = assetMakeDescription,
+                                LookupTypeId = type.LookupTypeId,
+                                TenantId = tenantId
+                            };
+                        }
                         asset.AssetMake = assetMake;
-
                         break;
                     case "category":
                         string categoryDescription = linesArray[i];
@@ -170,8 +179,18 @@ namespace HardwareInventoryManager.Services.Import
                             x => x.Type.Description == EnumHelper.LookupTypes.Category.ToString()
                                 && x.Description.Equals(categoryDescription,
                                 StringComparison.InvariantCultureIgnoreCase));
+                        if (category == null)
+                        {
+                            LookupType type = LookupTypesRepository.Single(
+                                x => x.Description == EnumHelper.LookupTypes.Category.ToString());
+                            category = new Lookup
+                            {
+                                Description = categoryDescription,
+                                LookupTypeId = type.LookupTypeId,
+                                TenantId = tenantId
+                            };
+                        }     
                         asset.Category = category;
-
                         break;
                     case "locationdescription":
                         asset.LocationDescription = linesArray[i];

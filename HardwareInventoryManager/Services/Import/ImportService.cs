@@ -39,6 +39,23 @@ namespace HardwareInventoryManager.Services.Import
             }
         }
 
+        private IRepository<LookupType> _lookupTypesRepository;
+        public IRepository<LookupType> LookupTypesRepository
+        {
+            get
+            {
+                if(_lookupTypesRepository ==null)
+                {
+                    _lookupTypesRepository = new RepositoryWithoutTenant<LookupType>();
+                }
+                return _lookupTypesRepository;
+            }
+            set
+            {
+                _lookupTypesRepository = value;
+            }
+        }
+
         private IRepository<BulkImport> _bulkImportRepository;
         public IRepository<BulkImport> BulkImportRepository
         {
@@ -91,7 +108,7 @@ namespace HardwareInventoryManager.Services.Import
         /// <param name="header"></param>
         /// <param name="line"></param>
         /// <returns></returns>
-        public Asset ProcessLineToAsset(string[] header, string line)
+        public Asset ProcessLineToAsset(string[] header, string line, int tenantId)
         {
             string[] linesArray = line.Split(',');
             Asset asset = new Asset();
@@ -109,14 +126,23 @@ namespace HardwareInventoryManager.Services.Import
                         asset.PurchaseDate = DateTime.Parse(linesArray[i]);
                         break;
                     case "warrantyperiod":
-
                         string warrantyPeriodDescription = linesArray[i];
-
                         Lookup warrantyPeriod = 
                         LookupRepository.Single(
                             x => x.Type.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString()
                                 && x.Description.Equals(warrantyPeriodDescription, 
                                 StringComparison.InvariantCultureIgnoreCase));
+                        if (warrantyPeriod == null)
+                        {
+                            LookupType type = LookupTypesRepository.Single(
+                                x => x.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString());
+                            warrantyPeriod = new Lookup
+                            {
+                                Description = warrantyPeriodDescription,
+                                LookupTypeId = type.LookupTypeId,
+                                TenantId = tenantId
+                            };
+                        }
                         asset.WarrantyPeriod = warrantyPeriod;
                         break;
                     case "obsolescencedate":
@@ -231,7 +257,7 @@ namespace HardwareInventoryManager.Services.Import
             IList<Asset> assets = new List<Asset>();
             for (int i = 1; i < csvLines.Length; i++)
             {
-                Asset asset = ProcessLineToAsset(csvHeader, csvLines[i]);
+                Asset asset = ProcessLineToAsset(csvHeader, csvLines[i], tenantId);
                 assets.Add(asset);
                 asset.TenantId = tenantId;
                 asset.AssetMakeId = asset.AssetMake.LookupId;
@@ -243,9 +269,9 @@ namespace HardwareInventoryManager.Services.Import
 
         private void ClearLookups(Asset asset)
         {
-            asset.AssetMake = null;
-            asset.Category = null;
-            asset.WarrantyPeriod = null;
+            asset.AssetMake = asset.AssetMakeId != 0 ? null : asset.AssetMake;
+            asset.Category = asset.CategoryId != 0 ? null : asset.Category;
+            asset.WarrantyPeriod = asset.WarrantyPeriodId != 0 ? null : asset.WarrantyPeriod;
         }
     }
 }

@@ -81,7 +81,7 @@ namespace HardwareInventoryManager.Tests.Services
             service.LookupRepository = m.Object;
 
             // ACT
-            Asset asset = service.ProcessLineToAsset(header, line);
+            Asset asset = service.ProcessLineToAsset(header, line, 3);
 
             // ASSERT
             Assert.IsNotNull(asset);

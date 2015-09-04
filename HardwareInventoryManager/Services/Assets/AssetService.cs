@@ -40,6 +40,7 @@ namespace HardwareInventoryManager.Services.Assets
                 Repository.Save();
                 return;
             }
+
             Repository.Edit(asset);
             Repository.Save();
         }

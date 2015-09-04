@@ -2,51 +2,69 @@
     <h2>Quotes/Wishlist</h2>
 </div>
 <div class="row">
-    <div class="form-group">
-        <button type="button" class="btn btn-default" ng-click="loadModalQuote()">Create</button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-1">
-            <label>Search: </label>
+    <div class="col-md-3">
+        <div class="form-group">
+            <button type="button" class="btn btn-default" ng-click="loadModalQuote()">Create</button>
         </div>
-        <div class="col-sm-4 form-group">
-            <input type="text" id="quoteListFilter" class="form-control" ng-model="search" />
+    </div>
+    <div class="col-md-7">
+        <div class="form-group">
+            <div class="col-sm-offset-5 col-sm-2">
+                <label>Search: </label>
+            </div>
+            <div class="col-sm-4 form-group">
+                <input type="text" id="quoteListFilter" class="form-control" ng-model="search" />
+            </div>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-10">
-        <table class="table table-striped table-hover dt-responsive" cellspacing="0">
-            <tr>
-                <th>Id</th>
-                <th>Date Required</th>
-                <th>Specification</th>
-                <th>Quantity</th>
-                <th>Category</th>
-                <th></th>
-            </tr>
+
                 <!--<tr ng-repeat="quote in quotes | filter:search">-->
-            <tr class="angularTableTr" ng-repeat="quote in filtered = quotes | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+        <!-- angularTableTr -->
+            <div class="panel panel-default " ng-repeat="quote in filtered = quotes | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
                 <!--<tr ng-repeat="quote in quotes">-->
-                <td>{{quote.quoteRequestId}}</td>
-                <td>{{quote.formattedDateRequired}}</td>
-                <td>{{quote.specificationSummary}}</td>
-                <td>{{quote.quantity}}</td>
-                <td>{{quote.category.Description}}</td>
-                <td>
-                    <button type="button" class="btn btn-default btn-xs" ng-click="getQuote(quote.quoteRequestId)">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </button>
-                    <button type="button" class="btn btn-default btn-xs" ng-click="deleteQuote(quote.quoteRequestId)">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </button>
-                </td>
-            </tr>
-</table>
+                <div class="panel-heading">
+                    <div class="row">
+                    <div class="col-md-5">
+                        <strong>Quote Id: </strong>{{quote.quoteRequestId}}
+                    </div>
+                        <div class="col-md-2 col-md-offset-5">
+                            <div class="col-md-offset-7">
+                                <button type="button" class="btn btn-default btn-xs" ng-click="getQuote(quote.quoteRequestId)">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" ng-click="deleteQuote(quote.quoteRequestId)">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Date Request: </strong> {{quote.formattedDateRequired}}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Quantity: </strong> {{quote.quantity}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Summary </strong>
+                            {{quote.specificationSummary}}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Description </strong>
+                            {{quote.category.Description}}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         <div ng-show="filteredQuotesLength === 0">
             No data to display.
         </div>

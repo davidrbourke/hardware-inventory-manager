@@ -30,12 +30,14 @@
 
 <table class="table table-striped">
     <tr>
+        <th>Row</th>
         <th>Model</th>
         <th>Serial Number</th>
         <th>Purchase Date</th>
         <th>Warranty Period</th>
     </tr>
     <tr ng-repeat="asset in filtered = assets | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+        <td>{{ asset.assetId}}</td>
         <td>{{ asset.model }}</td>
         <td>{{ asset.serialNumber }}</td>
         <td>{{ asset.purchaseDateFormatted }}</td>
@@ -43,6 +45,24 @@
         <td>{{ asset.obsolescenceDate }}</td>
     </tr>
 </table>
+
+<div class="panel panel-default" ng-show="errors.length > 0">
+    <div class="panel-heading">
+        Import Errors
+    </div>
+    <div class="panel-body">
+        <div class="" ng-repeat="error in errors">
+            <ul>
+                <li ng-repeat="lineError in error">
+                    {{lineError}}
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+
+</div>
+
 <pagination ng-model="currentPage"
             total-items="totalItems"
             max-size="noOfPages"

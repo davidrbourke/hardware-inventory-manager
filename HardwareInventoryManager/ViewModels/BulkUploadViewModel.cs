@@ -11,6 +11,7 @@ namespace HardwareInventoryManager.ViewModels
         public IEnumerable<AssetViewModel> Assets { get; set; }
         public bool Success { get; set; }
         public string Message { get; set; }
+        public IEnumerable<List<string>> Errors { get; set; }
         public IEnumerable<TenantViewModel> Tenants { get; set; }
         public TenantViewModel SelectedTenant { get; set; }
     }

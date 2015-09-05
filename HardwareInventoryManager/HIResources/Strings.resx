@@ -168,6 +168,12 @@
   <data name="EmailSubject_PasswordReset" xml:space="preserve">
     <value>Password Reset</value>
   </data>
+  <data name="ImportError_ObsolescenseDate" xml:space="preserve">
+    <value>Row {0}. Obsolesence Date is in an invalid format: {1}</value>
+  </data>
+  <data name="ImportError_PurchaseDate" xml:space="preserve">
+    <value>Row {0}. Purchase Date is in an invalid format: {1}</value>
+  </data>
   <data name="Login_Error" xml:space="preserve">
     <value>Invalid username or password.</value>
   </data>

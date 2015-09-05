@@ -10,8 +10,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using System.Linq;
+using HardwareInventoryManager.Filters;
 namespace HardwareInventoryManager.Controllers
 {
+    [CustomAuthorize]
     public class BulkUploadsController : Controller
     {
         // GET: BulkUploads
@@ -24,23 +26,15 @@ namespace HardwareInventoryManager.Controllers
         public ActionResult Upload(HttpPostedFileBase FileUpload)
         {
             ImportService importService = new ImportService(User.Identity.Name);
-            IEnumerable<Asset> assets = importService.PrepareImport(FileUpload);
+            BulkUploadViewModel response = importService.PrepareImport(FileUpload);
             string batchId = importService.BatchId;
 
-            Mapper.CreateMap<Asset, AssetViewModel>();
-            var assetsForView = Mapper.Map<IList<AssetViewModel>>(assets);
-
             IEnumerable<TenantViewModel> listOfTenants = GetTenants();
+            response.BatchId = batchId;
+            response.Tenants = listOfTenants;
 
             Utilities.JsonCamelCaseResult result =
-                new Utilities.JsonCamelCaseResult(
-                    new BulkUploadViewModel
-                    {
-                        BatchId = batchId,
-                        Assets = assetsForView,
-                        Tenants = listOfTenants
-                    },
-                    JsonRequestBehavior.AllowGet);
+                new Utilities.JsonCamelCaseResult(response, JsonRequestBehavior.AllowGet);
             return result;
         }
 

@@ -81,7 +81,8 @@ namespace HardwareInventoryManager.Tests.Services
             service.LookupRepository = m.Object;
 
             // ACT
-            Asset asset = service.ProcessLineToAsset(header, line, 3);
+            ConvertedAsset convertedAsset = service.ProcessLineToAsset(header, line, 3, 1);
+            Asset asset = convertedAsset.Asset;
 
             // ASSERT
             Assert.IsNotNull(asset);
@@ -90,6 +91,49 @@ namespace HardwareInventoryManager.Tests.Services
             Assert.AreEqual("10/03/2015", asset.PurchaseDate.Value.ToString("dd/MM/yyyy"));
             Assert.AreEqual("3 Years", asset.WarrantyPeriod.Description);
 
+        }
+
+        [TestMethod]
+        public void ProcessLineToAsset_InvalidPurchaseDate_ErrorSupplied()
+        {
+            // ARRANGE
+            Mock<IRepository<Lookup>> m = new Mock<IRepository<Lookup>>();
+            m.Setup(x => x.Single(It.IsAny<Expression<Func<Lookup, bool>>>())).Returns(
+                new Lookup
+                {
+                    Description = "3 Years",
+                    Type = new LookupType
+                    {
+                        Description = "WarrantyPeriod"
+                    }
+                }
+            );
+
+            var service = new ImportService("david");
+            string[] header = {
+                                  "Model",
+                                  "SerialNumber",
+                                  "PurchaseDate",
+                                  "WarrantyPeriod",
+                                  "ObsolescenseDate",
+                                  "PricePaid",
+                                  "Category",
+                                  "LocationDescription"
+                              };
+            string line = "12345,LLLLLLLL1,30/30/2015,3 years,10/03/2018,100,Desktop,Room 101";
+            service.LookupRepository = m.Object;
+
+            // ACT
+            ConvertedAsset convertedAsset = service.ProcessLineToAsset(header, line, 3, 1);
+            Asset asset = convertedAsset.Asset;
+
+            // ASSERT
+            Assert.IsNotNull(asset);
+            Assert.AreEqual("12345", asset.Model);
+            Assert.AreEqual("LLLLLLLL1", asset.SerialNumber);
+            Assert.AreEqual("3 Years", asset.WarrantyPeriod.Description);
+            Assert.AreEqual(1, convertedAsset.Errors.Count);
+                
         }
     }
 }

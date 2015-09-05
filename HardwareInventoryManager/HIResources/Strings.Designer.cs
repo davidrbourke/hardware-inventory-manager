@@ -214,6 +214,24 @@ namespace HardwareInventoryManager.HIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Row {0}. Obsolesence Date is in an invalid format: {1}.
+        /// </summary>
+        public static string ImportError_ObsolescenseDate {
+            get {
+                return ResourceManager.GetString("ImportError_ObsolescenseDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row {0}. Purchase Date is in an invalid format: {1}.
+        /// </summary>
+        public static string ImportError_PurchaseDate {
+            get {
+                return ResourceManager.GetString("ImportError_PurchaseDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid username or password..
         /// </summary>
         public static string Login_Error {

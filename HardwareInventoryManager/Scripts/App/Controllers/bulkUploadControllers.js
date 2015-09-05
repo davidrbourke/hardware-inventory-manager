@@ -35,6 +35,7 @@ bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Uploa
         $scope.batchId = $scope.batch.batchId
         $scope.tenants = $scope.batch.tenants;
         $scope.selectedTenant = $scope.batch.tenants[0];
+        $scope.errors = $scope.batch.errors;
 
         if ($scope.assets instanceof Array) {
             $scope.$watch('search', function (newVal, oldVal) {

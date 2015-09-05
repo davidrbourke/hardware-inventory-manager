@@ -24,9 +24,16 @@ namespace HardwareInventoryManager.Controllers.Api
         // GET: api/QuoteRequests
         public IEnumerable<QuoteRequestViewModel> Get()
         {
-            IList<QuoteRequest> quoteRequests = QuoteRequestService.GetAllQuotes().ToList();
+            IList<QuoteRequest> quoteRequests = QuoteRequestService.GetAllQuotes().OrderByDescending(x => x.QuoteRequestId)
+                .ToList();
+
+            QuoteRequest recentQuoteRequest = quoteRequests.Where(x => x.CreatedDate > DateTime.Now.AddSeconds(-10)).FirstOrDefault();
+            if(recentQuoteRequest != null)
+                recentQuoteRequest.NewQuoteRequest = true;
+
             Mapper.CreateMap<QuoteRequest, QuoteRequestViewModel>();
             return Mapper.Map<IList<QuoteRequest>, IList<QuoteRequestViewModel>>(quoteRequests);
+
         }
 
         // GET: api/AssetsApi/5

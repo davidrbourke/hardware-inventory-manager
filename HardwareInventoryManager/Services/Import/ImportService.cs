@@ -167,7 +167,15 @@ namespace HardwareInventoryManager.Services.Import
                         }
                         break;
                     case "pricepaid":
-                        asset.PricePaid = decimal.Parse(linesArray[i]);
+                        decimal pricePaid;
+                        if(decimal.TryParse(linesArray[i], out pricePaid))
+                        {
+                            asset.PricePaid = pricePaid;
+                        }
+                        else
+                        {
+                            convertedAsset.Errors.Add(string.Format(HIResources.Strings.ImportError_PricePaid, rowId, linesArray[i]));
+                        }
                         break;
                     case "assetmake":
                         string assetMakeDescription = linesArray[i];

@@ -27,7 +27,7 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
 
         $scope.currentpage = 1;
         $scope.totalItems = $scope.quotes.length;
-        $scope.entryLimit = 4; // items per page
+        $scope.entryLimit = 3; // items per page
         $scope.noOfpages = Math.ceil($scope.totalitems / $scope.entryLimit);
         $scope.resetFilters = function () {
             // needs to be a function or it won't trigger a $watch

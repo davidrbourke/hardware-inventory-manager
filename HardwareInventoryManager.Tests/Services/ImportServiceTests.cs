@@ -115,12 +115,12 @@ namespace HardwareInventoryManager.Tests.Services
                                   "SerialNumber",
                                   "PurchaseDate",
                                   "WarrantyPeriod",
-                                  "ObsolescenseDate",
+                                  "ObsolescenceDate",
                                   "PricePaid",
                                   "Category",
                                   "LocationDescription"
                               };
-            string line = "12345,LLLLLLLL1,30/30/2015,3 years,10/03/2018,100,Desktop,Room 101";
+            string line = "12345,LLLLLLLL1,30/30/2015,3 years,july july aug,money,Desktop,Room 101";
             service.LookupRepository = m.Object;
 
             // ACT
@@ -132,8 +132,16 @@ namespace HardwareInventoryManager.Tests.Services
             Assert.AreEqual("12345", asset.Model);
             Assert.AreEqual("LLLLLLLL1", asset.SerialNumber);
             Assert.AreEqual("3 Years", asset.WarrantyPeriod.Description);
-            Assert.AreEqual(1, convertedAsset.Errors.Count);
-                
+            Assert.AreEqual(3, convertedAsset.Errors.Count);
+            Assert.AreEqual(
+                string.Format(HIResources.Strings.ImportError_PurchaseDate, 1, "30/30/2015"),
+                convertedAsset.Errors[0]);
+            Assert.AreEqual(
+                string.Format(HIResources.Strings.ImportError_ObsolescenseDate, 1, "july july aug"),
+                convertedAsset.Errors[1]);
+            Assert.AreEqual(string.Format(HIResources.Strings.ImportError_PricePaid, 1, "money"),
+                convertedAsset.Errors[2]);
+       
         }
     }
 }

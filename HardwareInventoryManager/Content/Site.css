@@ -256,3 +256,12 @@ ng-view.ng-enter-active {
 .btn.import-btn {
     margin-top: 25px;
 }
+
+.panel-info.ng-enter-active {
+    opacity: 1;
+}
+
+.panel-info.ng-enter {
+    transition: opacity 1s;
+    opacity: 0.7;
+}

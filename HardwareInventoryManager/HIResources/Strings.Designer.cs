@@ -223,6 +223,15 @@ namespace HardwareInventoryManager.HIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Row {0}. Price Paid is in an invalid format: {1}.
+        /// </summary>
+        public static string ImportError_PricePaid {
+            get {
+                return ResourceManager.GetString("ImportError_PricePaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Row {0}. Purchase Date is in an invalid format: {1}.
         /// </summary>
         public static string ImportError_PurchaseDate {

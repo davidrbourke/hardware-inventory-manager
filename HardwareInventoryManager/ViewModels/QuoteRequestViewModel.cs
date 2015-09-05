@@ -57,5 +57,16 @@ namespace HardwareInventoryManager.ViewModels
         public Lookup SelectedQuoteRequestStatus { get; set; }
 
         public bool CanChangeStatus { get; set; }
+
+        public bool NewQuoteRequest { get; set; }
+
+        public string PanelClass { 
+            get
+            {
+                if(NewQuoteRequest) return "panel-info";
+                return "panel-default";
+            }
+
+            }
     }
 }

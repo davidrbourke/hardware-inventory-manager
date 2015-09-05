@@ -31,5 +31,8 @@ namespace HardwareInventoryManager.Models
         public int? QuoteRequestStatusId { get; set; }
         [ForeignKey("QuoteRequestStatusId")]
         public Lookup QuoteRequestStatus { get; set; }
+
+        [NotMapped]
+        public bool NewQuoteRequest { get; set; }
     }
 }

@@ -143,5 +143,28 @@ namespace HardwareInventoryManager.Tests.Services
                 convertedAsset.Errors[2]);
        
         }
+
+        [TestMethod]
+        public void RemoveBlankLines_BlankLines_Cleared()
+        {
+            // ARRANGE
+            string[] linesWithBlanks = {
+                ",,,,,,,",
+                "12345,LLLLLLLL1,30/30/2015,3 years,july july aug,money,Desktop,Room 101",
+                ",,,,,,,",
+                "",
+                "654321,LLLLLLLL1,30/30/2015,3 years,july july aug,money,Desktop,Room 101",
+                ",,,,,,," };
+            var service = new ImportService("user");
+
+            // ACT
+            string[] trimmedLines = service.RemoveBlankLines(linesWithBlanks);
+
+            // ASSERT
+            Assert.AreEqual(2, trimmedLines.Length);
+            Assert.IsTrue(trimmedLines[0].StartsWith("12345"));
+            Assert.IsTrue(trimmedLines[1].StartsWith("654321"));
+
+        }
     }
 }

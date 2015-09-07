@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using AutoMapper;
+using System.Text;
 
 namespace HardwareInventoryManager.Services.Import
 {
@@ -296,11 +297,14 @@ namespace HardwareInventoryManager.Services.Import
 
         private BulkUploadViewModel BuildAssetsForDisplay(string rawCsv, int tenantId)
         {
-            string[] csvLines = ProcessCsvLines(rawCsv);
-            string[] csvHeader = ProcessCsvHeader(csvLines[0]);
+            string[] csvRawLines = ProcessCsvLines(rawCsv);
+            string[] csvHeader = ProcessCsvHeader(csvRawLines[0]);
 
             IList<Asset> assets = new List<Asset>();
             IList<List<string>> errors = new List<List<string>>();
+
+            string[] csvLines = RemoveBlankLines(csvRawLines);
+
             for (int i = 1; i < csvLines.Length; i++)
             {
                 ConvertedAsset convertedAsset = ProcessLineToAsset(csvHeader, csvLines[i], tenantId, i);
@@ -325,10 +329,29 @@ namespace HardwareInventoryManager.Services.Import
             return response;
         }
 
+        public string[] RemoveBlankLines(string[] csvLines)
+        {
+            StringBuilder buildingNewLines = new StringBuilder();
+            foreach(string line in csvLines)
+            {
+                string[] columns = line.Split(',');
+                int countOfNonBlanks = columns.Count(x => !string.IsNullOrWhiteSpace(x));
+                if(countOfNonBlanks > 0)
+                {
+                    buildingNewLines.AppendLine(line);
+                }
+            }
+            char[] chars = {'\r','\n'};
+            string[] lines = buildingNewLines.ToString().Split(chars, StringSplitOptions.RemoveEmptyEntries);
+            return lines;
+        }
+
         private ConvertedAssetsDto BuildAssets(string rawCsv, int tenantId)
         {
-            string[] csvLines = ProcessCsvLines(rawCsv);
-            string[] csvHeader = ProcessCsvHeader(csvLines[0]);
+            string[] csvRawLines = ProcessCsvLines(rawCsv);
+            string[] csvHeader = ProcessCsvHeader(csvRawLines[0]);
+
+            string[] csvLines = RemoveBlankLines(csvRawLines);
 
             IList<Asset> assets = new List<Asset>();
             IList<List<string>> errors = new List<List<string>>();

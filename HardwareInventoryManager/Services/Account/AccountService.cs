@@ -77,15 +77,16 @@ namespace HardwareInventoryManager.Services.Account
         }
 
 
-        public async Task<AccountResponse> ForgotPassword(string userName)
+        public async Task<AccountResponse> ForgotPassword(string userName, string url)
         {
 
             var userToReset = await _accountProvider.Find(userName);
             
             string code = await _accountProvider.GeneratePasswordResetToken(userToReset.Id);
-            UrlHelper h = new UrlHelper();
-            var callbackUrl = h.Action("ResetPassword", "Account", new { userId = userToReset.Id, code = code });
-
+            var callbackUrl =
+                string.Format("{0}{1}/{2}?userId={3}&code={4}",
+                url, "Account", "ResetPassword", userToReset.Id, code);
+           
             IProcessEmail processEmail = new ProcessEmail(userName);
             processEmail.SendPasswordResetEmail(userToReset, callbackUrl);
 
@@ -95,15 +96,22 @@ namespace HardwareInventoryManager.Services.Account
             };
 
         }
-
-        public async Task<AccountResponse> RequestEmailConfirmation(string userName)
+        struct orr
+        {
+            public string userId { get; set; }
+            public string  code { get; set; }
+        }
+        public async Task<AccountResponse> RequestEmailConfirmation(string userName, string url)
         {
             var recipientUser = await _accountProvider.Find(userName);
    
             string emailConfirmationToken = await _accountProvider.GenerateEmailConfirmationToken(recipientUser.Id);
-            UrlHelper urlHelper = new UrlHelper();
-            string callback = urlHelper.Action("ConfirmEmail", "Account", new { userId = recipientUser.Id, code = emailConfirmationToken });
-            
+            var callback =
+                string.Format("{0}{1}/{2}?userId={3}&code={4}",
+                url, "Account", "ConfirmEmail",
+                recipientUser.Id,
+                emailConfirmationToken);
+           
             IProcessEmail processEmail = new ProcessEmail(userName);
             processEmail.SendEmailConfirmationEmail(recipientUser, callback);
             return new AccountResponse

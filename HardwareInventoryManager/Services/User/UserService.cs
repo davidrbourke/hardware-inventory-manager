@@ -73,6 +73,8 @@ namespace HardwareInventoryManager.Services.User
             user.TemporaryCode = temporaryCode;
             user = _userRepository.Create(user);
 
+            Errors = ((IUserErrors)_userRepository).Errors;
+
             if (!string.IsNullOrWhiteSpace(user.Id))
             {
                 IProcessEmail processEmail = new ProcessEmail(user.UserName);
@@ -80,6 +82,8 @@ namespace HardwareInventoryManager.Services.User
             }
             return user;
         }
+
+        public string[] Errors { get; set; }
     }
 
 }

@@ -9,7 +9,7 @@ using HardwareInventoryManager.Services.Account;
 
 namespace HardwareInventoryManager.Repository
 {
-    public class UserRepository : IRepository<ApplicationUser>
+    public class UserRepository : IRepository<ApplicationUser>, IUserErrors
     {
         private string _userId;
         private CustomApplicationDbContext _db;
@@ -59,15 +59,23 @@ namespace HardwareInventoryManager.Repository
                 int tenantId = applicationUser.UserTenants.FirstOrDefault().TenantId;
                 applicationUser.UserTenants = null;
                 bool userSucceeded = _accountProvider.Create(applicationUser, applicationUser.TemporaryCode);
-                bool roleSucceeded = _accountProvider.AddToRole(applicationUser.Id, applicationUser.TemporaryRole);
-                Tenant tenant = _db.Tenants.FirstOrDefault(t => t.TenantId == tenantId);
-                ApplicationUser reloadedUser = _db.Users.Include(t=>t.UserTenants).FirstOrDefault(u =>u.Id == applicationUser.Id);
-                reloadedUser.UserTenants = new List<Tenant>
+                if (userSucceeded)
+                {
+                    bool roleSucceeded = _accountProvider.AddToRole(applicationUser.Id, applicationUser.TemporaryRole);
+                    Tenant tenant = _db.Tenants.FirstOrDefault(t => t.TenantId == tenantId);
+                    ApplicationUser reloadedUser = _db.Users.Include(t => t.UserTenants).FirstOrDefault(u => u.Id == applicationUser.Id);
+                    reloadedUser.UserTenants = new List<Tenant>
                     {
                         tenant
                     };
-                _db.Entry(reloadedUser).State = EntityState.Modified;
-                _db.SaveChanges();
+                    _db.Entry(reloadedUser).State = EntityState.Modified;
+                    _db.SaveChanges();
+                 
+                }
+                else
+                {
+                    Errors = new string[] { "User name already exists" };
+                }
             }
             return applicationUser;
         }
@@ -149,6 +157,12 @@ namespace HardwareInventoryManager.Repository
         public void SetCurrentUserByUsername(string userName)
         {
             throw new NotImplementedException();
+        }
+
+        public string[] Errors
+        {
+            get;
+            set;
         }
     }
 }

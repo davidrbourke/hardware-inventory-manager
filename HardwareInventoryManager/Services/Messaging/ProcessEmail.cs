@@ -41,21 +41,21 @@ namespace HardwareInventoryManager.Services.Messaging
 
         public void SendPasswordResetEmail(ApplicationUser recipientUser, string callbackUrl)
         {
-            _emailRepository.SetCurrentUser(recipientUser);
+            EmailRepository.SetCurrentUser(recipientUser);
             string body = string.Format(HIResources.Strings.EmailBody_PasswordReset, callbackUrl);
             SendEmail(AdminEmailAddress(), new string[] { recipientUser.Email }, HIResources.Strings.EmailSubject_PasswordReset, body);    
         }
 
         public void SendEmailConfirmationEmail(ApplicationUser recipientUser, string callbackUrl)
         {
-            _emailRepository.SetCurrentUser(recipientUser);
+            EmailRepository.SetCurrentUser(recipientUser);
             string body = string.Format(HIResources.Strings.EmailBody_ConfirmUserEmail, callbackUrl);
             SendEmail(AdminEmailAddress(), new string[] { recipientUser.Email }, HIResources.Strings.EmailSubject_ConfirmUserEmail, body);    
         }
 
         public void SendNewAccountSetupEmail(ApplicationUser recipientUser)
         {
-            _emailRepository.SetCurrentUser(recipientUser);
+            EmailRepository.SetCurrentUser(recipientUser);
             string body = string.Format(HIResources.Strings.EmailBody_NewAccount, recipientUser.Email, recipientUser.TemporaryCode);
             SendEmail(AdminEmailAddress(), new string[] { recipientUser.Email }, HIResources.Strings.EmailSubject_NewAccount, body);    
         }
@@ -68,7 +68,7 @@ namespace HardwareInventoryManager.Services.Messaging
 
         private SendEmailTemplate CreateSendEmailService()
         {
-            return SendEmailFactory.GetSendEmailType(_emailRepository);
+            return SendEmailFactory.GetSendEmailType(EmailRepository);
         }
 
         private IRepository<Email> _emailRepository;
@@ -80,11 +80,11 @@ namespace HardwareInventoryManager.Services.Messaging
                 {
                     _emailRepository = new Repository<Email>(UserName);
                 }
-                return EmailRepository;
+                return _emailRepository;
             }
             set
             {
-                EmailRepository = value;
+                _emailRepository = value;
             }
         }
     }

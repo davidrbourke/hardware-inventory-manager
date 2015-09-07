@@ -221,6 +221,7 @@
     <Compile Include="Models\BulkImport.cs" />
     <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Models\QuoteResponse.cs" />
+    <Compile Include="Repository\IUserErrors.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\ApplicationSettings\IApplicationSettingsService.cs" />
     <Compile Include="Services\ApplicationSettings\ApplicationSettingsService.cs" />

@@ -113,5 +113,7 @@ namespace HardwareInventoryManager.Services.User
                 _context.SaveChanges();
             }
         }
+
+        public string[] Errors { get; set; }
     }
 }

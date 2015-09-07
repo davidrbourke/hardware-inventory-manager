@@ -16,5 +16,6 @@ namespace HardwareInventoryManager.Services.User
         EnumHelper.Roles GetCurrentUserRoleById(string userId);
         ApplicationUser CreateUser(ApplicationUser user);
         void UpdateUserTenants();
+        string[] Errors { get; set; }
     }
 }

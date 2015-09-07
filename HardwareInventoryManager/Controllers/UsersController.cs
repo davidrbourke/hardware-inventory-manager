@@ -88,6 +88,7 @@ namespace HardwareInventoryManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Email,PhoneNumber,Role,LockoutEnabled,TenantId")] UserViewModel userViewModel)
         {
+            string errors = string.Empty;
             if (ModelState.IsValid)
             {
                 if (!User.IsInRole(EnumHelper.Roles.Admin.ToString()) && userViewModel.Role.Equals(EnumHelper.Roles.Admin.ToString(), StringComparison.CurrentCultureIgnoreCase))
@@ -113,13 +114,17 @@ namespace HardwareInventoryManager.Controllers
                     TemporaryRole = userViewModel.Role
                 };
                 applicationUser = userService.CreateUser(applicationUser);
+                
+                errors = userService.Errors == null ? string.Empty : userService.Errors.ToString();
                 if(!string.IsNullOrWhiteSpace(applicationUser.Id))
                 {
                     Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                     return RedirectToAction("Index");
                 }
             }
-            Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
+            Alert(EnumHelper.Alerts.Error, string.Format("{0}, {1}",
+                HIResources.Strings.Change_Error,
+                errors));
             PopulateUserDropDowns(userViewModel);
             return View(userViewModel);
         }

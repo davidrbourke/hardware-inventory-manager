@@ -107,7 +107,7 @@ namespace HardwareInventoryManager.Controllers
                 {
                     Name = model.OrganisationName
                 };
-                IList<Tenant> tenants = new List<Tenant>();//
+                IList<Tenant> tenants = new List<Tenant>();
                 tenants.Add(tenant);
 
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, UserTenants = tenants };
@@ -177,12 +177,22 @@ namespace HardwareInventoryManager.Controllers
                 IAccountProvider accountProvider = new AspNetAccountProvider(
                     UserManager, AuthenticationManager);
                 AccountService accountService = new AccountService(accountProvider);
-                AccountResponse result = await accountService.ForgotPassword(model.Email);
+
+                string url = GetUrlTemplate();
+
+                AccountResponse result = await accountService.ForgotPassword(model.Email, url);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private string GetUrlTemplate()
+        {
+            return string.Format("{0}://{1}/",
+                    HttpContext.Request.Url.Scheme,
+                    HttpContext.Request.Url.Authority);
         }
 
         //
@@ -573,7 +583,8 @@ namespace HardwareInventoryManager.Controllers
             IAccountProvider accountProvider = new AspNetAccountProvider(
                  UserManager, AuthenticationManager);
             AccountService accountService = new AccountService(accountProvider);
-            AccountResponse result = await accountService.RequestEmailConfirmation(User.Identity.Name);
+            string url = GetUrlTemplate();
+            AccountResponse result = await accountService.RequestEmailConfirmation(User.Identity.Name, url);
 
             EmailNotConfirmedViewModel vm = new EmailNotConfirmedViewModel
             {

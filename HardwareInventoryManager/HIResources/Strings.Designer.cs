@@ -214,6 +214,15 @@ namespace HardwareInventoryManager.HIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Row {0}. Model is missing. The Asset will not be imported..
+        /// </summary>
+        public static string ImportError_ModelMissing {
+            get {
+                return ResourceManager.GetString("ImportError_ModelMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Row {0}. Obsolesence Date is in an invalid format: {1}.
         /// </summary>
         public static string ImportError_ObsolescenseDate {
@@ -237,6 +246,15 @@ namespace HardwareInventoryManager.HIResources {
         public static string ImportError_PurchaseDate {
             get {
                 return ResourceManager.GetString("ImportError_PurchaseDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Row {0}. Serial Number is missing. The Asset will not be imported..
+        /// </summary>
+        public static string ImportError_SerialNumberMissing {
+            get {
+                return ResourceManager.GetString("ImportError_SerialNumberMissing", resourceCulture);
             }
         }
         

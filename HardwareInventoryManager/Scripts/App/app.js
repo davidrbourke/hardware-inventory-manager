@@ -19,7 +19,7 @@ inventoryManagerApp.config(['$routeProvider', '$locationProvider',
                 templateUrl: '/Scripts/App/Views/BulkUploads/list.html',
                 controller: 'bulkUploadController'
             }).
-            when('/BulkUploadReview', {
+            when('/BulkUploadReview/:batchId', {
                 templateUrl: '/Scripts/App/Views/BulkUploads/review.html',
                 controller: 'reviewBulkUploadController'
             });

@@ -226,11 +226,31 @@ namespace HardwareInventoryManager.Services.Import
                         break;
                 }
             }
+            if(string.IsNullOrWhiteSpace(asset.Model))
+            {
+                convertedAsset.Errors.Add(string.Format(HIResources.Strings.ImportError_ModelMissing, asset.AssetId));
+            }  
+            if(string.IsNullOrWhiteSpace(asset.Model))
+            {
+                convertedAsset.Errors.Add(string.Format(HIResources.Strings.ImportError_SerialNumberMissing, asset.AssetId));
+            }  
             convertedAsset.Asset = asset;
             return convertedAsset;
         }
 
         public string BatchId { get; set; }
+
+
+        public BulkUploadViewModel PrepareImport(int batchId)
+        {
+            BulkImport bulkImport = BulkImportRepository.Single(x => x.BulkImportId == batchId);
+            if (bulkImport != null)
+            {
+                BulkUploadViewModel assetsToCommit = BuildAssetsForDisplay(bulkImport.ImportText, 0);
+                return assetsToCommit;
+            }
+            return new BulkUploadViewModel();
+        }
 
         public BulkUploadViewModel PrepareImport(HttpPostedFileBase importedCsv)
         {
@@ -358,12 +378,17 @@ namespace HardwareInventoryManager.Services.Import
             for (int i = 1; i < csvLines.Length; i++)
             {
                 ConvertedAsset convertedAsset = ProcessLineToAsset(csvHeader, csvLines[i], tenantId, i);
-                assets.Add(convertedAsset.Asset);
-                errors.Add(convertedAsset.Errors);
-                convertedAsset.Asset.TenantId = tenantId;
-                convertedAsset.Asset.AssetMakeId = convertedAsset.Asset.AssetMake.LookupId;
-                convertedAsset.Asset.CategoryId = convertedAsset.Asset.Category.LookupId;
-                convertedAsset.Asset.WarrantyPeriodId = convertedAsset.Asset.WarrantyPeriod.LookupId;
+                if (!string.IsNullOrWhiteSpace(convertedAsset.Asset.Model)
+                    && !string.IsNullOrWhiteSpace(convertedAsset.Asset.SerialNumber))
+                {
+
+                    assets.Add(convertedAsset.Asset);
+                    errors.Add(convertedAsset.Errors);
+                    convertedAsset.Asset.TenantId = tenantId;
+                    convertedAsset.Asset.AssetMakeId = convertedAsset.Asset.AssetMake.LookupId;
+                    convertedAsset.Asset.CategoryId = convertedAsset.Asset.Category.LookupId;
+                    convertedAsset.Asset.WarrantyPeriodId = convertedAsset.Asset.WarrantyPeriod.LookupId;
+                }
             }
             
             ConvertedAssetsDto response = new ConvertedAssetsDto

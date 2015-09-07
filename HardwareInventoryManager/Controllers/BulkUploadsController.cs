@@ -77,5 +77,20 @@ namespace HardwareInventoryManager.Controllers
             var listOfTenantViewModel = Mapper.Map<IEnumerable<Tenant>, IEnumerable<TenantViewModel>>(tenants.ToList());
             return listOfTenantViewModel;
         }
+
+        [HttpGet]
+        public ActionResult RefreshReview(int id)
+        {
+            ImportService importService = new ImportService(User.Identity.Name);
+            BulkUploadViewModel response = importService.PrepareImport(id);
+           
+            IEnumerable<TenantViewModel> listOfTenants = GetTenants();
+            response.BatchId = id.ToString();
+            response.Tenants = listOfTenants;
+
+            Utilities.JsonCamelCaseResult result =
+                new Utilities.JsonCamelCaseResult(response, JsonRequestBehavior.AllowGet);
+            return result;
+        }
     }
 }

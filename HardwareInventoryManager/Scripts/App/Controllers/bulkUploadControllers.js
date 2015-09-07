@@ -20,7 +20,7 @@ bulkUploadControllers.controller('bulkUploadController', ['$scope', 'Upload', '$
                     })
                     .success(function (data, status, headers, config) {
                         importService.set(data);
-                        $location.path('BulkUploadReview');
+                        $location.path('BulkUploadReview/' + data.batchId);
                     });
                 }
             }
@@ -31,26 +31,45 @@ bulkUploadControllers.controller('bulkUploadController', ['$scope', 'Upload', '$
 bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Upload', '$location', 'importService', 'filterFilter', 'bulkUploadRepository',
     function ($scope, Upload, $location, importService, filterFilter, bulkUploadRepository) {
         $scope.batch = importService.get();
-        $scope.assets = $scope.batch.assets;
-        $scope.batchId = $scope.batch.batchId
-        $scope.tenants = $scope.batch.tenants;
-        $scope.selectedTenant = $scope.batch.tenants[0];
-        $scope.errors = $scope.batch.errors;
 
-        if ($scope.assets instanceof Array) {
-            $scope.$watch('search', function (newVal, oldVal) {
-                $scope.filtered = filterFilter($scope.assets, newVal);
-                $scope.filteredAssetsLength = $scope.filtered.length;
-                $scope.totalItems = $scope.filtered.length;
-                $scope.noOfPages = 5;
+        $scope.buildResults = function () {
+            $scope.assets = $scope.batch.assets;
+            $scope.batchId = $scope.batch.batchId
+            $scope.tenants = $scope.batch.tenants;
+            $scope.selectedTenant = $scope.batch.tenants[0];
+            $scope.errors = $scope.batch.errors;
+
+            if ($scope.assets instanceof Array) {
+                $scope.$watch('search', function (newVal, oldVal) {
+                    $scope.filtered = filterFilter($scope.assets, newVal);
+                    $scope.filteredAssetsLength = $scope.filtered.length;
+                    $scope.totalItems = $scope.filtered.length;
+                    $scope.noOfPages = 5;
+                    $scope.currentPage = 1;
+                }, true);
+
+
                 $scope.currentPage = 1;
-            }, true);
+                $scope.totalItems = $scope.assets.length;
+                $scope.entryLimit = 10;
+                $scope.numPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+            }
+        };
 
+        if ($scope.batch.assets === undefined) {
 
-            $scope.currentPage = 1;
-            $scope.totalItems = $scope.assets.length;
-            $scope.entryLimit = 10;            
-            $scope.numPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+            var batchId = getUrlParameter('BulkUploadReview');
+
+            bulkUploadRepository.refreshReview(batchId).$promise.then(
+                function (resp) {
+                    $scope.batch = resp;
+                    $scope.buildResults();
+                },
+                function (respError) {
+
+                });
+        } else {
+            $scope.buildResults();
         }
         $scope.resetFilters = function () {
             // needs to be a function or it won't trigger a $watch
@@ -70,6 +89,21 @@ bulkUploadControllers.controller('reviewBulkUploadController', ['$scope', 'Uploa
                 }
             );
         };
-       
     }
 ]);
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.href),
+        sURLVariables = sPageURL.split('/'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i];
+
+        if (sParameterName === sParam) {
+            var requiredId = sURLVariables[i + 1];
+            return requiredId === undefined ? true : requiredId;
+        }
+    }
+};

@@ -61,5 +61,13 @@ namespace HardwareInventoryManager.Services
             Offline,
             OnlineSendGrid
         }
+
+        public enum QuoteRequestTypes
+        {
+            Pending,
+            Processing,
+            Supplied,
+            Complete
+        }
     }
 }

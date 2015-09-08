@@ -65,16 +65,43 @@
                             <h2>@Model.TotalWishlist</h2>
                         </div>
                     </div>
+                    <hr/>
                     <div class="row">
-                        <div class="col-md-12"></div>
-                        <dl class="dl-horizontal">
-                            <dt>Pending</dt>
-                            <dd>0</dd>
-                            <dt>In Progress</dt>
-                            <dd>0</dd>
-                            <dt>Complete</dt>
-                            <dd>0</dd>
-                        </dl>
+                        <div class="col-md-8` col-md-offset-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Pending
+                                </div>
+                                <div class="col-md-4">
+                                    @Model.TotalWishlistPending
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Processing
+                                </div>
+                                <div class="col-md-4">
+                                    @Model.TotalWishlistProcessing
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Supplied
+                                </div>
+                                <div class="col-md-4">
+                                    @Model.TotalWishlistSupplied
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Complete
+                                </div>
+                                <div class="col-md-4">
+                                    @Model.TotalWishlistComplete
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

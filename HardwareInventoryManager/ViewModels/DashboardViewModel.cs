@@ -14,9 +14,12 @@ namespace HardwareInventoryManager.ViewModels
             DashboardUpdates = new List<DashboardUpdates>();
         }
 
-        public int TotalAssets { get; set; }
-
         public int TotalWishlist { get; set; }
+
+        public int TotalWishlistPending { get; set; }
+        public int TotalWishlistProcessing { get; set; }
+        public int TotalWishlistSupplied { get; set; }
+        public int TotalWishlistComplete { get; set; }
 
         public int TotalPendingUpgrade { get; set; }
 

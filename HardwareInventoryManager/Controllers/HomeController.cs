@@ -46,8 +46,6 @@ namespace HardwareInventoryManager.Controllers
         public ActionResult Dashboard()
         {
             DashboardViewModel dashboad = new DashboardViewModel();
-            IQueryable<Asset> filteredAssets = AssetService.GetAllAssets();
-            dashboad.TotalAssets = filteredAssets.Count();
             
             DashboardService dashboardService = new DashboardService(User.Identity.Name);
             IList<TwoColumnChartData> fourMonthExpiryData = dashboardService.AssetsByExpiry4Months();
@@ -55,7 +53,14 @@ namespace HardwareInventoryManager.Controllers
 
             IList<TwoColumnChartData> pieChartData = dashboardService.AssetsByCategoryPieChart();
             dashboad.AssetsByCategory = JArray.FromObject(pieChartData);
-            
+
+            int[] wishListStatus = dashboardService.WishListSummary();
+            dashboad.TotalWishlistPending = wishListStatus[0];
+            dashboad.TotalWishlistProcessing = wishListStatus[1];
+            dashboad.TotalWishlistSupplied = wishListStatus[2];
+            dashboad.TotalWishlistComplete = wishListStatus[3];
+            dashboad.TotalWishlist = wishListStatus[0] + wishListStatus[1] + wishListStatus[2] + wishListStatus[3];
+
             return View(dashboad);
         }
 

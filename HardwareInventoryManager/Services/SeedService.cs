@@ -187,7 +187,12 @@ namespace HardwareInventoryManager.Services
             _context.LookupTypes.Add(quoteRequestStatus);
             _context.SaveChanges();
 
-            string[] quoteRequestStatusTypes = { "Pending", "Processing", "Supplied", "Complete" };
+            string[] quoteRequestStatusTypes = { 
+                                                   EnumHelper.QuoteRequestTypes.Pending.ToString(),
+                                                   EnumHelper.QuoteRequestTypes.Processing.ToString(),
+                                                   EnumHelper.QuoteRequestTypes.Supplied.ToString(),
+                                                   EnumHelper.QuoteRequestTypes.Complete.ToString()
+                                               };
             foreach(string quoteRequestStatusType in quoteRequestStatusTypes)
             {
                 Lookup quoteRequestStatusLookup = new Lookup

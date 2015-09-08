@@ -226,6 +226,7 @@
     <Compile Include="Services\ApplicationSettings\IApplicationSettingsService.cs" />
     <Compile Include="Services\ApplicationSettings\ApplicationSettingsService.cs" />
     <Compile Include="Services\Assets\AssetService.cs" />
+    <Compile Include="Services\Dashboard\DashboardService.cs" />
     <Compile Include="Services\Import\ImportService.cs" />
     <Compile Include="Services\Messaging\SendEmailFactory.cs" />
     <Compile Include="Services\Quotes\QuoteRequestService.cs" />

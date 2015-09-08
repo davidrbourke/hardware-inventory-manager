@@ -32,7 +32,7 @@ namespace HardwareInventoryManager.Controllers
             IEnumerable<TenantViewModel> listOfTenants = GetTenants();
             response.BatchId = batchId;
             response.Tenants = listOfTenants;
-
+                
             Utilities.JsonCamelCaseResult result =
                 new Utilities.JsonCamelCaseResult(response, JsonRequestBehavior.AllowGet);
             return result;

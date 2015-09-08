@@ -40,6 +40,6 @@ namespace HardwareInventoryManager.Models
         [ForeignKey("CategoryId")]
         public Lookup Category{ get; set; }
 
-        public string LocationDescription { get; set; }        
+        public string LocationDescription { get; set; }
     }
 }

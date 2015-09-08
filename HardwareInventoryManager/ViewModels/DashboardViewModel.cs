@@ -1,4 +1,5 @@
 ﻿using HardwareInventoryManager.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,9 @@ namespace HardwareInventoryManager.ViewModels
         public int TotalPendingUpgrade { get; set; }
 
         public IEnumerable<DashboardUpdates> DashboardUpdates { get; set;}
+
+        public JArray AssetExpiryData { get; set; }
+
+        public JArray AssetsByCategory { get; set; }
     }
 }

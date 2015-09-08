@@ -9,6 +9,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HardwareInventoryManager.Services.Assets;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using HardwareInventoryManager.Services.Dashboard;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -45,8 +48,17 @@ namespace HardwareInventoryManager.Controllers
             DashboardViewModel dashboad = new DashboardViewModel();
             IQueryable<Asset> filteredAssets = AssetService.GetAllAssets();
             dashboad.TotalAssets = filteredAssets.Count();
+            
+            DashboardService dashboardService = new DashboardService(User.Identity.Name);
+            IList<TwoColumnChartData> fourMonthExpiryData = dashboardService.AssetsByExpiry4Months();
+            dashboad.AssetExpiryData = JArray.FromObject(fourMonthExpiryData);
+
+            IList<TwoColumnChartData> pieChartData = dashboardService.AssetsByCategoryPieChart();
+            dashboad.AssetsByCategory = JArray.FromObject(pieChartData);
+            
             return View(dashboad);
         }
+
 
         private AssetService _assetService;
         public AssetService AssetService
@@ -65,4 +77,17 @@ namespace HardwareInventoryManager.Controllers
             }
         }
     }
+
+    public class DataForChart
+    {
+        public string DateString { get; set; }
+        public int CountOfAssets { get; set; }
+    }
+
+    public class AssetByCategoryForChart
+    {
+        public string Category { get; set; }
+        public int CountOfAssets { get; set; }
+    }
+
 }

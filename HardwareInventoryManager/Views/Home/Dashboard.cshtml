@@ -1,31 +1,148 @@
 ﻿@model HardwareInventoryManager.ViewModels.DashboardViewModel
-<div class="jumbotron">
-    <div class="container">
-        <h1>Welcome to Inventory Manager</h1>
-        <p>News on updates will appear here...</p>
+<h1>Your Dashboard</h1>
+<div class="row">
+    <div class="row">
+        <hr />
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Inventory Manager Updates
+            </div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                Notifications
+            </div>
+            <div class="panel-body">
+                <p>Pending membership requests: </p>
+                <p>Messages from Inventory Manager: </p>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="container">
+<hr/>
     <!-- Example row of columns -->
     <div class="row">
         <div class="col-md-4">
-            <h2>Total Assets</h2>
-            <p>Summary of all assets</p>
-            <strong>@Model.TotalAssets</strong>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Assets
+                </div>
+                <div class="panel-body">
+                    <div id="pie_chart_div"></div>
+                </div>
+            </div>
+
         </div>
         <div class="col-md-4">
-            <h2>Asset Renewel</h2>
-            <p>Summary of assets due for renewel</p>
-            <strong>@Model.TotalPendingUpgrade</strong>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Asset Renewel
+                </div>
+                <div class="panel-body">
+                    <div id="chart_div"></div>
+                </div>
+            </div>
+
         </div>
         <div class="col-md-4">
-            <h2>Wishlist</h2>
-            <p>Summary of wishlist here...total number, total with request quotes, total will received quotes..</p>
-            <strong>@Model.TotalWishlist</strong>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Wishlist
+                </div>
+                <div class="panel-body">
+
+
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-5">
+                            <h2>@Model.TotalWishlist</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"></div>
+                        <dl class="dl-horizontal">
+                            <dt>Pending</dt>
+                            <dd>0</dd>
+                            <dt>In Progress</dt>
+                            <dd>0</dd>
+                            <dt>Complete</dt>
+                            <dd>0</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div> <!-- /container -->
+<script type="text/javascript" src="https://www.google.com/jsapi">
+</script>
+
+<script type="text/javascript">
+    google.load('visualization', '1', { packages: ['corechart', 'bar'] });
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', 'Month');
+
+        data.addColumn('number', 'Expiry Count');
+
+        var rawData = @Html.Raw(@Model.AssetExpiryData);
+
+        for(var i = 0; i < rawData.length; i++) {
+            data.addRow([rawData[i].ColumnDescription, rawData[i].CountOf]);
+        }
+
+        var options = {
+            title: 'Assets due to expire in the next 4 months',
+            hAxis: {
+                title: 'Date Period',
+                viewWindow: {
+                    min: [7, 30, 0],
+                    max: [17, 30, 0]
+                }
+            },
+            vAxis: {
+                title: 'Total'
+            }
+        };
+
+        var chart = new google.visualization.ColumnChart(
+          document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+    }
+
+    google.setOnLoadCallback(drawPieChart);
+    function drawPieChart() {
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', 'Asset Category');
+        data.addColumn('number', 'Count of Assets');
+
+        var rawData = @Html.Raw(@Model.AssetsByCategory);
+
+        for(var i = 0; i < rawData.length; i++) {
+            data.addRow([rawData[i].ColumnDescription, rawData[i].CountOf]);
+        }
+
+        var options = {
+            title: 'Assets by Category'
+        };
+
+        var chart = new google.visualization.PieChart(
+          document.getElementById('pie_chart_div'));
+
+        chart.draw(data, options);
+    }
+
+</script>
+
+
+    

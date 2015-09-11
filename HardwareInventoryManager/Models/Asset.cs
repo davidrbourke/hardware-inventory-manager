@@ -41,5 +41,9 @@ namespace HardwareInventoryManager.Models
         public Lookup Category{ get; set; }
 
         public string LocationDescription { get; set; }
+
+        public int? AssetDetailId { get; set; }
+        [ForeignKey("AssetDetailId")]
+        public AssetDetail NetworkedAssetDetail { get; set; }
     }
 }

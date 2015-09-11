@@ -75,6 +75,7 @@ namespace HardwareInventoryManager.ViewModels
         public SelectList CategorySelectList { get; set; }
 
         public SelectList WarrantyPeriodSelectList { get; set; }
-
+        
+        public AssetDetailViewModel NetworkedAssetDetail { get; set; }
     }
 }

@@ -218,6 +218,7 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AssetDetail.cs" />
     <Compile Include="Models\BulkImport.cs" />
     <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Models\QuoteResponse.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Services\User\UserTypeFactory.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
+    <Compile Include="ViewModels\AssetDetailViewModel.cs" />
     <Compile Include="ViewModels\AssetIndexViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModel.cs" />
     <Compile Include="ViewModels\BulkUploadViewModel.cs" />

@@ -14,8 +14,8 @@ namespace HardwareInventoryManager.Repository
     /// <typeparam name="T"></typeparam>
     public class Repository<T> : IRepository<T> where T : class, ITenant
     {
-        private ApplicationUser _applicationUser;
-        private CustomApplicationDbContext _db;
+        protected ApplicationUser applicationUser;
+        protected CustomApplicationDbContext dbContext;
 
         public Repository(string userName)
             : this(new CustomApplicationDbContext(), userName)
@@ -24,7 +24,7 @@ namespace HardwareInventoryManager.Repository
 
         public Repository(CustomApplicationDbContext context, string userName)
         {
-            _db = context;
+            dbContext = context;
             SetCurrentUserByUsername(userName);
         }
 
@@ -35,7 +35,7 @@ namespace HardwareInventoryManager.Repository
         public IQueryable<T> GetAll()
         {
             IList<int> tenants = GetTenantIds();
-            IQueryable<T> query = _db.Set<T>().Where(a =>  tenants.Contains(a.TenantId));
+            IQueryable<T> query = dbContext.Set<T>().Where(a =>  tenants.Contains(a.TenantId));
             //var tenants = _db..Assets.Include(a => a.Tenant).Include(a => a.AssetMake).Include(a => a.Category).Include(a => a.WarrantyPeriod).Where(t => userTenants.Contains(t.TenantId));
             return query;
         }
@@ -52,7 +52,7 @@ namespace HardwareInventoryManager.Repository
             if (tenants.Contains(entity.TenantId))
             {
                 entity.TenantId = entity.TenantId;
-                _db.Set<T>().Add(entity);
+                dbContext.Set<T>().Add(entity);
             }
             return entity;
         }
@@ -63,13 +63,13 @@ namespace HardwareInventoryManager.Repository
         /// <param name="entity"></param>
         /// <param name="tenantId"></param>
         /// <returns></returns>
-        public T Edit(T entity)
+        public virtual T Edit(T entity)
         {
             IList<int> tenants = GetTenantIds();
             if (tenants.Contains(entity.TenantId))
             {
                 entity.TenantId = entity.TenantId;
-                _db.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                dbContext.Entry(entity).State = System.Data.Entity.EntityState.Modified;
             }
             return entity;
         }
@@ -84,7 +84,7 @@ namespace HardwareInventoryManager.Repository
         public virtual IQueryable<T> Find(Expression<Func<T, bool>> predicate)
         {
             IList<int> tenants = GetTenantIds();
-            return _db.Set<T>().Where(predicate).Where(x => tenants.Contains(x.TenantId));
+            return dbContext.Set<T>().Where(predicate).Where(x => tenants.Contains(x.TenantId));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace HardwareInventoryManager.Repository
             IList<int> tenants = GetTenantIds();
             if (GetTenantIds().Contains(entity.TenantId))
             {
-                _db.Set<T>().Remove(entity);
+                dbContext.Set<T>().Remove(entity);
             }
         }
 
@@ -110,7 +110,7 @@ namespace HardwareInventoryManager.Repository
         public virtual T Single(Expression<Func<T, bool>> predicate)
         {
             IList<int> tenants = GetTenantIds();
-            return _db.Set<T>().Where(predicate)
+            return dbContext.Set<T>().Where(predicate)
                 .Where(x => tenants.Contains(x.TenantId)).FirstOrDefault();
         }
 
@@ -119,23 +119,23 @@ namespace HardwareInventoryManager.Repository
         /// </summary>
         public void Save()
         {
-            _db.SaveChanges();
+            dbContext.SaveChanges();
         }
 
         /// <summary>
         /// Load the Users tenant ids
         /// </summary>
         /// <returns>List of tenant ids</returns>
-        private IList<int> GetTenantIds()
+        protected IList<int> GetTenantIds()
         {
-            if(_applicationUser == null)
+            if(applicationUser == null)
             {
                 throw new Exception("Application User has not been set");
             }
             IList<int> tenantIdList = new List<int>();
-            if (_applicationUser.UserTenants == null)
+            if (applicationUser.UserTenants == null)
             {
-                ApplicationUser reloadedUser = _db.Users.Include(u => u.UserTenants).FirstOrDefault(u => u.Id == _applicationUser.Id);
+                ApplicationUser reloadedUser = dbContext.Users.Include(u => u.UserTenants).FirstOrDefault(u => u.Id == applicationUser.Id);
                 tenantIdList = reloadedUser.UserTenants.Select(x => x.TenantId).ToList();
                 if (tenantIdList.Count() == 0)
                 {
@@ -144,7 +144,7 @@ namespace HardwareInventoryManager.Repository
             } 
             else
             {
-                tenantIdList = _applicationUser.UserTenants.Select(x => x.TenantId).ToList();
+                tenantIdList = applicationUser.UserTenants.Select(x => x.TenantId).ToList();
                 if (tenantIdList.Count() == 0)
                 {
                     throw new Exception("No tenant id has been found for the user");
@@ -159,7 +159,7 @@ namespace HardwareInventoryManager.Repository
         /// <param name="user"></param>
         public void SetCurrentUser(ApplicationUser user)
         {
-            _applicationUser = user;
+            applicationUser = user;
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace HardwareInventoryManager.Repository
         /// <param name="userName"></param>
         public void SetCurrentUserByUsername(string userName)
         {
-            _applicationUser = _db.Users.FirstOrDefault(u => u.UserName == userName);
+            applicationUser = dbContext.Users.FirstOrDefault(u => u.UserName == userName);
         }
     }
 }

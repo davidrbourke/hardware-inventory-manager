@@ -39,5 +39,16 @@ namespace HardwareInventoryManager.Services.User
             }
             return tenantContextId;
         }
+
+        public IQueryable<Tenant> GetUserTenants(string userName)
+        {
+            ApplicationUser uu = _context.Users.Include(x => x.UserTenants).First(u => u.UserName == userName) as ApplicationUser;
+            if (uu.UserTenants != null && uu.UserTenants.Count > 0)
+            {
+                return uu.UserTenants.AsQueryable();
+            }
+            return new List<Tenant>().AsQueryable();
+        }
+
     }
 }

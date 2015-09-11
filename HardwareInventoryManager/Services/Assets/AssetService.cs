@@ -23,7 +23,8 @@ namespace HardwareInventoryManager.Services.Assets
             var assets = Repository.GetAll()
                 .Include(x => x.AssetMake)
                 .Include(x => x.Category)
-                .Include(x => x.WarrantyPeriod);
+                .Include(x => x.WarrantyPeriod)
+                .Include(x => x.NetworkedAssetDetail);
             return assets;   
         }
 
@@ -59,7 +60,7 @@ namespace HardwareInventoryManager.Services.Assets
             {
                 if (_repository == null)
                 {
-                    _repository = new Repository<Asset>(UserName);
+                    _repository = new AssetRepository(UserName);
                 };
                 return _repository;
             }

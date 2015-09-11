@@ -16,6 +16,7 @@ using HardwareInventoryManager.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using HardwareInventoryManager.Services.Assets;
+using HardwareInventoryManager.Services.User;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -46,6 +47,7 @@ namespace HardwareInventoryManager.Controllers
         {
             IList<Asset> assets = AssetService.GetAllAssets().ToList();
             Mapper.CreateMap<Asset, AssetViewModel>();
+            Mapper.CreateMap<AssetDetail, AssetDetailViewModel>();
             var l = Mapper.Map<IList<Asset>, IList<AssetViewModel>>(assets);
             JObject o = JObject.FromObject(
                 new
@@ -90,11 +92,12 @@ namespace HardwareInventoryManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TenantId,TenantOrganisationId,CreatedDate,UpdatedDate,AssetId,AssetMakeId,Model,SerialNumber,PurchaseDate,WarrantyPeriodId,ObsolescenseDate,PricePaid,CategoryId,LocationDescription")] AssetViewModel createAssetViewModel)
+        public ActionResult Create(AssetViewModel createAssetViewModel)
         {
             if (ModelState.IsValid)
             {
                 Mapper.CreateMap<AssetViewModel, Asset>();
+                Mapper.CreateMap<AssetDetailViewModel, AssetDetail>();
                 Asset asset = Mapper.Map<AssetViewModel, Asset>(createAssetViewModel);
                 AssetService.SaveAsset(asset);
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
@@ -118,8 +121,12 @@ namespace HardwareInventoryManager.Controllers
                 return HttpNotFound();
             }
             Mapper.CreateMap<Asset, AssetViewModel>();
+            Mapper.CreateMap<AssetDetail, AssetDetailViewModel>();
             AssetViewModel editAssetViewModel = Mapper.Map<Asset, AssetViewModel>(asset);
-
+            if(editAssetViewModel.NetworkedAssetDetail == null)
+            {
+                editAssetViewModel.NetworkedAssetDetail = new AssetDetailViewModel();
+            }
             PopulateSelectLists(editAssetViewModel);
             return View(editAssetViewModel);
         }
@@ -129,16 +136,20 @@ namespace HardwareInventoryManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TenantId,TenantOrganisationId,CreatedDate,UpdatedDate,AssetId,AssetMakeId,Model,SerialNumber,PurchaseDate,WarrantyPeriodId,ObsolescenseDate,PricePaid,CategoryId,LocationDescription")] AssetViewModel editAssetViewModel)
+        public ActionResult Edit(AssetViewModel editAssetViewModel)
         {
             if (ModelState.IsValid)
             {
                 Mapper.CreateMap<AssetViewModel, Asset>();
                 Asset asset = Mapper.DynamicMap<AssetViewModel, Asset>(editAssetViewModel);
+                asset.AssetDetailId = asset.NetworkedAssetDetail.AssetDetailId;
                 AssetService.SaveAsset(asset);
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);
                 return RedirectToAction("Index");
             }
+            
+            var items = ModelState.ToList().Where(c => c.Value.Errors.Count() > 0);
+
             PopulateSelectLists(editAssetViewModel);
             Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
             return View(editAssetViewModel);
@@ -178,7 +189,8 @@ namespace HardwareInventoryManager.Controllers
         /// <returns></returns>
         public void PopulateSelectLists(AssetViewModel assetViewModel)
         {
-            assetViewModel.TenantOrganisationSelectList = new SelectList(db.Tenants, "TenantId", "Name", assetViewModel.TenantId);
+            IQueryable<Tenant> userTenants = new TenantUtility().GetUserTenants(User.Identity.Name);
+            assetViewModel.TenantOrganisationSelectList = new SelectList(userTenants, "TenantId", "Name", assetViewModel.TenantId);
             assetViewModel.AssetMakeSelectList = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Make.ToString()), "LookupId", "Description", assetViewModel.AssetMakeId);
             assetViewModel.CategorySelectList = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.Category.ToString()), "LookupId", "Description", assetViewModel.CategoryId);
             assetViewModel.WarrantyPeriodSelectList = new SelectList(db.Lookups.Where(l => l.Type.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString()), "LookupId", "Description", assetViewModel.WarrantyPeriodId);

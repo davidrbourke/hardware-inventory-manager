@@ -222,6 +222,7 @@
     <Compile Include="Models\BulkImport.cs" />
     <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Models\QuoteResponse.cs" />
+    <Compile Include="Repository\AssetRepository.cs" />
     <Compile Include="Repository\IUserErrors.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\ApplicationSettings\IApplicationSettingsService.cs" />
@@ -499,6 +500,7 @@
     <Content Include="Views\QuoteResponses\Index.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\BulkUploads\Index.cshtml" />
+    <Content Include="Views\Assets\_AssetDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,324 @@
+﻿@model HardwareInventoryManager.ViewModels.AssetViewModel
+
+<div class="panel-group" id="accordian" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading selectable" role="tab" id="headingOne">
+            <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="panel-title">
+                Advanced - General            
+            </div>
+            </>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.ComputerName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.ComputerName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.ComputerName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.WMIStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.WMIStatus, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.WMIStatus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.SSHStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.SSHStatus, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.SSHStatus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.CurrentOperatingSystem, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.CurrentOperatingSystem, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.CurrentOperatingSystem, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.ServicePackLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.ServicePackLevel, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.ServicePackLevel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.ActiveNetworkAdapter, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.ActiveNetworkAdapter, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.ActiveNetworkAdapter, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading selectable" role="tab" id="headingTwo">
+            <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                 class="panel-title">
+                Network Information
+            </div>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.IPAddress, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.IPAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.IPAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.MACAddress, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.MACAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.MACAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.DNSServer, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.DNSServer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.DNSServer, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.SubnetMask, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.SubnetMask, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.SubnetMask, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.WINSServer, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.WINSServer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.WINSServer, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.RegisteredUserName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.RegisteredUserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.RegisteredUserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.DomainWorkgroup, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.DomainWorkgroup, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.DomainWorkgroup, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.DaysSinceDomainAccountUpdate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.DaysSinceDomainAccountUpdate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.DaysSinceDomainAccountUpdate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading selectable" role="tab" id="headingThree">
+            <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
+                 class="panel-title">
+                Specification - CPU
+            </div>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.NumberOfProcessors, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.NumberOfProcessors, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.NumberOfProcessors, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.NumberOfProcessors, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.NumberOfProcessors, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.NumberOfProcessors, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.NumberOfCores, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.NumberOfCores, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.NumberOfCores, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.LogicalProcessorCount, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.LogicalProcessorCount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.LogicalProcessorCount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.CPU, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.CPU, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.CPU, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading selectable" role="tab" id="headingFive">
+            <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive"
+                 class="panel-title">
+                Specification - Secondary
+            </div>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+            <div class="panel-body">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.SystemMemoryMB, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.SystemMemoryMB, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.SystemMemoryMB, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.VideoCard, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.VideoCard, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.VideoCard, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.VideoCardMemoryMB, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.VideoCardMemoryMB, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.VideoCardMemoryMB, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.SoundCard, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.SoundCard, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.SoundCard, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.DiskDrive, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.DiskDrive, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.DiskDrive, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.DiskDriveSizeGB, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.DiskDriveSizeGB, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.DiskDriveSizeGB, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.OpticalDrive, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.OpticalDrive, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.OpticalDrive, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading selectable" role="tab" id="headingFour">
+            <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour"
+                 class="panel-title">
+                BIOS
+            </div>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.BIOS, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.BIOS, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.BIOS, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.BIOSSerialNumber, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.BIOSSerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.BIOSSerialNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.BIOSManufacturer, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.BIOSManufacturer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.BIOSManufacturer, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.BIOSReleaseDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.BIOSReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.BIOSReleaseDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NetworkedAssetDetail.MachineType, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NetworkedAssetDetail.MachineType, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NetworkedAssetDetail.MachineType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

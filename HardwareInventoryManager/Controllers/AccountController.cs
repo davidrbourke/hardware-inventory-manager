@@ -140,11 +140,11 @@ namespace HardwareInventoryManager.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
+            
             if (userId == null || code == null)
             {
                 return View("Error");
             }
-
             IdentityResult result = await UserManager.ConfirmEmailAsync(userId, code);
             if (result.Succeeded)
             {

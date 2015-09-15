@@ -217,6 +217,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509151651430_create.cs" />
+    <Compile Include="Migrations\201509151651430_create.Designer.cs">
+      <DependentUpon>201509151651430_create.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AssetDetail.cs" />
     <Compile Include="Models\BulkImport.cs" />
@@ -305,6 +309,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
     <Content Include="Images\ball-63527_640.jpg" />
+    <Content Include="Images\MAMlogo.gif" />
+    <Content Include="Images\mamlogo.png" />
     <Content Include="Images\man-475557_640.jpg" />
     <Content Include="Images\office-605503_640.jpg" />
     <Content Include="Content\Images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
@@ -386,6 +392,8 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\myassetmanager - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\myassetmanager - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTables.responsive.js" />
     <Content Include="Scripts\dataTables.responsive.min.js" />
@@ -515,6 +523,9 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509151651430_create.resx">
+      <DependentUpon>201509151651430_create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

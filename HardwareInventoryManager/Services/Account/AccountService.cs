@@ -85,8 +85,8 @@ namespace HardwareInventoryManager.Services.Account
             string code = await _accountProvider.GeneratePasswordResetToken(userToReset.Id);
             var callbackUrl =
                 string.Format("{0}{1}/{2}?userId={3}&code={4}",
-                url, "Account", "ResetPassword", userToReset.Id, code);
-           
+                url, "Account", "ResetPassword", userToReset.Id, UtilityHelper.EncodeUrlCode(code));
+            
             IProcessEmail processEmail = new ProcessEmail(userName);
             processEmail.SendPasswordResetEmail(userToReset, callbackUrl);
 
@@ -110,8 +110,8 @@ namespace HardwareInventoryManager.Services.Account
                 string.Format("{0}{1}/{2}?userId={3}&code={4}",
                 url, "Account", "ConfirmEmail",
                 recipientUser.Id,
-                emailConfirmationToken);
-           
+                UtilityHelper.EncodeUrlCode(emailConfirmationToken));
+
             IProcessEmail processEmail = new ProcessEmail(userName);
             processEmail.SendEmailConfirmationEmail(recipientUser, callback);
             return new AccountResponse

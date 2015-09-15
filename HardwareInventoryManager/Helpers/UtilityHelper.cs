@@ -38,5 +38,15 @@ namespace HardwareInventoryManager.Services
             }
             return Encoding.ASCII.GetString(generatedBytes);
         }
+
+        public static string EncodeUrlCode(string code)
+        {
+            return HttpUtility.UrlEncode(code);
+        }
+
+        public static string DecodeUrlCode(string code)
+        {
+            return HttpUtility.UrlDecode(code);
+        }
     }
 }

@@ -23,5 +23,8 @@ namespace HardwareInventoryManager.Models
         [Required]
         [Display(Name = "How can we help?")]
         public string Description { get; set; }
+
+        [Display(Name = "Message Read")]
+        public bool? MessageRead { get; set; }
     }
 }

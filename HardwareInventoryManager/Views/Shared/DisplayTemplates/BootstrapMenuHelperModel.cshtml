@@ -8,20 +8,25 @@
                 <ul class="nav navbar-nav">
                     @foreach (SiteMapNodeModel node in nodeList)
                     {
-                        string url = node.IsClickable ? node.Url : "#";
+                        if(!node.Attributes.ContainsKey("visibility") ||
+                            (node.Attributes.ContainsKey("visibility") && 
+                            !node.Attributes["visibility"].Equals("false")))
+                        { 
+                            string url = node.IsClickable ? node.Url : "#";
 
-                        if (!node.Children.Any())
-                        {
-                            <li><a href="@url">@node.Title</a></li>
-                        }
-                        else
-                        {
-                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">@node.Title <span class="caret"></span></a>@DropDownMenu(node.Children)</li>
-                        }
+                            if (!node.Children.Any())
+                            {
+                                <li><a href="@url">@node.Title</a></li>
+                            }
+                            else
+                            {
+                                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">@node.Title <span class="caret"></span></a>@DropDownMenu(node.Children)</li>
+                            }
 
-                        if (node != nodeList.Last())
-                        {
-                            <li class="divider-vertical"></li>
+                            if (node != nodeList.Last())
+                            {
+                                <li class="divider-vertical"></li>
+                            }
                         }
                     }
                 </ul>

@@ -9,10 +9,11 @@ using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Filters;
 
 namespace HardwareInventoryManager.Controllers
 {
-    [AllowAnonymous]
+    [CustomAuthorize]
     public class ContactsController : AppController
     {
         private CustomApplicationDbContext db = new CustomApplicationDbContext();
@@ -31,6 +32,9 @@ namespace HardwareInventoryManager.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Contact contact = db.Contacts.Find(id);
+            contact.MessageRead = true;
+            db.Entry(contact).State = EntityState.Modified;
+            db.SaveChanges();
             if (contact == null)
             {
                 return HttpNotFound();
@@ -39,6 +43,7 @@ namespace HardwareInventoryManager.Controllers
         }
 
         // GET: Contacts/Create
+        [AllowAnonymous]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +54,7 @@ namespace HardwareInventoryManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult Create([Bind(Include = "ContactId,Name,EmailAddress,Description,CreatedDate,UpdatedDate")] Contact contact)
         {
             if (ModelState.IsValid)

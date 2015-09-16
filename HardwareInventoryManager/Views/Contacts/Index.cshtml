@@ -4,33 +4,37 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Contact Requests</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
+            Email Address
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
+            Date Message Created
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </th>
-        <th></th>
+         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+
+    var msgClass = string.Empty;
+        if(item.MessageRead.HasValue && item.MessageRead.Value) 
+        {
+            msgClass = "MessageRead";
+        }
+        else
+        {
+            msgClass = "MessageUnread";
+        }
+    <tr class="@msgClass">
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
@@ -44,12 +48,7 @@
             @Html.DisplayFor(modelItem => item.CreatedDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UpdatedDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ContactId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ContactId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ContactId })
+            @Html.ActionLink("Details", "Details", new { id=item.ContactId })
         </td>
     </tr>
 }

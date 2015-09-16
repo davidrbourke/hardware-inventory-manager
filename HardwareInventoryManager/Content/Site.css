@@ -276,3 +276,7 @@ ng-view.ng-enter-active {
     background-color: #d9edf7;
     border-color: #bce8f1;
 }
+
+tr.MessageUnread {
+    font-weight: bold;
+}

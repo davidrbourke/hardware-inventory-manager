@@ -280,3 +280,81 @@ ng-view.ng-enter-active {
 tr.MessageUnread {
     font-weight: bold;
 }
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+.panel.panel-custom-import {
+    background-color: #2ab0c0;
+    transition: background-color 0.5s;
+}
+
+.panel.panel-custom-import:hover {
+    background-color: #21919e;
+    transition: background-color 0.5s;
+}
+
+
+    
+
+
+.panel.panel-custom-import h4,
+.panel.panel-custom-import span,
+.panel.panel-custom-users h4,
+.panel.panel-custom-users span,
+.panel.panel-custom-settings h4,
+.panel.panel-custom-settings span,
+.panel.panel-custom-reports h4,
+.panel.panel-custom-reports span {
+    color: white;
+    text-decoration: none;
+}
+
+.panel.panel-custom-users {
+    background-color: #2cd3a1;
+    transition: background-color 0.5s;
+}
+
+.panel.panel-custom-users:hover {
+    background-color: #20a07a;
+    transition: background-color 0.5s;
+}
+
+.panel.panel-custom-settings {
+    background-color: #469bd7;
+    transition: background-color 0.5s;
+}
+
+.panel.panel-custom-settings:hover {
+    background-color: #357dad;
+    transition: background-color 0.5s;
+}
+
+.panel.panel-custom-reports {
+    background-color: #de6489;
+    transition: background-color 0.5s;
+}
+
+.panel.panel-custom-reports:hover {
+    background-color: #c15b79;
+    transition: background-color 0.5s;
+}
+
+span {
+    text-align: center;
+}
+
+.panel-custom-import .panel-body,
+.panel-custom-users .panel-body,
+.panel-custom-settings .panel-body,
+.panel-custom-reports .panel-body {
+    padding-top: 0px;
+    padding-bottom: 35px;
+    text-align: center;
+}
+
+.panel-custom-import h4 {
+    text-decoration: none;
+}

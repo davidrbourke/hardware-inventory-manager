@@ -7,6 +7,7 @@
     <mvcSiteMapNode title="Contact Us" controller="Contacts" action="Create"/>
     <mvcSiteMapNode title="Register" controller="Account" action="Register" visibility="false"/>
     <mvcSiteMapNode title="Log In" controller="Account" action="Login" visibility="false"/>
+    <mvcSiteMapNode title="Forgotten Password" controller="Account" action="ForgotPassword" visibility="false"/>
     <mvcSiteMapNode title="Assets" controller="Assets" action="Index">
       <mvcSiteMapNode title="Assets" controller="Assets" action="Index"/>
       <mvcSiteMapNode title="Bulk Upload" url="/BulkUploads/#/BulkUpload" />

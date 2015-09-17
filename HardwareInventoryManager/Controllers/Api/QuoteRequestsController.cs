@@ -119,5 +119,12 @@ namespace HardwareInventoryManager.Controllers.Api
                 _quoteRequestService = value;
             }
         }
+        
+        [AllowAnonymous]
+        public IHttpActionResult Alive()
+        {
+            return Ok();
+        }
+    
     }
 }

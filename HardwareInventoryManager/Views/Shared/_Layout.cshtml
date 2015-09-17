@@ -25,7 +25,10 @@
                 
             </div>
             <div class="navbar-collapse collapse">
-                @*<ul class="nav navbar-nav">
+                @*<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#contactRequestModal">
+                    Launch demo modal
+                </button>*@            
+                   @*<ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
@@ -43,6 +46,13 @@
         </div>
         @RenderBody()
         <hr />
+
+        @{
+            //Html.RenderAction("Create", "Contacts");
+            
+        }
+        
+
         <footer>
             <p>&copy; @DateTime.Now.Year - @HardwareInventoryManager.HIResources.Strings.AppName</p>
         </footer>

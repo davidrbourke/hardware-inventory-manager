@@ -46,6 +46,7 @@ namespace HardwareInventoryManager.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
+            //return PartialView("_ContactRequest");
             return View();
         }
 
@@ -61,11 +62,11 @@ namespace HardwareInventoryManager.Controllers
             {
                 db.Contacts.Add(contact);
                 db.SaveChanges();
-                //TempData["success"] = "Thank you. Your contact request has been sent.";
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Contact_Success);
                 return RedirectToAction("Index", "Home");
             }
             Alert(EnumHelper.Alerts.Error, HIResources.Strings.Contact_Error);
+            //return PartialView("_ContactRequest");//View(contact);
             return View(contact);
         }
 

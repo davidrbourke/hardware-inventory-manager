@@ -61,7 +61,7 @@ namespace HardwareInventoryManager.HIResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hardware Inventory.
+        ///   Looks up a localized string similar to My Asset Manager.
         /// </summary>
         public static string AppName {
             get {

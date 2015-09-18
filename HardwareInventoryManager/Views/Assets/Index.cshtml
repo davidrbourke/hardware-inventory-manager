@@ -2,82 +2,14 @@
 @model HardwareInventoryManager.ViewModels.AssetIndexViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Assets List";
 }
 
-<h2>Index</h2>
+<h2>Assets</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
 </p>
-@*<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Model)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SerialNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PurchaseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ObsolescenseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PricePaid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LocationDescription)
-        </th>
-        <th>
-            @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_Make)
-        </th>
-        <th>
-            @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_Category)
-        </th>
-        <th>
-            @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_WarrantyPeriod)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Model)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SerialNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PurchaseDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ObsolescenseDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PricePaid)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LocationDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AssetMake.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WarrantyPeriod.Description)
-        </td>
-        <td>
-            @Html.IndexLinks(new { id=item.AssetId })
-        </td>
-    </tr>
-}
-
-</table>*@
 
 <div class="col-md-12">
     <table id="table_id" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">

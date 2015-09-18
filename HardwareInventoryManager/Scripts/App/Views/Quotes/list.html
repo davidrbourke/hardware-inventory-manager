@@ -7,12 +7,12 @@
             <button type="button" class="btn btn-default" ng-click="loadModalQuote()">Create</button>
         </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-9">
         <div class="form-group">
-            <div class="col-sm-offset-5 col-sm-2">
+            <div class="col-md-offset-8 col-md-1">
                 <label>Search: </label>
             </div>
-            <div class="col-sm-4 form-group">
+            <div class="col-md-3 form-group">
                 <input type="text" id="quoteListFilter" class="form-control" ng-model="search" />
             </div>
         </div>
@@ -21,8 +21,6 @@
 
 <div class="row">
     <div class="col-md-12">
-
-                <!--<tr ng-repeat="quote in quotes | filter:search">-->
         <!-- angularTableTr -->
         <div class="panel" ng-class="quote.panelClass" ng-repeat="quote in filtered = quotes | filter:search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
             <!--<tr ng-repeat="quote in quotes">-->

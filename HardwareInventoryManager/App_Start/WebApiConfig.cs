@@ -22,8 +22,13 @@ namespace HardwareInventoryManager
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+
             config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(
              new IsoDateTimeConverter());
+
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+                = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
     }
 }

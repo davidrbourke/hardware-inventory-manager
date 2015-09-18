@@ -120,11 +120,11 @@ namespace HardwareInventoryManager.Controllers.Api
             }
         }
         
-        [AllowAnonymous]
-        public IHttpActionResult Alive()
-        {
-            return Ok();
-        }
+        //[AllowAnonymous]
+        //public IHttpActionResult Alive()
+        //{
+        //    return Ok();
+        //}
     
     }
 }

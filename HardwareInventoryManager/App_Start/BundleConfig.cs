@@ -59,8 +59,9 @@ namespace HardwareInventoryManager
                         "~/Scripts/jquery.dataTables.js",
                         "~/Scripts/dataTables.responsive.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/app").IncludeDirectory(
-                        "~/Scripts/App/", "*.js", true));
+            bundles.Add(new ScriptBundle("~/bundles/app")
+                .Include("~/Scripts/App/app.js")
+                .IncludeDirectory("~/Scripts/App/", "*.js", searchSubdirectories: true));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

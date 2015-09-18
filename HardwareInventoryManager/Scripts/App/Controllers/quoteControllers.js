@@ -77,7 +77,7 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 
-quoteControllers.controller('ModalInstanceCtrl',
+quoteControllers.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', '$location', 'quoteRepository',
     function ($scope, $modalInstance, $location, quoteRepository) {
 
         $scope.postQuote = function (quote) {
@@ -118,4 +118,4 @@ quoteControllers.controller('ModalInstanceCtrl',
                     toastr["error"]("Not saved");
                 });
         };
-    });
+    }]);

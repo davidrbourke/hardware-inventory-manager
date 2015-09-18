@@ -1,5 +1,4 @@
-﻿inventoryManagerApp.factory('quoteRepository',
-    /*function ($http, $q) {*/
+﻿inventoryManagerApp.factory('quoteRepository', ['$resource', '$modal',
     function ($resource, $modal) {
         return {
             getQuoteList: function () {
@@ -51,4 +50,4 @@
                 return $resource('/api/QuoteRequests/:id', { id: quote.QuoteRequestId }).delete();
             }
         };
-    });
+    }]);

@@ -1,4 +1,4 @@
-﻿inventoryManagerApp.factory('bulkUploadRepository',
+﻿inventoryManagerApp.factory('bulkUploadRepository', ['$resource',
     function ($resource) {
         return {
             confirmImport: function (batch) {
@@ -8,4 +8,4 @@
                 return $resource('RefreshReview/' + batchId).get(batchId);
             }
         };
-    });
+    }]);

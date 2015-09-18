@@ -7,7 +7,6 @@
     'bulkUploadControllers',
     'ui.bootstrap',
     'inventoryManagerFilters']);
-
 inventoryManagerApp.config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
         $routeProvider.

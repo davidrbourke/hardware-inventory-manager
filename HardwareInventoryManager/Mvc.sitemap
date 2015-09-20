@@ -12,7 +12,7 @@
       <mvcSiteMapNode title="Assets" controller="Assets" action="Index"/>
       <mvcSiteMapNode title="Bulk Upload" url="/BulkUploads/#/BulkUpload" />
     </mvcSiteMapNode>
-    <mvcSiteMapNode title="Wishlist" url="/QuoteRequests/#/QuoteList" />
+    <mvcSiteMapNode title="Wishlist" url="/QuoteRequests/#/QuoteList/"  />
     <mvcSiteMapNode title="Administration" controller="Lookups" action="Index">
       <mvcSiteMapNode title="Lookup" controller="Lookups" action="Index"/>
       <mvcSiteMapNode title="Lookup Types" controller="LookupTypes" action="Index"/>

@@ -224,6 +224,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AssetDetail.cs" />
     <Compile Include="Models\BulkImport.cs" />
+    <Compile Include="Models\CaptchaResponse.cs" />
     <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Models\QuoteResponse.cs" />
     <Compile Include="Repository\AssetRepository.cs" />

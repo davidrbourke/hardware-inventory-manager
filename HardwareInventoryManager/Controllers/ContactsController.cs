@@ -10,6 +10,9 @@ using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services;
 using HardwareInventoryManager.Filters;
+using System.Collections.Specialized;
+using Newtonsoft.Json.Linq;
+using System.Web.Script.Serialization;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -58,12 +61,17 @@ namespace HardwareInventoryManager.Controllers
         [AllowAnonymous]
         public ActionResult Create([Bind(Include = "ContactId,Name,EmailAddress,Description,CreatedDate,UpdatedDate")] Contact contact)
         {
-            if (ModelState.IsValid)
+            string gCaptcha = HttpContext.Request.Params["g-recaptcha-response"];
+            string userIpAddress = Request.ServerVariables["REMOTE_ADDR"];
+            if (!string.IsNullOrWhiteSpace(gCaptcha) && UtilityHelper.IsGoogleReCaptchaValid(gCaptcha, userIpAddress))
             {
-                db.Contacts.Add(contact);
-                db.SaveChanges();
-                Alert(EnumHelper.Alerts.Success, HIResources.Strings.Contact_Success);
-                return RedirectToAction("Index", "Home");
+                if (ModelState.IsValid)
+                {
+                    db.Contacts.Add(contact);
+                    db.SaveChanges();
+                    Alert(EnumHelper.Alerts.Success, HIResources.Strings.Contact_Success);
+                    return RedirectToAction("Index", "Home");
+                }
             }
             Alert(EnumHelper.Alerts.Error, HIResources.Strings.Contact_Error);
             //return PartialView("_ContactRequest");//View(contact);

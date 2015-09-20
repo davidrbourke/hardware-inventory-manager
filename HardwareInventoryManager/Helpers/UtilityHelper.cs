@@ -1,9 +1,13 @@
-﻿using System;
+﻿using HardwareInventoryManager.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace HardwareInventoryManager.Services
 {
@@ -70,8 +74,35 @@ namespace HardwareInventoryManager.Services
             #else
                 return new MvcHtmlString(string.Empty);
             #endif
+        }
 
 
+        public static bool IsGoogleReCaptchaValid(string captchaCode, string userIpAddress)
+        {
+            try
+            {
+                WebClient client = new WebClient();
+                NameValueCollection collection = new NameValueCollection()
+            {
+                {"secret", "6LdpLA0TAAAAALj2bvRJr4OEnpTq8ATFwLxm5_YU"},
+                {"response", captchaCode},
+                {"remoteip", userIpAddress}
+            };
+
+                byte[] resp = client.UploadValues("https://www.google.com/recaptcha/api/siteverify", collection);
+                string output = System.Text.Encoding.UTF8.GetString(resp);
+
+                //JObject o = JObject.Parse(output);
+                JavaScriptSerializer jsonSerialiser = new JavaScriptSerializer();
+                CaptchaResponse response = jsonSerialiser.Deserialize<CaptchaResponse>(output);
+
+                return response.success == "True" ? true : false;
+            }
+            catch(Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return false;
+            }
         }
     }
 }

@@ -100,37 +100,44 @@ namespace HardwareInventoryManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            string gCaptcha = HttpContext.Request.Params["g-recaptcha-response"];
+            string userIpAddress = Request.ServerVariables["REMOTE_ADDR"];
+            if (!string.IsNullOrWhiteSpace(gCaptcha) && UtilityHelper.IsGoogleReCaptchaValid(gCaptcha, userIpAddress))
             {
 
-                Tenant tenant = new Tenant
-                {
-                    Name = model.OrganisationName
-                };
-                IList<Tenant> tenants = new List<Tenant>();
-                tenants.Add(tenant);
 
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, UserTenants = tenants };
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-                result = await UserManager.AddToRoleAsync(user.Id, EnumHelper.Roles.Author.ToString());
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    await SignInAsync(user, isPersistent: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    Tenant tenant = new Tenant
+                    {
+                        Name = model.OrganisationName
+                    };
+                    IList<Tenant> tenants = new List<Tenant>();
+                    tenants.Add(tenant);
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    AddErrors(result);
+                    var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, UserTenants = tenants };
+                    IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                    result = await UserManager.AddToRoleAsync(user.Id, EnumHelper.Roles.Author.ToString());
+                    if (result.Succeeded)
+                    {
+                        await SignInAsync(user, isPersistent: false);
+
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
                 }
             }
-
+            Alert(EnumHelper.Alerts.Error, HIResources.Strings.Change_Error);
             // If we got this far, something failed, redisplay form
             return View(model);
         }

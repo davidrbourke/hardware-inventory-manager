@@ -54,6 +54,10 @@ namespace HardwareInventoryManager.Services
             return HttpUtility.UrlDecode(code);
         }
 
+        /// <summary>
+        /// Returns javascript for google analytics in non-debug mode
+        /// </summary>
+        /// <returns></returns>
         public static MvcHtmlString GoogleAnalytics()
         {
             #if !DEBUG
@@ -76,7 +80,12 @@ namespace HardwareInventoryManager.Services
             #endif
         }
 
-
+        /// <summary>
+        /// Returns true if the captcha is successfully validated by google
+        /// </summary>
+        /// <param name="captchaCode"></param>
+        /// <param name="userIpAddress"></param>
+        /// <returns></returns>
         public static bool IsGoogleReCaptchaValid(string captchaCode, string userIpAddress)
         {
             try

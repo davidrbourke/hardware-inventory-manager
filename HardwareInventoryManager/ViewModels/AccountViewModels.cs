@@ -58,11 +58,20 @@ namespace HardwareInventoryManager.ViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "Your Name")]
-        public string Name { get; set; }
+        [Required]
+        [Display(Name = "Your First Name")]
+        public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Organisation Name")]
+        [Display(Name = "Your Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Your Role")]
+        public string OrganisationalRole { get; set; }
+
+        [Required]
+        [Display(Name = "Your Organisation")]
         public string OrganisationName { get; set; }
 
         [Required]

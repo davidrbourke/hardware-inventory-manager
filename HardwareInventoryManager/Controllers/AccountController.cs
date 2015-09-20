@@ -104,11 +104,8 @@ namespace HardwareInventoryManager.Controllers
             string userIpAddress = Request.ServerVariables["REMOTE_ADDR"];
             if (!string.IsNullOrWhiteSpace(gCaptcha) && UtilityHelper.IsGoogleReCaptchaValid(gCaptcha, userIpAddress))
             {
-
-
                 if (ModelState.IsValid)
                 {
-
                     Tenant tenant = new Tenant
                     {
                         Name = model.OrganisationName
@@ -116,7 +113,14 @@ namespace HardwareInventoryManager.Controllers
                     IList<Tenant> tenants = new List<Tenant>();
                     tenants.Add(tenant);
 
-                    var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, UserTenants = tenants };
+                    var user = new ApplicationUser() { 
+                        UserName = model.Email, 
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        OrganisationalRole = model.OrganisationalRole,
+                        PhoneNumber = model.TelephoneNumber,
+                        Email = model.Email, 
+                        UserTenants = tenants };
                     IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                     result = await UserManager.AddToRoleAsync(user.Id, EnumHelper.Roles.Author.ToString());
                     if (result.Succeeded)

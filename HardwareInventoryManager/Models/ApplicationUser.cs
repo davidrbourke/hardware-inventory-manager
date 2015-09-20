@@ -27,6 +27,12 @@ namespace HardwareInventoryManager.Models
         /// </summary>
         public bool ForcePasswordReset { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string OrganisationalRole { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

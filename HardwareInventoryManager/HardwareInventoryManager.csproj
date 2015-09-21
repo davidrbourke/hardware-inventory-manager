@@ -513,6 +513,7 @@
     <Content Include="Views\BulkUploads\Index.cshtml" />
     <Content Include="Views\Assets\_AssetDetail.cshtml" />
     <Content Include="Views\Contacts\_ContactRequest.cshtml" />
+    <Content Include="Views\Assets\_AssetDetailReadOnly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

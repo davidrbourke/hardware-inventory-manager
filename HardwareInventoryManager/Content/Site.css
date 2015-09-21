@@ -52,9 +52,6 @@ a:hover {
 
 
 
-
-
-
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
@@ -357,4 +354,13 @@ span {
 
 .panel-custom-import h4 {
     text-decoration: none;
+}
+
+.footer {
+    padding-left: 1em;
+    padding-top: 1em;
+}
+
+.full-page {
+    min-height: 750px;
 }

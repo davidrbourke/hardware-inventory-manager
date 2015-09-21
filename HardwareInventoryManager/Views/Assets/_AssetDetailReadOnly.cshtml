@@ -1,0 +1,403 @@
+﻿@model HardwareInventoryManager.ViewModels.AssetViewModel
+<div class="row">
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AssetId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AssetId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Model)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SerialNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SerialNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PurchaseDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PurchaseDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ObsolescenseDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ObsolescenseDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PricePaid)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PricePaid)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LocationDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LocationDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_Make)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AssetMake.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_Category)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayName(HardwareInventoryManager.HIResources.Strings.Asset_DetailDelete_WarrantyPeriod)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WarrantyPeriod.Description)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <div class="panel-group" id="accordian" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading selectable" role="tab" id="headingOne">
+                    <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="panel-title">
+                        Advanced - General
+                    </div>
+                    </>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.ComputerName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayTextFor(model => model.NetworkedAssetDetail.ComputerName)
+                            </dd>
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.WMIStatus)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.WMIStatus)
+                            </dd>
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.SSHStatus)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.SSHStatus)
+                            </dd>
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.CurrentOperatingSystem)
+
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.CurrentOperatingSystem)
+                            </dd>
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.ServicePackLevel)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.ServicePackLevel)
+                            </dd>
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.ActiveNetworkAdapter)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.ActiveNetworkAdapter)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading selectable" role="tab" id="headingTwo">
+                    <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                         class="panel-title">
+                        Network Information
+                    </div>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.IPAddress)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.IPAddress)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.MACAddress)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.MACAddress)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.DNSServer)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.DNSServer)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.SubnetMask)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.SubnetMask)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.WINSServer)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.WINSServer)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.RegisteredUserName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.RegisteredUserName)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.DomainWorkgroup)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.DomainWorkgroup)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.DaysSinceDomainAccountUpdate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.DaysSinceDomainAccountUpdate)
+                            </dd>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading selectable" role="tab" id="headingThree">
+                    <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
+                         class="panel-title">
+                        Specification - CPU
+                    </div>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.NumberOfProcessors)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.NumberOfProcessors)
+
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.NumberOfProcessors)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.NumberOfProcessors)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.NumberOfCores)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.NumberOfCores)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.LogicalProcessorCount)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.LogicalProcessorCount)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.CPU)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.CPU)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading selectable" role="tab" id="headingFive">
+                    <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive"
+                         class="panel-title">
+                        Specification - Secondary
+                    </div>
+                </div>
+                <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.SystemMemoryMB)
+                            </dt>
+                            <dd class="col-md-6">
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.SystemMemoryMB)
+                            </dd>
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.VideoCard)
+                            <dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.VideoCard)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.VideoCardMemoryMB)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.VideoCardMemoryMB)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.SoundCard)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.SoundCard)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.DiskDrive)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.DiskDrive)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.DiskDriveSizeGB)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.DiskDriveSizeGB)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.OpticalDrive)
+                            <dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.OpticalDrive)
+                            </dd>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading selectable" role="tab" id="headingFour">
+                    <div role="button" data-toggle="collapse" data-parent="#accordian" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour"
+                         class="panel-title">
+                        BIOS
+                    </div>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.BIOS)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.BIOS)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.BIOSSerialNumber)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.BIOSSerialNumber)
+                            </dd>
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.BIOSManufacturer)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.BIOSManufacturer)
+                            </dd>
+
+
+                            <dt>
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.BIOSReleaseDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.BIOSReleaseDate)
+                            </dd>
+
+                            <dt>
+
+                                @Html.LabelFor(model => model.NetworkedAssetDetail.MachineType)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NetworkedAssetDetail.MachineType)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

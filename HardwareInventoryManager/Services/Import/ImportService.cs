@@ -151,7 +151,8 @@ namespace HardwareInventoryManager.Services.Import
                             {
                                 Description = warrantyPeriodDescription,
                                 LookupTypeId = type.LookupTypeId,
-                                TenantId = tenantId
+                                TenantId = tenantId,
+                                Type = type
                             };
                         }
                         asset.WarrantyPeriod = warrantyPeriod;
@@ -193,7 +194,8 @@ namespace HardwareInventoryManager.Services.Import
                             {
                                 Description = assetMakeDescription,
                                 LookupTypeId = type.LookupTypeId,
-                                TenantId = tenantId
+                                TenantId = tenantId,
+                                Type = type
                             };
                         }
                         asset.AssetMake = assetMake;
@@ -214,7 +216,8 @@ namespace HardwareInventoryManager.Services.Import
                             {
                                 Description = categoryDescription,
                                 LookupTypeId = type.LookupTypeId,
-                                TenantId = tenantId
+                                TenantId = tenantId,
+                                Type = type
                             };
                         }
                         asset.Category = category;
@@ -288,6 +291,7 @@ namespace HardwareInventoryManager.Services.Import
             foreach (Asset asset in assets)
             {
                 AssetService assetService = new AssetService(_userName);
+                ClearLookups(asset);
                 assetService.SaveAsset(asset);
             }
         }
@@ -308,10 +312,10 @@ namespace HardwareInventoryManager.Services.Import
         {
             
             ConvertedAssetsDto bulkUpload = BuildAssets(rawCsv, tenantId);
-            foreach(Asset asset in bulkUpload.Assets)
-            {
-                ClearLookups(asset);
-            }
+            //foreach(Asset asset in bulkUpload.Assets)
+            //{
+            //    ClearLookups(asset);
+            //}
             return bulkUpload;
         }
 
@@ -372,7 +376,7 @@ namespace HardwareInventoryManager.Services.Import
             string[] csvHeader = ProcessCsvHeader(csvRawLines[0]);
 
             string[] csvLines = RemoveBlankLines(csvRawLines);
-
+            List<Lookup> lookups = new List<Lookup>();
             IList<Asset> assets = new List<Asset>();
             IList<List<string>> errors = new List<List<string>>();
             for (int i = 1; i < csvLines.Length; i++)
@@ -381,13 +385,13 @@ namespace HardwareInventoryManager.Services.Import
                 if (!string.IsNullOrWhiteSpace(convertedAsset.Asset.Model)
                     && !string.IsNullOrWhiteSpace(convertedAsset.Asset.SerialNumber))
                 {
-
                     assets.Add(convertedAsset.Asset);
                     errors.Add(convertedAsset.Errors);
                     convertedAsset.Asset.TenantId = tenantId;
                     convertedAsset.Asset.AssetMakeId = convertedAsset.Asset.AssetMake.LookupId;
                     convertedAsset.Asset.CategoryId = convertedAsset.Asset.Category.LookupId;
                     convertedAsset.Asset.WarrantyPeriodId = convertedAsset.Asset.WarrantyPeriod.LookupId;
+                    LoadLookupsForAsset(convertedAsset.Asset, lookups);
                 }
             }
             
@@ -399,12 +403,108 @@ namespace HardwareInventoryManager.Services.Import
             return response;
         }
 
+
+        private Asset LoadLookupsForAsset(Asset asset, List<Lookup> lookups)
+        {
+            if(asset.AssetMakeId == 0)
+            {
+                Lookup existingLookup = lookups.FirstOrDefault(
+                x => x.Type.Description == EnumHelper.LookupTypes.Make.ToString()
+                && x.Description == asset.AssetMake.Description);
+                asset.AssetMakeId = existingLookup == null ? 0 : existingLookup.LookupId;
+
+
+                if (existingLookup == null)
+                {
+                    lookups.Add(asset.AssetMake);
+                }
+                else
+                {
+                    asset.AssetMake = existingLookup;
+                }
+            }
+            if (asset.CategoryId == 0)
+            {
+                Lookup existingLookup = lookups.FirstOrDefault(
+                x => x.Type.Description == EnumHelper.LookupTypes.Category.ToString()
+                && x.Description == asset.Category.Description);
+                asset.CategoryId = existingLookup == null ? 0 : existingLookup.LookupId;
+
+
+                if (existingLookup == null)
+                {
+                    lookups.Add(asset.Category);
+                }
+                else
+                {
+                    asset.Category = existingLookup;
+                }
+
+            }
+            if (asset.WarrantyPeriodId == 0)
+            {
+                Lookup existingLookup = lookups.FirstOrDefault(
+                x => x.Type.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString()
+                && x.Description == asset.WarrantyPeriod.Description);
+                asset.WarrantyPeriodId = existingLookup == null ? 0 : existingLookup.LookupId;
+
+                if (existingLookup == null)
+                {
+                    lookups.Add(asset.WarrantyPeriod);
+                }
+                else
+                {
+                    asset.WarrantyPeriod = existingLookup;
+                }
+            }
+            return asset;
+        }
+
+        private IList<Lookup> LoadLookups()
+        {
+            return new CustomApplicationDbContext().Lookups.Include("Type").ToList();
+        }
+
         private void ClearLookups(Asset asset)
         {
             asset.AssetId = 0;
-            asset.AssetMake = asset.AssetMakeId != 0 ? null : asset.AssetMake;
-            asset.Category = asset.CategoryId != 0 ? null : asset.Category;
-            asset.WarrantyPeriod = asset.WarrantyPeriodId != 0 ? null : asset.WarrantyPeriod;
+
+            // Asset Make
+            if(asset.AssetMakeId != 0)
+            {
+                asset.AssetMake = null;
+            }
+            else if (asset.AssetMakeId == 0 && asset.AssetMake != null
+                && asset.AssetMake.LookupId != 0)
+            {
+                asset.AssetMakeId = asset.AssetMake.LookupId;
+                asset.AssetMake = null;
+            }
+
+            // Category
+            if (asset.CategoryId != 0)
+            {
+                asset.Category = null;
+            }
+            else if (asset.CategoryId == 0 && asset.Category != null
+                && asset.Category.LookupId != 0)
+            {
+                asset.CategoryId = asset.Category.LookupId;
+                asset.Category = null;
+            }
+
+            // Warranty Period
+            if (asset.WarrantyPeriodId != 0)
+            {
+                asset.WarrantyPeriod = null;
+            } 
+            else if(asset.WarrantyPeriodId == 0 && asset.WarrantyPeriod != null
+                && asset.WarrantyPeriod.LookupId != 0)
+            {
+                asset.WarrantyPeriodId = asset.WarrantyPeriod.LookupId;
+                asset.WarrantyPeriod = null;
+            }
+            
         }
     }
 

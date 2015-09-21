@@ -199,7 +199,10 @@ namespace HardwareInventoryManager.Services
             if (!_context.Lookups.Any())
             {
                 SeedMakeLookup();
-                SeedCategoryLookup();
+                SeedCategoryLookup();    
+            }
+            if(!_context.LookupTypes.Any(x=>x.Description == EnumHelper.LookupTypes.WarrantyPeriod.ToString()))
+            {
                 SeedWarrantyPeriodLookup();
             }
             if(!_context.LookupTypes.Any(x => x.Description == EnumHelper.LookupTypes.QuoteRequestStatus.ToString()))
@@ -304,13 +307,14 @@ namespace HardwareInventoryManager.Services
             _context.LookupTypes.Add(warrantyPeriodType);
             _context.SaveChanges();
 
-            string[] warrantyPeriods = { "3 Months", "1 Year", "2 Years", "3 Years" };
+            string[] warrantyPeriods = { "1 Year", "2 Years", "3 Years", "4 Years", "5 Years", "6 Years" };
             foreach (string warrantyPeriod in warrantyPeriods)
             {
                 Lookup initLookup = new Lookup
                 {
                     Description = warrantyPeriod,
-                    Type = warrantyPeriodType
+                    Type = warrantyPeriodType,
+                    AssociatedNumericValue = int.Parse(warrantyPeriod.Substring(0, 1))
                 };
                 _context.Lookups.Add(initLookup);
             }

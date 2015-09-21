@@ -77,5 +77,29 @@ namespace HardwareInventoryManager.ViewModels
         public SelectList WarrantyPeriodSelectList { get; set; }
         
         public AssetDetailViewModel NetworkedAssetDetail { get; set; }
+
+        public string WarrantyExpiryDate
+        {
+            get
+            {
+                if (WarrantyPeriod != null && PurchaseDate.HasValue)
+                {
+                    return PurchaseDate.Value.AddYears(WarrantyPeriod.AssociatedNumericValue).ToString("dd/MM/yy");
+                }
+                return string.Empty;
+            }
+        }
+
+        public bool IsWarrantyExpired
+        {
+            get
+            {
+                if (WarrantyPeriod != null && PurchaseDate.HasValue)
+                {
+                    return PurchaseDate.Value.AddYears(WarrantyPeriod.AssociatedNumericValue) <= DateTime.Now;
+                }
+                return true;
+            }
+        }
     }
 }

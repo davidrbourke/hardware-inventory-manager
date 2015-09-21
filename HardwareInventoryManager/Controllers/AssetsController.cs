@@ -142,6 +142,7 @@ namespace HardwareInventoryManager.Controllers
             {
                 Mapper.CreateMap<AssetViewModel, Asset>();
                 Asset asset = Mapper.DynamicMap<AssetViewModel, Asset>(editAssetViewModel);
+                asset.PurchaseDate = editAssetViewModel.PurchaseDate;
                 asset.AssetDetailId = asset.NetworkedAssetDetail.AssetDetailId;
                 AssetService.SaveAsset(asset);
                 Alert(EnumHelper.Alerts.Success, HIResources.Strings.Change_Success);

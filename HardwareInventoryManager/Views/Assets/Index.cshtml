@@ -20,10 +20,12 @@
                 <th>Purchase Date</th>
                 <th>Obsolescence Date</th>
                 <th>Price Paid</th>
+                <th>MAC Address</th>
                 <th>Location</th>
                 <th>Make</th>
                 <th>Category</th>
                 <th>Warranty Period</th>
+                <th>Warranty Expiry Date</th>
                 <th></th>
             </tr>
         </thead>
@@ -45,10 +47,19 @@
                     { data: 'PurchaseDateFormatted' },
                     { data: 'ObsolescenceDateFormatted' },
                     { data: 'PricePaid' },
+                    {
+                        data: function (data) {
+                            return macAddressHelper(data);
+                        }},
                     { data: 'LocationDescription' },
                     { data: 'AssetMake.Description' },
                     { data: 'Category.Description' },
                     { data: 'WarrantyPeriod.Description' },
+                    {
+                        data: function (data) {
+                            return warrantyHelper(data);
+                        }
+                    },
                     {
                         data: function (data) {
                             return linkHelper(data);
@@ -57,6 +68,23 @@
                 ]
             });
         });
+
+        var macAddressHelper = function (data) {
+            if (data.NetworkedAssetDetail !== null) {
+                return data.NetworkedAssetDetail.MACAddress;
+            }
+            return "";
+        };
+
+        var warrantyHelper = function (data) {
+            if ( data.IsWarrantyExpired ) {
+                return '<span class="text-danger"><strong>' + data.WarrantyExpiryDate + '</strong></span>';
+            } else {
+                return data.WarrantyExpiryDate;
+            }
+
+            };
+        
 
         var linkHelper = function (data) {
             //return '<a href="Assets/Details/' + data.AssetId + '">Details</a> '

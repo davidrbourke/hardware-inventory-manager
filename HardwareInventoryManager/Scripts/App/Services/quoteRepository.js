@@ -47,7 +47,7 @@
                 return res;
             },
             deleteQuote: function (quote) {
-                return $resource('/api/QuoteRequests/:id', { id: quote.QuoteRequestId }).delete();
+                return $resource('/api/QuoteRequests/:id', { id: quote.quoteRequestId }).delete();
             }
         };
     }]);

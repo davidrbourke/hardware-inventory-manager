@@ -100,58 +100,70 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Wishlist
+                    <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span> Warranty Expiry
                 </div>
                 <div class="panel-body">
-
-
-                    <div class="row">
-                        <div class="col-md-2 col-md-offset-5">
-                            <h2>@Model.TotalWishlist</h2>
-                        </div>
+                    <div id="chart_div_warranty"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Wishlist
                     </div>
-                    <hr/>
-                    <div class="row">
-                        <div class="col-md-8` col-md-offset-4">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Pending
-                                </div>
-                                <div class="col-md-4">
-                                    @Model.TotalWishlistPending
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Processing
-                                </div>
-                                <div class="col-md-4">
-                                    @Model.TotalWishlistProcessing
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Supplied
-                                </div>
-                                <div class="col-md-4">
-                                    @Model.TotalWishlistSupplied
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Complete
-                                </div>
-                                <div class="col-md-4">
-                                    @Model.TotalWishlistComplete
-                                </div>
+                    <div class="panel-body">
 
+
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-5 col-sm-offset-5 col-xs-offset-5">
+                                <h2>@Model.TotalWishlist</h2>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        Pending
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        @Model.TotalWishlistPending
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        Processing
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        @Model.TotalWishlistProcessing
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        Supplied
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        @Model.TotalWishlistSupplied
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        Complete
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-5">
+                                        @Model.TotalWishlistComplete
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 <script type="text/javascript" src="https://www.google.com/jsapi">
 </script>
 
@@ -211,6 +223,38 @@
         var chart = new google.visualization.PieChart(
           document.getElementById('pie_chart_div'));
 
+        chart.draw(data, options);
+    }
+
+    google.setOnLoadCallback(drawWarrantyChart);
+    function drawWarrantyChart() {
+        var data = new google.visualization.DataTable();
+        
+        data.addColumn('string', 'Month');
+        data.addColumn('number', 'Expiry Count');
+        data.addColumn({ type: 'string', role: 'style' });
+        var rawData = @Html.Raw(@Model.WarrantyExpiryData);
+
+        for(var i = 0; i < rawData.length; i++) {
+            data.addRow([rawData[i].ColumnDescription, rawData[i].CountOf, 'color: gold']);
+        }
+
+        var options = {
+            title: 'Warranties due to expire in the next 4 months',
+            hAxis: {
+                title: 'Date Period',
+                viewWindow: {
+                    min: [7, 30, 0],
+                    max: [17, 30, 0]
+                }
+            },
+            vAxis: {
+                title: 'Total'
+            }
+        };
+
+        var chart = new google.visualization.ColumnChart(
+          document.getElementById('chart_div_warranty'));
         chart.draw(data, options);
     }
 

@@ -44,7 +44,6 @@ namespace HardwareInventoryManager.Services.Dashboard
         {
             IRepository<Asset> repository = new Repository<Asset>(_userName);
 
-
             DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime endDate = new DateTime(DateTime.Now.AddMonths(4).Year,
                 DateTime.Now.AddMonths(4).Month, 1).AddMonths(1).AddDays(-1);
@@ -66,6 +65,35 @@ namespace HardwareInventoryManager.Services.Dashboard
                 })
                 .OrderBy(x => x.OrderByDate);
                 
+            return groupedChartData.ToList();
+        }
+
+        public IList<TwoColumnChartData> AssetsWarrantyExpiry4Months()
+        {
+            IRepository<Asset> repository = new Repository<Asset>(_userName);
+
+            DateTime startDate = new DateTime(DateTime.Now.AddYears(-1).Year, DateTime.Now.Month, 1);
+            DateTime endDate = new DateTime
+                (DateTime.Now.AddYears(-1).AddMonths(4).Year,
+                DateTime.Now.AddMonths(4).Month, 1).AddMonths(1).AddDays(-1);
+
+
+            var chartData = repository.GetAll()
+                .Where(x => x.PurchaseDate.HasValue
+                    && x.WarrantyPeriod != null 
+                && x.PurchaseDate.Value >= startDate
+                && x.PurchaseDate.Value <= endDate).ToList();
+
+            var groupedChartData = chartData
+                .GroupBy(x => LinqExtention.MonthYear(x.WarrantyExpiryDate))
+                .Select(group => new TwoColumnChartData
+                {
+                    ColumnDescription = group.Key.ToString("MMM-yy"),
+                    CountOf = group.Count(),
+                    OrderByDate = group.Key
+                })
+                .OrderBy(x => x.OrderByDate);
+
             return groupedChartData.ToList();
         }
 

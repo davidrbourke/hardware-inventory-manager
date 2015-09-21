@@ -15,7 +15,8 @@ quoteControllers.controller("QuoteController", ['$scope', 'quoteRepository', '$l
                     $scope.filtered = filterFilter($scope.quotes, newVal);
                     $scope.filteredQuotesLength = $scope.filtered.length;
                     $scope.totalItems = $scope.filtered.length;
-                    $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+                    $scope.noOfPages = 5;
+                    //$scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
                     $scope.currentPage = 1;
                 }, true);
             },

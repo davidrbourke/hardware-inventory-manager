@@ -28,5 +28,7 @@ namespace HardwareInventoryManager.ViewModels
         public JArray AssetExpiryData { get; set; }
 
         public JArray AssetsByCategory { get; set; }
+
+        public JArray WarrantyExpiryData { get; set; }
     }
 }

@@ -54,6 +54,9 @@ namespace HardwareInventoryManager.Controllers
             IList<TwoColumnChartData> pieChartData = dashboardService.AssetsByCategoryPieChart();
             dashboad.AssetsByCategory = JArray.FromObject(pieChartData);
 
+            IList<TwoColumnChartData> warrantyExpiryData = dashboardService.AssetsWarrantyExpiry4Months();
+            dashboad.WarrantyExpiryData = JArray.FromObject(warrantyExpiryData);
+
             int[] wishListStatus = dashboardService.WishListSummary();
             dashboad.TotalWishlistPending = wishListStatus[0];
             dashboad.TotalWishlistProcessing = wishListStatus[1];

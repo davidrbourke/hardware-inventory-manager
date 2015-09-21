@@ -97,6 +97,7 @@ namespace HardwareInventoryManager.Controllers.Api
         }
 
         // DELETE: api/QuoteRequests/5
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             QuoteRequestService.DeleteQuoteRequest(id);

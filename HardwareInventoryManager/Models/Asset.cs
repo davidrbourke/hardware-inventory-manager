@@ -12,7 +12,7 @@ namespace HardwareInventoryManager.Models
     {
         [Key]
         public int AssetId { get; set; }
-        
+
         public int TenantId { get; set; }
         [ForeignKey("TenantId")]
         public Tenant Tenant { get; set; }
@@ -20,7 +20,7 @@ namespace HardwareInventoryManager.Models
         public int AssetMakeId { get; set; }
         [ForeignKey("AssetMakeId")]
         public Lookup AssetMake { get; set; }
-        
+
         [Required]
         public string Model { get; set; }
 
@@ -38,12 +38,26 @@ namespace HardwareInventoryManager.Models
 
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
-        public Lookup Category{ get; set; }
+        public Lookup Category { get; set; }
 
         public string LocationDescription { get; set; }
 
         public int? AssetDetailId { get; set; }
         [ForeignKey("AssetDetailId")]
         public AssetDetail NetworkedAssetDetail { get; set; }
+
+        [NotMapped]
+        public DateTime? WarrantyExpiryDate
+        {
+            get
+            {
+                if (WarrantyPeriod != null && PurchaseDate.HasValue)
+                {
+                    return PurchaseDate.Value.AddYears(WarrantyPeriod.AssociatedNumericValue);
+                }
+                return null;
+            }
+            private set { PurchaseDate = value; }
+        }
     }
 }

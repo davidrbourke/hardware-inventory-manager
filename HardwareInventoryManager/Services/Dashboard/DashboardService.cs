@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using System.Data.Entity;
 
 namespace HardwareInventoryManager.Services.Dashboard
 {
@@ -79,6 +80,7 @@ namespace HardwareInventoryManager.Services.Dashboard
 
 
             var chartData = repository.GetAll()
+                .Include(x => x.WarrantyPeriod)
                 .Where(x => x.PurchaseDate.HasValue
                     && x.WarrantyPeriod != null 
                 && x.PurchaseDate.Value >= startDate

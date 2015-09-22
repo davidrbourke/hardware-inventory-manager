@@ -46,6 +46,11 @@
 
                                     @Html.EditorFor(item => item[i].Value, new { htmlAttributes = new { @class = "form-control" } })
                                 }
+                                else if (Model[i].DataType == HardwareInventoryManager.Helpers.EnumHelper.AppSettingDataType.SecureString)
+                                {
+
+                                    @Html.PasswordFor(item => item[i].Value, new { @class = "form-control" })
+                                }
                                 @Html.ValidationMessage("Value", "", new { @class = "text-danger" })
                             }
                         </div>

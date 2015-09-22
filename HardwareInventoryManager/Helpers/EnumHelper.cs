@@ -76,7 +76,8 @@ namespace HardwareInventoryManager.Helpers
             String,
             Decimal,
             DateTime,
-            Bool
+            Bool,
+            SecureString
         }
 
         public enum AppSettingScopeType

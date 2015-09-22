@@ -48,7 +48,7 @@ namespace HardwareInventoryManager.Helpers
                 ApplicationSetting appSetting = new ApplicationSetting
                 {
                     Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString(),
-                    DataType = EnumHelper.AppSettingDataType.String,
+                    DataType = EnumHelper.AppSettingDataType.SecureString,
                     ScopeType = EnumHelper.AppSettingScopeType.Application
                 };
                 _context.ApplicationSettings.Add(appSetting);

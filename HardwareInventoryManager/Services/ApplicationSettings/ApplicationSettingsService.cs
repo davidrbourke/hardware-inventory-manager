@@ -76,7 +76,14 @@ namespace HardwareInventoryManager.Helpers.ApplicationSettings
         {
             foreach(ApplicationSetting setting in settings)
             {
-                Repository.Edit(setting);
+                if (setting.DataType == EnumHelper.AppSettingDataType.SecureString &&
+                    string.IsNullOrWhiteSpace(setting.Value))
+                {
+                    
+                } else
+                {
+                    Repository.Edit(setting);
+                }
             }
             Repository.Save();
         }

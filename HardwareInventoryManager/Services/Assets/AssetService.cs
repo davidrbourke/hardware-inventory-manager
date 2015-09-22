@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 
-namespace HardwareInventoryManager.Services.Assets
+namespace HardwareInventoryManager.Helpers.Assets
 {
     public class AssetService
     {

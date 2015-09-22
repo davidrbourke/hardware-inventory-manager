@@ -8,15 +8,15 @@ using System.Web;
 using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.Repository;
 using AutoMapper;
 using HardwareInventoryManager.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using HardwareInventoryManager.Services.Assets;
-using HardwareInventoryManager.Services.User;
+using HardwareInventoryManager.Helpers.Assets;
+using HardwareInventoryManager.Helpers.User;
 
 namespace HardwareInventoryManager.Controllers
 {

@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HardwareInventoryManager.Controllers;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services.Import;
+using HardwareInventoryManager.Helpers.Import;
 using Moq;
 using HardwareInventoryManager.Repository;
 using System.Linq.Expressions;

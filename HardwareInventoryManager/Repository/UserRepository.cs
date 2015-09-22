@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
-using HardwareInventoryManager.Services.Account;
+using HardwareInventoryManager.Helpers.Account;
 
 namespace HardwareInventoryManager.Repository
 {

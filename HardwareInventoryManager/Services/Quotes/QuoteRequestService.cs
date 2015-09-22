@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 
-namespace HardwareInventoryManager.Services.Quotes
+namespace HardwareInventoryManager.Helpers.Quotes
 {
     public class QuoteRequestService
     {

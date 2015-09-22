@@ -1,14 +1,14 @@
 ﻿using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services.ApplicationSettings;
-using HardwareInventoryManager.Services.User;
+using HardwareInventoryManager.Helpers.ApplicationSettings;
+using HardwareInventoryManager.Helpers.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace HardwareInventoryManager.Services.Messaging
+namespace HardwareInventoryManager.Helpers.Messaging
 {
     public class ProcessEmail : IProcessEmail
     {
@@ -62,13 +62,13 @@ namespace HardwareInventoryManager.Services.Messaging
 
         private string AdminEmailAddress()
         {
-            IApplicationSettingsService applicationSettings = new ApplicationSettingsService();
+            IApplicationSettingsService applicationSettings = new ApplicationSettingsService(UserName);
             return applicationSettings.GetEmailServiceSenderEmailAddress();
         }
 
         private SendEmailTemplate CreateSendEmailService()
         {
-            return SendEmailFactory.GetSendEmailType(EmailRepository);
+            return SendEmailFactory.GetSendEmailType(EmailRepository, UserName);
         }
 
         private IRepository<Email> _emailRepository;

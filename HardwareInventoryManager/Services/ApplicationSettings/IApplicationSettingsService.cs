@@ -1,10 +1,10 @@
-﻿using HardwareInventoryManager.Services;
+﻿using HardwareInventoryManager.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Services.ApplicationSettings
+namespace HardwareInventoryManager.Helpers.ApplicationSettings
 {
     public interface IApplicationSettingsService
     {
@@ -12,5 +12,6 @@ namespace HardwareInventoryManager.Services.ApplicationSettings
         string GetEmailServiceKeyCode();
         string GetEmailServiceSenderEmailAddress();
         EnumHelper.EmailServiceTypes GetEmailServiceOnlineType();
+        void UpdateMultipleSettings(List<Models.ApplicationSetting> settings);
     }
 }

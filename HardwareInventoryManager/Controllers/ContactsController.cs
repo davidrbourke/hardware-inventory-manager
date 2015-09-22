@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HardwareInventoryManager;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Filters;
 using System.Collections.Specialized;
 using Newtonsoft.Json.Linq;

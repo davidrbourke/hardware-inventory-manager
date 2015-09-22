@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using HardwareInventoryManager.Services.User;
+using HardwareInventoryManager.Helpers.User;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services.Messaging;
+using HardwareInventoryManager.Helpers.Messaging;
 
-namespace HardwareInventoryManager.Services.User
+namespace HardwareInventoryManager.Helpers.User
 {
     public class UserService : IUserService
     {

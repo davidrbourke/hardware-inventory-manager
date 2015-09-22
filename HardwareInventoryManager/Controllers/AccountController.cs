@@ -11,13 +11,13 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.ViewModels;
-using HardwareInventoryManager.Services.Account;
-using HardwareInventoryManager.Services.Messaging;
+using HardwareInventoryManager.Helpers.Account;
+using HardwareInventoryManager.Helpers.Messaging;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services.User;
+using HardwareInventoryManager.Helpers.User;
 
 namespace HardwareInventoryManager.Controllers
 {

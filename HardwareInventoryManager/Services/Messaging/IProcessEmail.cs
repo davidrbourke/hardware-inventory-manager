@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Services.Messaging
+namespace HardwareInventoryManager.Helpers.Messaging
 {
     public interface IProcessEmail
     {

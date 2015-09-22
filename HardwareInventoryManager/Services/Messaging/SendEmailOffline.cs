@@ -5,7 +5,7 @@ using System.Web;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Models;
 
-namespace HardwareInventoryManager.Services.Messaging
+namespace HardwareInventoryManager.Helpers.Messaging
 {
     /// <summary>
     /// This class does not send an email, it only logs the email to the database

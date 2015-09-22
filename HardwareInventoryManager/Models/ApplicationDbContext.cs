@@ -43,5 +43,6 @@ namespace HardwareInventoryManager.Models
         public DbSet<QuoteRequest> QuoteRequests { get; set;}
         public DbSet<QuoteResponse> QuoteResponses { get; set; }
         public DbSet<BulkImport> BulkImports { get; set; }
+        public DbSet<ApplicationSetting> ApplicationSettings { get; set; }
     }
 }

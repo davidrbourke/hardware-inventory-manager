@@ -133,6 +133,15 @@ namespace HardwareInventoryManager.HIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to admin@myassetmanager.net.
+        /// </summary>
+        public static string DefaultAppEmailAddress {
+            get {
+                return ResourceManager.GetString("DefaultAppEmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The lookup cannot be deleted as it is being used..
         /// </summary>
         public static string Delete_Lookup_Error {

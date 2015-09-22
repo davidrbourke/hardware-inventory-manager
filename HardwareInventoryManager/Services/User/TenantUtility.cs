@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using HardwareInventoryManager.Services.User;
+using HardwareInventoryManager.Helpers.User;
 
-namespace HardwareInventoryManager.Services.User
+namespace HardwareInventoryManager.Helpers.User
 {
     public class TenantUtility : ITenantUtility
     {

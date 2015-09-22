@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Services
+namespace HardwareInventoryManager.Helpers
 {
     public class SeedService
     {
@@ -20,6 +20,72 @@ namespace HardwareInventoryManager.Services
             SeedInitialUserAndRole();
             SeedRoles();
             SeedDefaultRolePermissions();
+            SeedApplicationSettings();            
+        }
+
+        private void SeedApplicationSettings()
+        {
+            // Email Service User Name
+            if(!_context.ApplicationSettings.Any(x => 
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceUserName.ToString(), 
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                ApplicationSetting appSetting = new ApplicationSetting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceUserName.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.String,
+                    ScopeType = EnumHelper.AppSettingScopeType.Application
+                };
+                _context.ApplicationSettings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Email Service Key Code
+            if (!_context.ApplicationSettings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                ApplicationSetting appSetting = new ApplicationSetting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.String,
+                    ScopeType = EnumHelper.AppSettingScopeType.Application
+                };
+                _context.ApplicationSettings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Email Service Sender Email Address
+            if (!_context.ApplicationSettings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                ApplicationSetting appSetting = new ApplicationSetting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.String,
+                    ScopeType = EnumHelper.AppSettingScopeType.Application,
+                    Value = HIResources.Strings.DefaultAppEmailAddress
+                };
+                _context.ApplicationSettings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Email Service Online Type
+            if (!_context.ApplicationSettings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                ApplicationSetting appSetting = new ApplicationSetting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.Bool,
+                    ScopeType = EnumHelper.AppSettingScopeType.Application,
+                    Value = "false"
+                };
+                _context.ApplicationSettings.Add(appSetting);
+                _context.SaveChanges();
+            }
         }
 
         /// <summary>

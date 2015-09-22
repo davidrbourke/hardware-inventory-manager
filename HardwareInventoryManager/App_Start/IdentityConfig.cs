@@ -4,7 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services.Messaging;
+using HardwareInventoryManager.Helpers.Messaging;
 
 namespace HardwareInventoryManager
 {

@@ -1,5 +1,5 @@
-﻿using HardwareInventoryManager.Services;
-using HardwareInventoryManager.Services.Account;
+﻿using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Helpers.Account;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
 using Microsoft.AspNet.Identity;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Services.User
+namespace HardwareInventoryManager.Helpers.User
 {
     public class UserServiceUoW
     {

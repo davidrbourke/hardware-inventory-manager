@@ -1,4 +1,4 @@
-﻿using HardwareInventoryManager.Services.Messaging;
+﻿using HardwareInventoryManager.Helpers.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HardwareInventoryManager.Services.Account
+namespace HardwareInventoryManager.Helpers.Account
 {
     /// <summary>
     /// Account Service class for account functionality

@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Data.Entity;
 
-namespace HardwareInventoryManager.Services.Dashboard
+namespace HardwareInventoryManager.Helpers.Dashboard
 {
     public class DashboardService
     {

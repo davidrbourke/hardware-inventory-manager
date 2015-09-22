@@ -1,7 +1,7 @@
 ﻿using HardwareInventoryManager.Controllers;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using HardwareInventoryManager.Services.Assets;
+using HardwareInventoryManager.Helpers.Assets;
 
 namespace HardwareInventoryManager.Tests.Controllers
 {

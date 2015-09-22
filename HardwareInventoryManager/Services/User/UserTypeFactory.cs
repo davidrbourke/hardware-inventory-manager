@@ -1,12 +1,12 @@
 ﻿using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services.User;
+using HardwareInventoryManager.Helpers.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Services.User
+namespace HardwareInventoryManager.Helpers.User
 {
     public class UserTypeFactory
     {

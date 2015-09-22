@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services.Assets;
-using HardwareInventoryManager.Services.Import;
+using HardwareInventoryManager.Helpers.Assets;
+using HardwareInventoryManager.Helpers.Import;
 using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;

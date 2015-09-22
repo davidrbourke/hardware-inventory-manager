@@ -1,7 +1,7 @@
-﻿using HardwareInventoryManager.Services;
+﻿using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services.Assets;
+using HardwareInventoryManager.Helpers.Assets;
 using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Web;
 using AutoMapper;
 using System.Text;
 
-namespace HardwareInventoryManager.Services.Import
+namespace HardwareInventoryManager.Helpers.Import
 {
     public class ImportService
     {

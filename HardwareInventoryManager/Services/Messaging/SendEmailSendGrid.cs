@@ -7,20 +7,22 @@ using System.Net.Mail;
 using SendGrid;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Models;
-using HardwareInventoryManager.Services.ApplicationSettings;
+using HardwareInventoryManager.Helpers.ApplicationSettings;
 
-namespace HardwareInventoryManager.Services.Messaging
+namespace HardwareInventoryManager.Helpers.Messaging
 {
     /// <summary>
     /// Uses the Sendgrid services to send a real email
     /// </summary>
     public class SendEmailSendGrid : SendEmailTemplate
     {
+        private string _userName;
         private IRepository<Email> _repository;
 
-        public SendEmailSendGrid(IRepository<Email> repository)
+        public SendEmailSendGrid(IRepository<Email> repository, string userName)
         {
             _repository = repository;
+            _userName = userName;
         }
 
         protected override void SendEmail(string sender, string recipient, string subject, string body)
@@ -40,7 +42,7 @@ namespace HardwareInventoryManager.Services.Messaging
 
         private void Deliver(SendGridMessage message)
         {
-            IApplicationSettingsService applicationSettings = new ApplicationSettingsService();
+            IApplicationSettingsService applicationSettings = new ApplicationSettingsService(_userName);
             var username = applicationSettings.GetEmailServiceUsername();
             var password = applicationSettings.GetEmailServiceKeyCode();
             var credentials = new NetworkCredential(username, password);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Services
+namespace HardwareInventoryManager.Helpers
 {
     /// <summary>
     /// Application Wide Enums
@@ -68,6 +68,22 @@ namespace HardwareInventoryManager.Services
             Processing,
             Supplied,
             Complete
+        }
+
+        public enum AppSettingDataType
+        {
+            Int,
+            String,
+            Decimal,
+            DateTime,
+            Bool
+        }
+
+        public enum AppSettingScopeType
+        {
+            Application,
+            Tenant,
+            User
         }
     }
 }

@@ -1,17 +1,17 @@
 ﻿using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers;
 using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using HardwareInventoryManager.Services.Assets;
+using HardwareInventoryManager.Helpers.Assets;
 using System.IO;
 using Newtonsoft.Json.Linq;
-using HardwareInventoryManager.Services.Dashboard;
+using HardwareInventoryManager.Helpers.Dashboard;
 
 namespace HardwareInventoryManager.Controllers
 {

@@ -1,0 +1,61 @@
+﻿@model IList<HardwareInventoryManager.Models.ApplicationSetting>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Administrator Settings</h2>
+
+<hr />
+@using (Html.BeginForm("Index", "ApplicationSettings", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-10">
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <div class="form-group">
+                        @{
+                            string[] s = System.Text.RegularExpressions.Regex.Split(Model[i].Key, "(?=[A-Z][^A-Z])");
+                            System.Text.StringBuilder b = new System.Text.StringBuilder();
+                            foreach (string st in s)
+                            {
+                                if (!string.IsNullOrWhiteSpace(st))
+                                {
+                                    b.Append(string.Format("{0} ", st));
+                                }
+                            }
+                        }
+                        @Html.HiddenFor(item => item[i].Key)
+                        @Html.HiddenFor(item => item[i].ApplicationSettingId)
+                        @Html.HiddenFor(item => item[i].CreatedDate)
+                        @Html.HiddenFor(item => item[i].DataType)
+                        @Html.HiddenFor(item => item[i].ScopeType)
+                        @Html.HiddenFor(item => item[i].UpdatedDate)
+                        @Html.HiddenFor(item => item[i].TenantId)
+
+                        @Html.Label(b.ToString(), new { @class = "control-label col-md-5" })
+                        <div class="col-md-5">
+                            @{
+                                if (Model[i].DataType == HardwareInventoryManager.Helpers.EnumHelper.AppSettingDataType.Bool)
+                                {
+                                    @Html.CheckBoxFor(item => item[i].BoolValue, new { @data_toggle = "toggle" })
+                                }
+                                else if (Model[i].DataType == HardwareInventoryManager.Helpers.EnumHelper.AppSettingDataType.String)
+                                {
+
+                                    @Html.EditorFor(item => item[i].Value, new { htmlAttributes = new { @class = "form-control" } })
+                                }
+                                @Html.ValidationMessage("Value", "", new { @class = "text-danger" })
+                            }
+                        </div>
+                    </div>
+                }
+                <p>
+                    <button type="submit" class="btn btn-default">Save</button> |
+                    @Html.ActionLink("Back", "Index", "Home")
+                </p>
+            </div>
+        </div>
+    </div>
+}

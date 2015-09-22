@@ -141,6 +141,9 @@
   <data name="Contact_Success" xml:space="preserve">
     <value>Thank you. Your contact request has been sent.</value>
   </data>
+  <data name="DefaultAppEmailAddress" xml:space="preserve">
+    <value>admin@myassetmanager.net</value>
+  </data>
   <data name="Delete_Lookup_Error" xml:space="preserve">
     <value>The lookup cannot be deleted as it is being used.</value>
   </data>

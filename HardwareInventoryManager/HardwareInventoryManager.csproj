@@ -197,6 +197,7 @@
     <Compile Include="Controllers\Api\AliveController.cs" />
     <Compile Include="Controllers\Api\QuoteRequestsController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\ApplicationSettingsController.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\BulkUploadsController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
@@ -222,6 +223,7 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ApplicationSetting.cs" />
     <Compile Include="Models\AssetDetail.cs" />
     <Compile Include="Models\BulkImport.cs" />
     <Compile Include="Models\CaptchaResponse.cs" />
@@ -232,6 +234,7 @@
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\ApplicationSettings\IApplicationSettingsService.cs" />
     <Compile Include="Services\ApplicationSettings\ApplicationSettingsService.cs" />
+    <Compile Include="Services\ApplicationSettings\IRepository.cs" />
     <Compile Include="Services\Assets\AssetService.cs" />
     <Compile Include="Services\Dashboard\DashboardService.cs" />
     <Compile Include="Services\Import\ImportService.cs" />
@@ -294,6 +297,8 @@
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-toggle.css" />
+    <Content Include="Content\bootstrap-toggle.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.responsive.css" />
@@ -364,6 +369,8 @@
     <Content Include="Scripts\App\Views\BulkUploads\review.html" />
     <Content Include="Scripts\App\Views\Quotes\delete.html" />
     <Content Include="Scripts\App\Views\Quotes\edit.html" />
+    <Content Include="Scripts\bootstrap-toggle.js" />
+    <Content Include="Scripts\bootstrap-toggle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Mvc.sitemap">
@@ -514,6 +521,11 @@
     <Content Include="Views\Assets\_AssetDetail.cshtml" />
     <Content Include="Views\Contacts\_ContactRequest.cshtml" />
     <Content Include="Views\Assets\_AssetDetailReadOnly.cshtml" />
+    <Content Include="Views\ApplicationSettings\Create.cshtml" />
+    <Content Include="Views\ApplicationSettings\Delete.cshtml" />
+    <Content Include="Views\ApplicationSettings\Details.cshtml" />
+    <Content Include="Views\ApplicationSettings\Edit.cshtml" />
+    <Content Include="Views\ApplicationSettings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

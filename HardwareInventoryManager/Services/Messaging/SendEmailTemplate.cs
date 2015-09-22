@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HardwareInventoryManager.Services.Messaging
+namespace HardwareInventoryManager.Helpers.Messaging
 {
     /// <summary>
     /// Abstract template for sending an email, includes sending and logging email

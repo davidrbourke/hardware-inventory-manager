@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using HardwareInventoryManager.Filters;
-using HardwareInventoryManager.Services;
-using HardwareInventoryManager.Services.User;
+using HardwareInventoryManager.Helpers;
+using HardwareInventoryManager.Helpers.User;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services.Quotes;
+using HardwareInventoryManager.Helpers.Quotes;
 using HardwareInventoryManager.ViewModels;
 using System;
 using System.Collections.Generic;

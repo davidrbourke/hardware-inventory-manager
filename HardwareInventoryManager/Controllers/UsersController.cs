@@ -12,13 +12,13 @@ using HardwareInventoryManager.Filters;
 using AutoMapper;
 using HardwareInventoryManager.ViewModels;
 using HardwareInventoryManager.Repository;
-using HardwareInventoryManager.Services.User;
-using HardwareInventoryManager.Services;
+using HardwareInventoryManager.Helpers.User;
+using HardwareInventoryManager.Helpers;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
-using HardwareInventoryManager.Services.Account;
-using HardwareInventoryManager.Services.Messaging;
+using HardwareInventoryManager.Helpers.Account;
+using HardwareInventoryManager.Helpers.Messaging;
 
 namespace HardwareInventoryManager.Controllers
 {

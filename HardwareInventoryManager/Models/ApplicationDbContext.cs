@@ -44,5 +44,6 @@ namespace HardwareInventoryManager.Models
         public DbSet<QuoteResponse> QuoteResponses { get; set; }
         public DbSet<BulkImport> BulkImports { get; set; }
         public DbSet<ApplicationSetting> ApplicationSettings { get; set; }
+        public DbSet<Setting> Settings { get; set; }
     }
 }

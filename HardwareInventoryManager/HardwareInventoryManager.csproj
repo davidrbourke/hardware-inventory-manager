@@ -222,6 +222,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509222146212_AddSettingTypeToApplicationSettings.cs" />
+    <Compile Include="Migrations\201509222146212_AddSettingTypeToApplicationSettings.Designer.cs">
+      <DependentUpon>201509222146212_AddSettingTypeToApplicationSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509231638555_CreateSettingsTable.cs" />
+    <Compile Include="Migrations\201509231638555_CreateSettingsTable.Designer.cs">
+      <DependentUpon>201509231638555_CreateSettingsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509231711079_AddUserIdToAppSettings.cs" />
+    <Compile Include="Migrations\201509231711079_AddUserIdToAppSettings.Designer.cs">
+      <DependentUpon>201509231711079_AddUserIdToAppSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationSetting.cs" />
     <Compile Include="Models\AssetDetail.cs" />
@@ -229,17 +241,18 @@
     <Compile Include="Models\CaptchaResponse.cs" />
     <Compile Include="Models\QuoteRequest.cs" />
     <Compile Include="Models\QuoteResponse.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Repository\AssetRepository.cs" />
     <Compile Include="Repository\IUserErrors.cs" />
     <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Services\ApplicationSettings\IApplicationSettingsService.cs" />
     <Compile Include="Services\ApplicationSettings\ApplicationSettingsService.cs" />
-    <Compile Include="Services\ApplicationSettings\IRepository.cs" />
     <Compile Include="Services\Assets\AssetService.cs" />
     <Compile Include="Services\Dashboard\DashboardService.cs" />
     <Compile Include="Services\Import\ImportService.cs" />
     <Compile Include="Services\Messaging\SendEmailFactory.cs" />
     <Compile Include="Services\Quotes\QuoteRequestService.cs" />
+    <Compile Include="Services\SeedUserSettings.cs" />
     <Compile Include="Services\User\UserServiceUoW.cs" />
     <Compile Include="Utilities\JsonCamelCaseResult.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -521,11 +534,8 @@
     <Content Include="Views\Assets\_AssetDetail.cshtml" />
     <Content Include="Views\Contacts\_ContactRequest.cshtml" />
     <Content Include="Views\Assets\_AssetDetailReadOnly.cshtml" />
-    <Content Include="Views\ApplicationSettings\Create.cshtml" />
-    <Content Include="Views\ApplicationSettings\Delete.cshtml" />
-    <Content Include="Views\ApplicationSettings\Details.cshtml" />
-    <Content Include="Views\ApplicationSettings\Edit.cshtml" />
     <Content Include="Views\ApplicationSettings\Index.cshtml" />
+    <Content Include="Views\ApplicationSettings\IndexUserSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -540,6 +550,15 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509222146212_AddSettingTypeToApplicationSettings.resx">
+      <DependentUpon>201509222146212_AddSettingTypeToApplicationSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509231638555_CreateSettingsTable.resx">
+      <DependentUpon>201509231638555_CreateSettingsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509231711079_AddUserIdToAppSettings.resx">
+      <DependentUpon>201509231711079_AddUserIdToAppSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

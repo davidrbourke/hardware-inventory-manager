@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Administrator Settings</h2>
+<h2>User Settings for @User.Identity.Name</h2>
 
 <hr />
-@using (Html.BeginForm("Index", "ApplicationSettings", FormMethod.Post))
+@using (Html.BeginForm("IndexUserSettings", "ApplicationSettings", FormMethod.Post))
 {
     <div class="form-horizontal">
         <div class="row">

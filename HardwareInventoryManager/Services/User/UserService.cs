@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Helpers.Messaging;
+using HardwareInventoryManager.Services;
 
 namespace HardwareInventoryManager.Helpers.User
 {
@@ -80,6 +81,8 @@ namespace HardwareInventoryManager.Helpers.User
                 IProcessEmail processEmail = new ProcessEmail(user.UserName);
                 processEmail.SendNewAccountSetupEmail(user);
             }
+
+            SeedUserSettings seedUserSettings = new SeedUserSettings(user.Id);
             return user;
         }
 

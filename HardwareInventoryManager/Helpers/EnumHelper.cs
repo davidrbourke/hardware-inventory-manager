@@ -50,7 +50,22 @@ namespace HardwareInventoryManager.Helpers
             EmailServiceUserName,
             EmailServiceKeyCode,
             EmailServiceSenderEmailAddress,
-            EmailServiceOnlineType
+            EmailServiceOnlineType,
+            DashboardButtonsPanel,
+            DashboardNotificationsPanel,
+            DashboardAssetsPieChartPanel,
+            DashboardAssetsObsoleteChartPanel,
+            DashboardAssetsWarrantyExpiryChartPanel,
+            DashboardAssetsWishlistStatsPanel
+        }
+
+        public enum ApplicationSettingType
+        {
+            Email,
+            Dashboard,
+            Theme,
+            Reports,
+            Other
         }
 
         /// <summary>

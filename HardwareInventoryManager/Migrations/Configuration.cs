@@ -10,7 +10,7 @@ namespace HardwareInventoryManager.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "HardwareInventoryManager.Models.ApplicationDbContext";
         }
 

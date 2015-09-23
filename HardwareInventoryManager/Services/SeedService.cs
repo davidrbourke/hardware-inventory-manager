@@ -1,4 +1,5 @@
 ﻿using HardwareInventoryManager.Models;
+using HardwareInventoryManager.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -20,50 +21,240 @@ namespace HardwareInventoryManager.Helpers
             SeedInitialUserAndRole();
             SeedRoles();
             SeedDefaultRolePermissions();
-            SeedApplicationSettings();            
+            SeedApplicationSettings();
+            SeedUserSettings();
+
+            // Must come last
+            SeedBasicApplicationSettings();
         }
 
+        /// <summary>
+        /// Seed app settings - user level types
+        /// </summary>
+        private void SeedUserSettings()
+        {
+
+            // Dashboard Buttons Panel
+            if (!_context.Settings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.DashboardButtonsPanel.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Setting appSetting = new Setting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.DashboardButtonsPanel.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.Bool,
+                    //ScopeType = EnumHelper.AppSettingScopeType.User,
+                    SettingType = EnumHelper.ApplicationSettingType.Dashboard,
+                    //Value = "true"
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Dashboard Notifications Panel
+            if (!_context.Settings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.DashboardNotificationsPanel.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Setting appSetting = new Setting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.DashboardNotificationsPanel.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.Bool,
+                    //ScopeType = EnumHelper.AppSettingScopeType.User,
+                    SettingType = EnumHelper.ApplicationSettingType.Dashboard,
+                    //Value = "true"
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Dashboard All Assets Panel
+            if (!_context.Settings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.DashboardAssetsPieChartPanel.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Setting appSetting = new Setting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.DashboardAssetsPieChartPanel.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.Bool,
+                    //ScopeType = EnumHelper.AppSettingScopeType.User,
+                    SettingType = EnumHelper.ApplicationSettingType.Dashboard,
+                    //Value = "true"
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+
+            // Dashboard All Assets Obsolete Panel
+            if (!_context.Settings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.DashboardAssetsObsoleteChartPanel.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Setting appSetting = new Setting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.DashboardAssetsObsoleteChartPanel.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.Bool,
+                    //ScopeType = EnumHelper.AppSettingScopeType.User,
+                    SettingType = EnumHelper.ApplicationSettingType.Dashboard,
+                    //Value = "true"
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Dashboard WarrantyExpiry Obsolete Panel
+            if (!_context.Settings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.DashboardAssetsWarrantyExpiryChartPanel.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Setting appSetting = new Setting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.DashboardAssetsWarrantyExpiryChartPanel.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.Bool,
+                    //ScopeType = EnumHelper.AppSettingScopeType.User,
+                    SettingType = EnumHelper.ApplicationSettingType.Dashboard,
+                    //Value = "true"
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Dashboard Wishlist Panel
+            if (!_context.Settings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.DashboardAssetsWishlistStatsPanel.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Setting appSetting = new Setting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.DashboardAssetsWishlistStatsPanel.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.Bool,
+                    //ScopeType = EnumHelper.AppSettingScopeType.User,
+                    SettingType = EnumHelper.ApplicationSettingType.Dashboard,
+                    //Value = "true"
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Seed app settings - global types
+        /// </summary>
         private void SeedApplicationSettings()
         {
             // Email Service User Name
-            if(!_context.ApplicationSettings.Any(x => 
+            if(!_context.Settings.Any(x => 
                 x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceUserName.ToString(), 
                     StringComparison.CurrentCultureIgnoreCase)))
             {
-                ApplicationSetting appSetting = new ApplicationSetting
+                Setting appSetting = new Setting
                 {
                     Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceUserName.ToString(),
                     DataType = EnumHelper.AppSettingDataType.String,
-                    ScopeType = EnumHelper.AppSettingScopeType.Application
+                    //ScopeType = EnumHelper.AppSettingScopeType.Application,
+                    SettingType = EnumHelper.ApplicationSettingType.Email
                 };
-                _context.ApplicationSettings.Add(appSetting);
+                _context.Settings.Add(appSetting);
                 _context.SaveChanges();
             }
 
             // Email Service Key Code
-            if (!_context.ApplicationSettings.Any(x =>
+            if (!_context.Settings.Any(x =>
                 x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString(),
                     StringComparison.CurrentCultureIgnoreCase)))
             {
-                ApplicationSetting appSetting = new ApplicationSetting
+                Setting appSetting = new Setting
                 {
                     Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString(),
                     DataType = EnumHelper.AppSettingDataType.SecureString,
+                    //ScopeType = EnumHelper.AppSettingScopeType.Application,
+                    SettingType = EnumHelper.ApplicationSettingType.Email
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Email Service Sender Email Address
+            if (!_context.Settings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Setting appSetting = new Setting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.String,
+                    //ScopeType = EnumHelper.AppSettingScopeType.Application,
+                    //Value = HIResources.Strings.DefaultAppEmailAddress,
+                    SettingType = EnumHelper.ApplicationSettingType.Email
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            // Email Service Online Type
+            if (!_context.Settings.Any(x =>
+                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString(),
+                    StringComparison.CurrentCultureIgnoreCase)))
+            {
+                Setting appSetting = new Setting
+                {
+                    Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString(),
+                    DataType = EnumHelper.AppSettingDataType.Bool,
+                    //ScopeType = EnumHelper.AppSettingScopeType.Application,
+                    //Value = "false",
+                    SettingType = EnumHelper.ApplicationSettingType.Email
+                };
+                _context.Settings.Add(appSetting);
+                _context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Seed app settings for a for the applications - general - only a single instance of these
+        /// settings for the entire application
+        /// </summary>
+        private void SeedBasicApplicationSettings()
+        {
+            if(!_context.ApplicationSettings.Any(
+                x => x.AppSetting.Key == EnumHelper.ApplicationSettingKeys.EmailServiceUserName.ToString()))
+            {
+
+                var setting = _context.Settings.FirstOrDefault(x => x.Key == EnumHelper.ApplicationSettingKeys.EmailServiceUserName.ToString());
+
+                ApplicationSetting appSetting = new ApplicationSetting
+                {
+                    AppSetting = setting,
                     ScopeType = EnumHelper.AppSettingScopeType.Application
                 };
                 _context.ApplicationSettings.Add(appSetting);
                 _context.SaveChanges();
             }
 
-            // Email Service Sender Email Address
-            if (!_context.ApplicationSettings.Any(x =>
-                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString(),
-                    StringComparison.CurrentCultureIgnoreCase)))
+            if (!_context.ApplicationSettings.Any(
+                x => x.AppSetting.Key == EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString()))
             {
+
+                var setting = _context.Settings.FirstOrDefault(x => x.Key == EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString());
+
                 ApplicationSetting appSetting = new ApplicationSetting
                 {
-                    Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString(),
-                    DataType = EnumHelper.AppSettingDataType.String,
+                    AppSetting = setting,
+                    ScopeType = EnumHelper.AppSettingScopeType.Application
+                };
+                _context.ApplicationSettings.Add(appSetting);
+                _context.SaveChanges();
+            }
+
+            if (!_context.ApplicationSettings.Any(
+                x => x.AppSetting.Key == EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString()))
+            {
+
+                var setting = _context.Settings.FirstOrDefault(x => x.Key == EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString());
+
+                ApplicationSetting appSetting = new ApplicationSetting
+                {
+                    AppSetting = setting,
                     ScopeType = EnumHelper.AppSettingScopeType.Application,
                     Value = HIResources.Strings.DefaultAppEmailAddress
                 };
@@ -71,17 +262,16 @@ namespace HardwareInventoryManager.Helpers
                 _context.SaveChanges();
             }
 
-            // Email Service Online Type
-            if (!_context.ApplicationSettings.Any(x =>
-                x.Key.Equals(Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString(),
-                    StringComparison.CurrentCultureIgnoreCase)))
+            if (!_context.ApplicationSettings.Any(
+                x => x.AppSetting.Key == EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString()))
             {
+
+                var setting = _context.Settings.FirstOrDefault(x => x.Key == EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString());
+
                 ApplicationSetting appSetting = new ApplicationSetting
                 {
-                    Key = Helpers.EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString(),
-                    DataType = EnumHelper.AppSettingDataType.Bool,
-                    ScopeType = EnumHelper.AppSettingScopeType.Application,
-                    Value = "false"
+                    AppSetting = setting,
+                    ScopeType = EnumHelper.AppSettingScopeType.Application
                 };
                 _context.ApplicationSettings.Add(appSetting);
                 _context.SaveChanges();
@@ -132,6 +322,9 @@ namespace HardwareInventoryManager.Helpers
                     roleManager.Create(new IdentityRole { Name = EnumHelper.Roles.Admin.ToString() });
                     manager.Create(user, "password");
                     manager.AddToRole(user.Id, EnumHelper.Roles.Admin.ToString());
+
+                    SeedUserSettings seedUserSettings = new SeedUserSettings(user.Id);
+                    
                 }
             }
         }
@@ -247,6 +440,42 @@ namespace HardwareInventoryManager.Helpers
                 {
                     Role = EnumHelper.Roles.Viewer.ToString(),
                     Controller = "Contacts",
+                    Action = "Index",
+                    IsAllowed = false,
+                    CreatedDate = DateTime.Now
+                };
+
+                _context.RolePermissions.Add(authorRolePermission);
+                _context.SaveChanges();
+            }
+
+
+            // Permissions for Application Settings - Admin only
+            if (!_context.RolePermissions.Any(r => r.Role.Equals(EnumHelper.Roles.Author.ToString()) &&
+                r.Controller.Equals("ApplicationSettings") &&
+                r.Action.Equals("Index")))
+            {
+                RolePermission authorRolePermission = new RolePermission
+                {
+                    Role = EnumHelper.Roles.Author.ToString(),
+                    Controller = "ApplicationSettings",
+                    Action = "Index",
+                    IsAllowed = false,
+                    CreatedDate = DateTime.Now
+                };
+
+                _context.RolePermissions.Add(authorRolePermission);
+                _context.SaveChanges();
+            }
+
+            if (!_context.RolePermissions.Any(r => r.Role.Equals(EnumHelper.Roles.Viewer.ToString()) &&
+                r.Controller.Equals("ApplicationSettings") &&
+                r.Action.Equals("Index")))
+            {
+                RolePermission authorRolePermission = new RolePermission
+                {
+                    Role = EnumHelper.Roles.Viewer.ToString(),
+                    Controller = "ApplicationSettings",
                     Action = "Index",
                     IsAllowed = false,
                     CreatedDate = DateTime.Now

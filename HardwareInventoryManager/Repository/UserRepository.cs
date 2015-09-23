@@ -121,6 +121,8 @@ namespace HardwareInventoryManager.Repository
 
             IRepository<ApplicationUser> repository = new RepositoryWithoutTenant<ApplicationUser>();
             ApplicationUser applicationUser = repository.Single(u => u.Id == _userId);
+            if(applicationUser == null)
+                applicationUser = repository.Single(u => u.Email == _userId);
 
             if (applicationUser == null)
             {

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Data.Entity;
+using System.Collections.Specialized;
+using HardwareInventoryManager.Helpers.ApplicationSettings;
 
 namespace HardwareInventoryManager.Helpers.Dashboard
 {
@@ -130,6 +132,20 @@ namespace HardwareInventoryManager.Helpers.Dashboard
             wishlistStats[3] = countComplete;
             return wishlistStats;
         }
+
+        public NameValueCollection DisplayPanels(string userId)
+        {
+            ApplicationSettingsService settings = new ApplicationSettingsService(userId);
+            var dashboardSettingsForUser = settings.GetDashboardSettingsForUser();
+
+            NameValueCollection collection = new NameValueCollection();
+            foreach(var item in dashboardSettingsForUser)
+            {
+                collection.Add(item.AppSetting.Key, item.Value);
+            }
+            return collection;
+        }
+
     }
 
     public class TwoColumnChartData
@@ -150,4 +166,5 @@ namespace HardwareInventoryManager.Helpers.Dashboard
             return new DateTime();
         }
     }
+
 }

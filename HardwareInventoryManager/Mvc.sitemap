@@ -20,6 +20,7 @@
       <mvcSiteMapNode title="Users" controller="Users" action="Index"/>
       <mvcSiteMapNode title="Contact Requests" controller="Contacts" action="Index"/>
       <mvcSiteMapNode title="Settings" controller="ApplicationSettings" action="Index"/>
+      <mvcSiteMapNode title="User Settings" controller="ApplicationSettings" action="IndexUserSettings"/>
     </mvcSiteMapNode>    
   </mvcSiteMapNode>
 

@@ -4,7 +4,10 @@ using HardwareInventoryManager.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
+using HardwareInventoryManager.Helpers.User;
+using HardwareInventoryManager.Services;
 
 namespace HardwareInventoryManager.Helpers.ApplicationSettings
 {
@@ -15,12 +18,19 @@ namespace HardwareInventoryManager.Helpers.ApplicationSettings
     /// </summary>
     public class ApplicationSettingsService : IApplicationSettingsService
     {
-        private string _userName;
+        private string _userId;
         
-        public ApplicationSettingsService(string userName)
+        public ApplicationSettingsService(string userId)
         {
-            _userName = userName;
+            _userId = userId;
+            CheckSeededData();
         }
+
+        public void CheckSeededData()
+        {
+            SeedUserSettings seedUserSettings = new SeedUserSettings(_userId);
+        }
+
         private IRepository<ApplicationSetting> _repository;
         public IRepository<ApplicationSetting> Repository
         {
@@ -40,25 +50,25 @@ namespace HardwareInventoryManager.Helpers.ApplicationSettings
 
         string IApplicationSettingsService.GetEmailServiceUsername()
         {
-            ApplicationSetting setting = Repository.Single(x => x.Key == EnumHelper.ApplicationSettingKeys.EmailServiceUserName.ToString());
+            ApplicationSetting setting = Repository.Single(x => x.AppSetting.Key == EnumHelper.ApplicationSettingKeys.EmailServiceUserName.ToString());
             return setting != null ? setting.Value : string.Empty;
         }
 
         string IApplicationSettingsService.GetEmailServiceKeyCode()
         {
-            ApplicationSetting setting = Repository.Single(x => x.Key == EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString());
+            ApplicationSetting setting = Repository.Single(x => x.AppSetting.Key == EnumHelper.ApplicationSettingKeys.EmailServiceKeyCode.ToString());
             return setting != null ? setting.Value : string.Empty;
         }
 
         string IApplicationSettingsService.GetEmailServiceSenderEmailAddress()
         {
-            ApplicationSetting setting = Repository.Single(x => x.Key == EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString());
+            ApplicationSetting setting = Repository.Single(x => x.AppSetting.Key == EnumHelper.ApplicationSettingKeys.EmailServiceSenderEmailAddress.ToString());
             return setting != null ? setting.Value : string.Empty;
         }
 
         EnumHelper.EmailServiceTypes IApplicationSettingsService.GetEmailServiceOnlineType()
         {
-            ApplicationSetting setting = Repository.Single(x => x.Key == EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString());
+            ApplicationSetting setting = Repository.Single(x => x.AppSetting.Key == EnumHelper.ApplicationSettingKeys.EmailServiceOnlineType.ToString());
             if(setting == null)
                 return EnumHelper.EmailServiceTypes.Offline;
 
@@ -76,7 +86,7 @@ namespace HardwareInventoryManager.Helpers.ApplicationSettings
         {
             foreach(ApplicationSetting setting in settings)
             {
-                if (setting.DataType == EnumHelper.AppSettingDataType.SecureString &&
+                if (setting.AppSetting.DataType == EnumHelper.AppSettingDataType.SecureString &&
                     string.IsNullOrWhiteSpace(setting.Value))
                 {
                     
@@ -86,6 +96,16 @@ namespace HardwareInventoryManager.Helpers.ApplicationSettings
                 }
             }
             Repository.Save();
+        }
+
+
+        public IQueryable<ApplicationSetting> GetDashboardSettingsForUser()
+        {
+            return Repository.Find(
+                x => x.ScopeType == EnumHelper.AppSettingScopeType.User &&
+                x.UserId == _userId &&
+                x.AppSetting.SettingType == EnumHelper.ApplicationSettingType.Dashboard)
+                .Include(x => x.AppSetting);
         }
     }
 }

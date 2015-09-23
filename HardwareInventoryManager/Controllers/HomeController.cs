@@ -12,6 +12,8 @@ using HardwareInventoryManager.Helpers.Assets;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using HardwareInventoryManager.Helpers.Dashboard;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -46,7 +48,9 @@ namespace HardwareInventoryManager.Controllers
         public ActionResult Dashboard()
         {
             DashboardViewModel dashboad = new DashboardViewModel();
-            
+
+            string userId = User.Identity.GetUserId();
+
             DashboardService dashboardService = new DashboardService(User.Identity.Name);
             IList<TwoColumnChartData> fourMonthExpiryData = dashboardService.AssetsByExpiry4Months();
             dashboad.AssetExpiryData = JArray.FromObject(fourMonthExpiryData);
@@ -63,6 +67,15 @@ namespace HardwareInventoryManager.Controllers
             dashboad.TotalWishlistSupplied = wishListStatus[2];
             dashboad.TotalWishlistComplete = wishListStatus[3];
             dashboad.TotalWishlist = wishListStatus[0] + wishListStatus[1] + wishListStatus[2] + wishListStatus[3];
+
+            var dashboardCollection = dashboardService.DisplayPanels(userId);
+            dashboad.DisplayButtonsPanel = bool.Parse(dashboardCollection[EnumHelper.ApplicationSettingKeys.DashboardButtonsPanel.ToString()]);
+            dashboad.DisplayNotificationsPanel = bool.Parse(dashboardCollection[EnumHelper.ApplicationSettingKeys.DashboardNotificationsPanel.ToString()]);
+            dashboad.DisplayAssetPieChartPanel = bool.Parse(dashboardCollection[EnumHelper.ApplicationSettingKeys.DashboardAssetsPieChartPanel.ToString()]);
+            dashboad.DisplayAssetObsoletePanel = bool.Parse(dashboardCollection[EnumHelper.ApplicationSettingKeys.DashboardAssetsObsoleteChartPanel.ToString()]);
+            dashboad.DisplayAssetWarrantyPanel= bool.Parse(dashboardCollection[EnumHelper.ApplicationSettingKeys.DashboardAssetsWarrantyExpiryChartPanel.ToString()]);
+            dashboad.DisplayWatchlistStatsPanel = bool.Parse(dashboardCollection[EnumHelper.ApplicationSettingKeys.DashboardAssetsWishlistStatsPanel.ToString()]);
+
 
             return View(dashboad);
         }

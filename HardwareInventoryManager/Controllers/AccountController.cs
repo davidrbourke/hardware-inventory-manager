@@ -18,6 +18,7 @@ using HardwareInventoryManager.Helpers.Account;
 using HardwareInventoryManager.Helpers.Messaging;
 using HardwareInventoryManager.Repository;
 using HardwareInventoryManager.Helpers.User;
+using HardwareInventoryManager.Services;
 
 namespace HardwareInventoryManager.Controllers
 {
@@ -123,6 +124,9 @@ namespace HardwareInventoryManager.Controllers
                         UserTenants = tenants };
                     IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                     result = await UserManager.AddToRoleAsync(user.Id, EnumHelper.Roles.Author.ToString());
+
+                    SeedUserSettings seedUserSettings = new SeedUserSettings(user.Id);
+
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);

@@ -30,5 +30,13 @@ namespace HardwareInventoryManager.ViewModels
         public JArray AssetsByCategory { get; set; }
 
         public JArray WarrantyExpiryData { get; set; }
+
+        public bool DisplayButtonsPanel { get; set; }
+        public bool DisplayNotificationsPanel { get; set; }
+        public bool DisplayAssetPieChartPanel { get; set; }
+        public bool DisplayAssetObsoletePanel { get; set; }
+        public bool DisplayAssetWarrantyPanel { get; set; }
+        public bool DisplayWatchlistStatsPanel { get; set; }
+
     }
 }

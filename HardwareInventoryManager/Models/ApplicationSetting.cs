@@ -12,11 +12,11 @@ namespace HardwareInventoryManager.Models
         [Key]
         public int ApplicationSettingId { get; set; }
 
-        public string Key { get; set; }
+        public int SettingId { get; set; }
+        [ForeignKey("SettingId")]
+        public Setting AppSetting { get; set; }
 
         public string Value { get; set; }
-
-        public Helpers.EnumHelper.AppSettingDataType DataType { get; set; }
 
         public Helpers.EnumHelper.AppSettingScopeType ScopeType { get; set; }
 
@@ -39,5 +39,7 @@ namespace HardwareInventoryManager.Models
                 Value = value ? "true" : "false";
             }
         }
+
+        public string UserId { get; set; }
     }
 }

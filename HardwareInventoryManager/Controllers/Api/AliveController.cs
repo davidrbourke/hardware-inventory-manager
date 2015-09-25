@@ -18,7 +18,9 @@ namespace HardwareInventoryManager.Controllers.Api
         // GET: api/Alive/5
         public IHttpActionResult Get(int id)
         {
-            return Ok(id);
+            CustomApplicationDbContext context = new CustomApplicationDbContext();
+            var setting = context.ApplicationSettings.FirstOrDefault();
+            return Ok(setting.SettingId);
         }
 
         // POST: api/Alive

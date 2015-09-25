@@ -34,6 +34,7 @@ namespace HardwareInventoryManager
             #if DEBUG
                 BundleTable.EnableOptimizations = false;
             #endif
+
         }
 
         private void ApplyJsonSettings()

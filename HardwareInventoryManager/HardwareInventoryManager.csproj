@@ -207,6 +207,7 @@
     <Compile Include="Controllers\LookupTypesController.cs" />
     <Compile Include="Controllers\QuoteRequestsController.cs" />
     <Compile Include="Controllers\QuoteResponsesController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CustomApplicationDbContext.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="Services\Import\ImportService.cs" />
     <Compile Include="Services\Messaging\SendEmailFactory.cs" />
     <Compile Include="Services\Quotes\QuoteRequestService.cs" />
+    <Compile Include="Services\Reporting\ReportingService.cs" />
     <Compile Include="Services\SeedUserSettings.cs" />
     <Compile Include="Services\User\UserServiceUoW.cs" />
     <Compile Include="Utilities\JsonCamelCaseResult.cs" />
@@ -536,6 +538,8 @@
     <Content Include="Views\Assets\_AssetDetailReadOnly.cshtml" />
     <Content Include="Views\ApplicationSettings\Index.cshtml" />
     <Content Include="Views\ApplicationSettings\IndexUserSettings.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

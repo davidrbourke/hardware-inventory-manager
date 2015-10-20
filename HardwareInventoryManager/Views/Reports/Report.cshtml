@@ -1,0 +1,38 @@
+﻿@model HardwareInventoryManager.ViewModels.AssetIndexViewModel
+
+@{
+    ViewBag.Title = "Reports";
+}
+
+<h2>Report: @Model.ReportDisplayName</h2>
+
+<p>@Model.ReportDescription</p>
+
+@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+<hr />
+<div class="container">
+    <div class="col-md-12">
+        <table id="reportTable" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    @foreach(var headerColumn in Model.Headers)
+                    {
+                        <th>@headerColumn.data</th>
+                    }
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+    @section scripts {
+        <script type="text/javascript">
+            var rawReportData = @Html.Raw(Model.AssetListJson)
+            var rawHeaderData = @Html.Raw(Model.ReportHeaders)
+            $('#reportTable').DataTable({
+                data: rawReportData.Table,
+                responsive: true,
+                columns: rawHeaderData.Header
+            });
+        </script>
+    }
+</div>

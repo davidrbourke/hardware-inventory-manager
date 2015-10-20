@@ -275,5 +275,41 @@ namespace HardwareInventoryManager.HIResources {
                 return ResourceManager.GetString("Login_Error", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This report lists all assets with an expired warranty or no warranty expiry date..
+        /// </summary>
+        public static string Report_Desc_ExpiredWarranty {
+            get {
+                return ResourceManager.GetString("Report_Desc_ExpiredWarranty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This report lists all the assets which have an expired obsolesence date, this is equipment which should be scheduled for renewal..
+        /// </summary>
+        public static string Report_Desc_PastObsoleteDate {
+            get {
+                return ResourceManager.GetString("Report_Desc_PastObsoleteDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expired Warranty.
+        /// </summary>
+        public static string Report_ExpiredWarranty {
+            get {
+                return ResourceManager.GetString("Report_ExpiredWarranty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Obsolete Date Expired.
+        /// </summary>
+        public static string Report_PastObsoleteDate {
+            get {
+                return ResourceManager.GetString("Report_PastObsoleteDate", resourceCulture);
+            }
+        }
     }
 }

@@ -55,11 +55,13 @@ namespace HardwareInventoryManager
             // Datatables Bundles
             bundles.Add(new StyleBundle("~/Content/datatablescss").Include(
                        "~/Content/jquery.dataTables.css",
-                       "~/Content/dataTables.responsive.css"));
+                       "~/Content/dataTables.responsive.css",
+                       "~/Content/buttons.dataTables.css"));
             
             bundles.Add(new ScriptBundle("~/bundles/dataTables").Include(
                         "~/Scripts/jquery.dataTables.js",
-                        "~/Scripts/dataTables.responsive.js"));
+                        "~/Scripts/dataTables.responsive.js",
+                        "~/Scripts/DataTables/dataTables.buttons.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .Include("~/Scripts/App/app.js")

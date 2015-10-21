@@ -364,3 +364,7 @@ span {
 .full-page {
     min-height: 750px;
 }
+
+.buttonArea {
+    padding: 00px 0px 58px 0px;
+}

@@ -23,14 +23,18 @@ namespace HardwareInventoryManager.Services.Reporting
         public IEnumerable<Asset> ExpiredWarrantyReport()
         {
             IRepository<Asset> rep = new Repository<Asset>(_username);
-            IList<Asset> assets = rep.GetAll().Include(x => x.WarrantyPeriod).ToList();
+            IList<Asset> assets = rep.GetAll().Include(x => x.WarrantyPeriod).Include(x =>x.AssetMake).ToList();
             return assets.Where(x => x.WarrantyExpiryDate < DateTime.Now);
         }
 
+        /// <summary>
+        /// Returns a list of assets where the obsolesence date is in the past
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Asset> PastObsoleteDateReport()
         {
             IRepository<Asset> rep = new Repository<Asset>(_username);
-            IList<Asset> assets = rep.GetAll().ToList();
+            IList<Asset> assets = rep.GetAll().Include(x => x.AssetMake).ToList();
             return assets.Where(x => x.ObsolescenseDate < DateTime.Now);
         }
     }

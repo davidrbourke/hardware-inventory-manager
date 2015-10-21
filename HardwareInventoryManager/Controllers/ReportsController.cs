@@ -59,6 +59,11 @@ namespace HardwareInventoryManager.Controllers
             IList<Header> header = new List<Header>();
             header.Add(new Header { data = "Model" });
             header.Add(new Header { data = "SerialNumber" });
+            header.Add(new Header { data = "AssetMake.Description" });
+            header.Add(new Header { data = "PurchaseDateFormatted" });
+            header.Add(new Header { data = "WarrantyExpiryDate" });
+            header.Add(new Header { data = "LocationDescription" });
+
             vm.Headers = header;
             JObject headerJson = JObject.FromObject(
                 new 
@@ -89,6 +94,10 @@ namespace HardwareInventoryManager.Controllers
             IList<Header> header = new List<Header>();
             header.Add(new Header { data = "Model" });
             header.Add(new Header { data = "SerialNumber" });
+            header.Add(new Header { data = "AssetMake.Description" });
+            header.Add(new Header { data = "PurchaseDateFormatted" });
+            header.Add(new Header { data = "ObsolescenceDateFormatted" });
+            header.Add(new Header { data = "LocationDescription" });
             vm.Headers = header;
             JObject headerJson = JObject.FromObject(
                 new

@@ -286,6 +286,15 @@ namespace HardwareInventoryManager.HIResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This report lists all MACAddresses recorded in the system..
+        /// </summary>
+        public static string Report_Desc_MacAddresses {
+            get {
+                return ResourceManager.GetString("Report_Desc_MacAddresses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This report lists all the assets which have an expired obsolesence date, this is equipment which should be scheduled for renewal..
         /// </summary>
         public static string Report_Desc_PastObsoleteDate {
@@ -300,6 +309,15 @@ namespace HardwareInventoryManager.HIResources {
         public static string Report_ExpiredWarranty {
             get {
                 return ResourceManager.GetString("Report_ExpiredWarranty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAC Addresses.
+        /// </summary>
+        public static string Report_MacAddresses {
+            get {
+                return ResourceManager.GetString("Report_MacAddresses", resourceCulture);
             }
         }
         

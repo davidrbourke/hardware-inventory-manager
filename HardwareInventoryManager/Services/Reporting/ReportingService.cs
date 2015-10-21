@@ -37,5 +37,34 @@ namespace HardwareInventoryManager.Services.Reporting
             IList<Asset> assets = rep.GetAll().Include(x => x.AssetMake).ToList();
             return assets.Where(x => x.ObsolescenseDate < DateTime.Now);
         }
+
+        /// <summary>
+        /// Data for MAC Addresses
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<MacAddressReportStructure> MacAddressReport()
+        {
+            IRepository<Asset> rep = new Repository<Asset>(_username);
+
+            return rep.GetAll().Include(x => x.NetworkedAssetDetail)
+                .Where(x => x.NetworkedAssetDetail.MACAddress != "")
+                .Where(x => x.NetworkedAssetDetail.MACAddress != null)
+                .Select(
+                g => new MacAddressReportStructure
+                {
+                    MacAddress = g.NetworkedAssetDetail.MACAddress,
+                    SerialNumber = g.SerialNumber,
+                    Location = g.LocationDescription
+                }).ToList();
+        }
+
+
+    }
+
+    public class MacAddressReportStructure
+    {
+        public string MacAddress { get; set; }
+        public string SerialNumber { get; set; }
+        public string Location { get; set; }
     }
 }

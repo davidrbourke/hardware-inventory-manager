@@ -3,10 +3,11 @@
 }
 
 <h2>Reports</h2>
-
+@Html.ActionLink("Back", "Dashboard", "Home", null, new { @class = "btn btn-default" })
 <hr />
 
 <ul class="list-group">
     <li class="list-group-item">@Html.ActionLink("Expired Warranties Report", "ExpiredWarrantyReport") </li>
     <li class="list-group-item">@Html.ActionLink("Obsolete Equipment Report", "PastObsoleteDateReport") </li>
+    <li class="list-group-item">@Html.ActionLink("MAC Addresses Report", "MacAddressReport") </li>
 </ul>

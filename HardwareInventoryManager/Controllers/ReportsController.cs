@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HardwareInventoryManager.Filters;
 using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Services.Reporting;
 using HardwareInventoryManager.ViewModels;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace HardwareInventoryManager.Controllers
 {
+    [CustomAuthorize]
     public class ReportsController : Controller
     {
 
@@ -106,6 +108,33 @@ namespace HardwareInventoryManager.Controllers
                 });
             vm.ReportHeaders = headerJson;
             return View("Report", vm);
+        }
+
+        public ActionResult MacAddressReport()
+        {
+            AssetIndexViewModel viewModel = new AssetIndexViewModel();
+
+            JObject data = JObject.FromObject(
+                new
+                {
+                    Table = ReportingService.MacAddressReport()
+                });
+            IList<Header> header = new List<Header>();
+            header.Add(new Header { data = "MacAddress" });
+            header.Add(new Header { data = "SerialNumber" });
+            header.Add(new Header { data = "Location" });
+
+            JObject headerObject = JObject.FromObject(
+                new
+                {
+                    Header = header
+                });
+            viewModel.AssetListJson = data;
+            viewModel.ReportHeaders = headerObject;
+            viewModel.ReportDisplayName = HIResources.Strings.Report_MacAddresses;
+            viewModel.ReportDescription = HIResources.Strings.Report_Desc_MacAddresses;
+            viewModel.Headers = header;
+            return View("Report", viewModel);
         }
     }
 

@@ -192,11 +192,17 @@
   <data name="Report_Desc_ExpiredWarranty" xml:space="preserve">
     <value>This report lists all assets with an expired warranty or no warranty expiry date.</value>
   </data>
+  <data name="Report_Desc_MacAddresses" xml:space="preserve">
+    <value>This report lists all MACAddresses recorded in the system.</value>
+  </data>
   <data name="Report_Desc_PastObsoleteDate" xml:space="preserve">
     <value>This report lists all the assets which have an expired obsolesence date, this is equipment which should be scheduled for renewal.</value>
   </data>
   <data name="Report_ExpiredWarranty" xml:space="preserve">
     <value>Expired Warranty</value>
+  </data>
+  <data name="Report_MacAddresses" xml:space="preserve">
+    <value>MAC Addresses</value>
   </data>
   <data name="Report_PastObsoleteDate" xml:space="preserve">
     <value>Obsolete Date Expired</value>

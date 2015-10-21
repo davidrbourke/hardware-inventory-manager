@@ -13,6 +13,11 @@
       <mvcSiteMapNode title="Bulk Upload" url="/BulkUploads/#/BulkUpload" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Wishlist" url="/QuoteRequests/#/QuoteList/"  />
+    <mvcSiteMapNode title="Reports" controller="Reports" action="Index">
+      <mvcSiteMapNode title="Expired Warranty" controller="Reports" action="ExpiredWarrantyReport"/>
+      <mvcSiteMapNode title="Obsolete Equipment" controller="Reports" action="PastObsoleteDateReport"/>
+      <mvcSiteMapNode title="MAC Addresses" controller="Reports" action="MacAddressReport"/>
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Administration" controller="Lookups" action="Index">
       <mvcSiteMapNode title="Lookup" controller="Lookups" action="Index"/>
       <mvcSiteMapNode title="Lookup Types" controller="LookupTypes" action="Index"/>

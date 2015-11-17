@@ -60,12 +60,12 @@ namespace HardwareInventoryManager.Controllers
         {
             string path = string.Format(@"{0}{1}\{2}",
                 (HttpContext.Request).PhysicalApplicationPath,
-                @"Files",
-                "im_import_template.csv");
+                @"DownloadFiles",
+                "AssetImportTemplate.csv");
             FileStream fileStream = System.IO.File.Open(path, FileMode.Open);
             BinaryReader bin = new BinaryReader(fileStream);
             byte[] bytes = bin.ReadBytes((int)fileStream.Length);
-            return File(bytes, "text/csv", "im_import_template.csv");
+            return File(bytes, "text/csv", "AssetImportTemplate.csv");
         }   
 
 

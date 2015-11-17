@@ -28,7 +28,7 @@ namespace HardwareInventoryManager.Tests.Controllers
             AssetService assetService = new AssetService(string.Empty);
             assetService.Repository = mock.Object;
             
-            AssetsController controller = new AssetsController();
+            AssetItemsController controller = new AssetItemsController();
             controller.AssetService = assetService;
             
             // ACT
@@ -47,7 +47,7 @@ namespace HardwareInventoryManager.Tests.Controllers
             mock.Setup(r => r.GetAll()).Returns(MultipleAssets());
             AssetService assetService = new AssetService(string.Empty);
             assetService.Repository = mock.Object;
-            AssetsController controller = new AssetsController();
+            AssetItemsController controller = new AssetItemsController();
             controller.AssetService = assetService;
 
             // ACT
@@ -67,7 +67,7 @@ namespace HardwareInventoryManager.Tests.Controllers
                 MultipleAssets());
             AssetService assetService = new AssetService(string.Empty);
             assetService.Repository = mock.Object;
-            AssetsController controller = new AssetsController();
+            AssetItemsController controller = new AssetItemsController();
             controller.AssetService = assetService;
 
             // ACT
@@ -99,7 +99,7 @@ namespace HardwareInventoryManager.Tests.Controllers
             };
             AssetService assetService = new AssetService(string.Empty);
             assetService.Repository = mock.Object;
-            AssetsController controller = new AssetsController();
+            AssetItemsController controller = new AssetItemsController();
             controller.AssetService = assetService;
 
             // ACT
@@ -120,7 +120,7 @@ namespace HardwareInventoryManager.Tests.Controllers
 
             AssetViewModel avm = new AssetViewModel();
             
-            AssetsController controller = new AssetsController();
+            AssetItemsController controller = new AssetItemsController();
             controller.AssetService = assetService;
 
             controller.ModelState.Clear();

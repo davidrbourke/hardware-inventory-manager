@@ -44,13 +44,14 @@ namespace HardwareInventoryManager
                 "~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
               
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      //"~/Content/bootstrap.css",
                       "~/Content/bootstrap-toggle.css",
                       "~/Content/site.css",
-                      "~/Content/bootstrap-theme.css",
+                      //"~/Content/bootstrap-theme.css",
                       "~/Content/toastr.css",
                       "~/Content/jquery-ui.css",
-                      "~/Content/jquery-ui.theme.css"));
+                      "~/Content/jquery-ui.theme.css"
+                      ));
 
             // Datatables Bundles
             bundles.Add(new StyleBundle("~/Content/datatablescss").Include(

@@ -567,9 +567,8 @@ namespace HardwareInventoryManager.Controllers
         }
 
         //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // GET: /Account/LogOff
+        [HttpGet]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();

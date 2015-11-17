@@ -8,8 +8,8 @@
     <mvcSiteMapNode title="Register" controller="Account" action="Register" visibility="false"/>
     <mvcSiteMapNode title="Log In" controller="Account" action="Login" visibility="false"/>
     <mvcSiteMapNode title="Forgotten Password" controller="Account" action="ForgotPassword" visibility="false"/>
-    <mvcSiteMapNode title="Assets" controller="Assets" action="Index">
-      <mvcSiteMapNode title="Assets" controller="Assets" action="Index"/>
+    <mvcSiteMapNode title="Assets" controller="AssetItems" action="Index">
+      <mvcSiteMapNode title="Asset List" controller="AssetItems" action="Index"/>
       <mvcSiteMapNode title="Bulk Upload" url="/BulkUploads/#/BulkUpload" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Wishlist" url="/QuoteRequests/#/QuoteList/"  />

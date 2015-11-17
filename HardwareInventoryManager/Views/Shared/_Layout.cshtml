@@ -1,125 +1,211 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Hardware Software Inventory Assets Schools Free" name="description" />
+    <meta content="Orbital IT Solutions Anton Beehl David Bourke My Asset Manager" name="author" />
     <title>@ViewBag.Title @HardwareInventoryManager.HIResources.Strings.AppName </title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/datatablescss")
     @Scripts.Render("~/bundles/modernizr")
+
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="~/assets/global/css/components.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME STYLES -->
+
+    <link rel="shortcut icon" href="favicon.ico" />
+
     <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
-<body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-
-                @Html.ActionLink(HardwareInventoryManager.HIResources.Strings.AppName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-content-white">
+    <div class="page-header navbar navbar-fixed-top">
+        <div class="page-header-inner">
+            <div class="page-logo">
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" />
+                </a>
+                @*@Html.ActionLink(HardwareInventoryManager.HIResources.Strings.AppName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <div class="menu-toggler sidebar-toggler"> </div>
             </div>
-            <div class="navbar-collapse collapse">
-                @*<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#contactRequestModal">
-                        Launch demo modal
-                    </button>*@
-                @*<ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>*@
-                @Html.MvcSiteMap().Menu("BootstrapMenuHelperModel")
-                @Html.Partial("_LoginPartial")
+
+
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <!-- BEGIN NOTIFICATION DROPDOWN -->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                    <li class="dropdown dropdown-user">
+                        @Html.Partial("_LoginPartial")
+                    </li>
+                    <!-- END NOTIFICATION DROPDOWN -->
+                </ul>
             </div>
         </div>
     </div>
-    <div class="container body-content" ng-app="inventoryManagerApp">
-        <div class="row">
-            <div class="col-md-12">
-                @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+
+    <!-- BEGIN HEADER & CONTENT DIVIDER -->
+    <div class="clearfix"> </div>
+    <!-- END HEADER & CONTENT DIVIDER -->
+    <!-- BEGIN CONTAINER -->
+
+    <div class="page-container">
+
+
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            <!-- BEGIN SIDEBAR -->
+            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+            <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+            <div class="page-sidebar navbar-collapse collapse">
+                <!-- BEGIN SIDEBAR MENU -->
+                <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+                <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+                <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+                <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-light " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                    <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                    <li class="sidebar-toggler-wrapper hide">
+                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                        <div class="sidebar-toggler"> </div>
+                        <!-- END SIDEBAR TOGGLER BUTTON -->
+                    </li>
+                    @Html.MvcSiteMap().Menu("SideBarMenuHelperModel")
+
+                </ul>
             </div>
         </div>
-        @RenderBody()
-        <hr />
-
-        @{
-    //Html.RenderAction("Create", "Contacts");
-
-        }
 
 
-
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper" ng-app="inventoryManagerApp">
+            <!-- BEGIN CONTENT BODY -->
+            <div class="page-content">
+                <!-- BEGIN PAGE HEADER-->
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.MvcSiteMap().SiteMapPath("BootstrapSiteMapPathHelperModel")
+                    </div>
+                </div>
+                @RenderBody()
+                <hr />
+            </div>
+        </div>
     </div>
     <div class="navbar navbar-fixed-bottom">
         <footer class="footer">
             <p>&copy; @DateTime.Now.Year - @HardwareInventoryManager.HIResources.Strings.AppName</p>
         </footer>
     </div>
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/toastr")
-        @Scripts.Render("~/bundles/datatables")
-        @Scripts.Render("~/bundles/angular")
-        @Scripts.Render("~/bundles/angulardatatables")
-        @Scripts.Render("~/bundles/angularbootstrap")
-        @Scripts.Render("~/bundles/app")
 
-        @RenderSection("scripts", required: false)
-        <script type="text/javascript">
-            $(document).ready(function () {
-                if ($('#success').val()) {
-                    displayMessage($('#success').val(), 'success');
-                }
-                if ($('#info').val()) {
-                    displayMessage($('#info').val(), 'info');
-                }
-                if ($('#warning').val()) {
-                    displayMessage($('#warning').val(), 'warning');
-                }
-                if ($('#error').val()) {
-                    displayMessage($('#error').val(), 'error');
-                }
-            });
+    <!--[if lt IE 9]>
+    <script src="~/assets/global/plugins/respond.min.js"></script>
+    <script src="~/assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="~/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/angulardatatables")
+    @Scripts.Render("~/bundles/angularbootstrap")
+    @Scripts.Render("~/bundles/app")
 
-            var displayMessage = function (message, msgType) {
-                toastr.options = {
-                    'closeButton': false,
-                    'debug': false,
-                    'positionClass': 'toast-top-right',
-                    'onClick': null,
-                    'showDuration': '300',
-                    'hideDuration': '1000',
-                    'timeOut': '8000',
-                    'extendedTimeOut': '1000',
-                    'showEasing': 'swing',
-                    'hideEasing': 'linear',
-                    'showMethod': 'fadeIn',
-                    'hideMethod': 'fadeOut'
-                };
 
-                toastr[msgType](message);
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#success').val()) {
+                displayMessage($('#success').val(), 'success');
+            }
+            if ($('#info').val()) {
+                displayMessage($('#info').val(), 'info');
+            }
+            if ($('#warning').val()) {
+                displayMessage($('#warning').val(), 'warning');
+            }
+            if ($('#error').val()) {
+                displayMessage($('#error').val(), 'error');
+            }
+        });
+
+        var displayMessage = function (message, msgType) {
+            toastr.options = {
+                'closeButton': false,
+                'debug': false,
+                'positionClass': 'toast-top-right',
+                'onClick': null,
+                'showDuration': '300',
+                'hideDuration': '1000',
+                'timeOut': '8000',
+                'extendedTimeOut': '1000',
+                'showEasing': 'swing',
+                'hideEasing': 'linear',
+                'showMethod': 'fadeIn',
+                'hideMethod': 'fadeOut'
             };
 
-            $(function () {
-                $("input[id*='Date']").datepicker({
-                    dateFormat: 'dd/mm/yy',
-                    showButtonPanel: true,
-                    changeMonth: true,
-                    changeYear: true
-                });
+            toastr[msgType](message);
+        };
+
+        $(function () {
+            $("input[id*='Date']").datepicker({
+                dateFormat: 'dd/mm/yy',
+                showButtonPanel: true,
+                changeMonth: true,
+                changeYear: true
             });
-        </script>
+        });
 
-        <input type="hidden" id="success" value="@TempData["success"]" />
-        <input type="hidden" id="info" value="@TempData["info"]" />
-        <input type="hidden" id="warning" value="@TempData["warning"]" />
-        <input type="hidden" id="error" value="@TempData["error"]" />
+    </script>
 
-        @HardwareInventoryManager.Helpers.UtilityHelper.GoogleAnalytics()
+    <input type="hidden" id="success" value="@TempData["success"]" />
+    <input type="hidden" id="info" value="@TempData["info"]" />
+    <input type="hidden" id="warning" value="@TempData["warning"]" />
+    <input type="hidden" id="error" value="@TempData["error"]" />
+
+    @HardwareInventoryManager.Helpers.UtilityHelper.GoogleAnalytics()
 </body>
 </html>
+

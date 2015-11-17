@@ -1,0 +1,92 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+
+@helper  TopMenu(List<SiteMapNodeModel> nodeList)
+{
+
+
+
+    foreach (SiteMapNodeModel node in nodeList)
+    {
+        if (!node.Attributes.ContainsKey("visibility") ||
+            (node.Attributes.ContainsKey("visibility") &&
+            !node.Attributes["visibility"].Equals("false")))
+        {
+
+            string url = node.IsClickable ? node.Url : "#";
+
+
+
+            if (!node.Children.Any())
+            {
+                <li class="nav-item">
+                    <a href="@url" class="nav-link nav-toggle">
+                        <i class="icon-diamond"></i>
+                        <span class="title">@node.Title</span>
+                    </a>
+
+                </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="icon-diamond"></i>
+                            <span class="title">@node.Title</span>
+                            <span class="arrow"></span>
+                        </a>
+                        @DropDownMenu(node.Children)
+                    </li>
+                }
+
+                if (node != nodeList.Last())
+                {
+                    <li class="divider-vertical"></li>
+                }
+                
+            }
+        }
+
+
+}
+
+@helper DropDownMenu(SiteMapNodeModelList nodeList)
+{
+    <ul class="sub-menu">
+        @foreach (SiteMapNodeModel node in nodeList)
+        {
+            if (node.Title == "Separator")
+            {
+                <li class="divider"></li>
+                continue;
+            }
+
+            string url = node.IsClickable ? node.Url : "#";
+
+            if (!node.Children.Any())
+            {
+                <li class="nav-item">
+                    <a href="@url" class="nav-link ">
+                        <span class="title">@node.Title</span>
+                    </a>
+                </li>
+            }
+            else
+            {
+                    <li class="nav-item">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title">@node.Title</span>
+                    <span class="arrow"></span>
+                </a>
+                @DropDownMenu(node.Children)
+                        </li>
+            }
+        }
+    </ul>
+}
+
+@TopMenu(Model.Nodes)
+
+

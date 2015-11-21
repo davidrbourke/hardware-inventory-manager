@@ -109,7 +109,7 @@ namespace HardwareInventoryManager.Repository
 
         public ApplicationUser Single(System.Linq.Expressions.Expression<Func<ApplicationUser, bool>> predicate)
         {
-            return GetAll().Where(predicate).FirstOrDefault();
+            return (ApplicationUser)GetAll().Where(predicate).FirstOrDefault();
         }
 
         /// <summary>

@@ -368,3 +368,10 @@ span {
 .buttonArea {
     padding: 00px 0px 58px 0px;
 }
+
+.logo {
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 15px;
+    color: white;   
+}

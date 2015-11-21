@@ -22,7 +22,14 @@
             {
                 <li class="nav-item">
                     <a href="@url" class="nav-link nav-toggle">
-                        <i class="icon-diamond"></i>
+                        @if (node.Title.Equals("Contact Us", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            <i class="icon-envelope"></i>
+                        }
+                        else
+                        {
+                            <i class="icon-diamond"></i>
+                        }
                         <span class="title">@node.Title</span>
                     </a>
 
@@ -32,7 +39,7 @@
                 {
                     <li class="nav-item">
                         <a href="javascript:;" class="nav-link nav-toggle">
-                            <i class="icon-diamond"></i>
+                            <i class="title"></i>
                             <span class="title">@node.Title</span>
                             <span class="arrow"></span>
                         </a>

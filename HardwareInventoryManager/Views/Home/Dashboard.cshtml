@@ -6,7 +6,7 @@
     </div>
     @if (Model.DisplayButtonsPanel)
     {
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8">
+        <div class="col-md-2">
             <div style="cursor: pointer" class="panel-custom" onclick="window.location.href='../BulkUploads/#/BulkUpload'">
                 <div class="dashboard-stat blue">
                     <div class="visual">
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8">
+         <div class="col-md-2">
             <div style="cursor: pointer" class="panel-custom" onclick="window.location.href='../Users'">
                 <div class="dashboard-stat red">
                     <div class="visual">
@@ -38,38 +38,38 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <div style="cursor: pointer" class="panel-custom" onclick="window.location.href='../ApplicationSettings/IndexUserSettings'">
-                <div class="dashboard-stat green">
-                    <div class="visual">
-                        <i class="fa fa-shopping-cart"></i>
-                    </div>
-                    <div class="details">
-                        <div class="desc">Settings</div>
-                    </div>
-                    <a class="more" href="javascript:;">
-                        View More
-                        <i class="m-icon-swapright m-icon-white"></i>
-                    </a>
+    <div class="col-md-2">
+        <div style="cursor: pointer" class="panel-custom" onclick="window.location.href='../ApplicationSettings/IndexUserSettings'">
+            <div class="dashboard-stat green">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
                 </div>
+                <div class="details">
+                    <div class="desc">Settings</div>
+                </div>
+                <a class="more" href="javascript:;">
+                    View More
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
             </div>
         </div>
-        <div class="col-md-2">
-            <div style="cursor: pointer" class="panel-custom" onclick="window.location.href='../Reports/Index'">
-                <div class="dashboard-stat purple">
-                    <div class="visual">
-                        <i class="fa fa-globe"></i>
-                    </div>
-                    <div class="details">
-                        <div class="desc">Reports</div>
-                    </div>
-                    <a class="more" href="javascript:;">
-                        View More
-                        <i class="m-icon-swapright m-icon-white"></i>
-                    </a>
+    </div>
+    <div class="col-md-2">
+        <div style="cursor: pointer" class="panel-custom" onclick="window.location.href='../Reports/Index'">
+            <div class="dashboard-stat purple">
+                <div class="visual">
+                    <i class="fa fa-globe"></i>
                 </div>
+                <div class="details">
+                    <div class="desc">Reports</div>
+                </div>
+                <a class="more" href="javascript:;">
+                    View More
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
             </div>
         </div>
+    </div>
     }
     @if (Model.DisplayNotificationsPanel)
     {

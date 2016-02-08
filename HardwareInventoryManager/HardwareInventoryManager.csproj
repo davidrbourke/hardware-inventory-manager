@@ -223,10 +223,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602061408367_c1.cs" />
-    <Compile Include="Migrations\201602061408367_c1.Designer.cs">
-      <DependentUpon>201602061408367_c1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationSetting.cs" />
     <Compile Include="Models\AssetDetail.cs" />
@@ -1005,9 +1001,6 @@
     <EmbeddedResource Include="HIResources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602061408367_c1.resx">
-      <DependentUpon>201602061408367_c1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

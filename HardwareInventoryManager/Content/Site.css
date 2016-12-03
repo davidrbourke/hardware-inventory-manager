@@ -375,3 +375,8 @@ span {
     font-size: 15px;
     color: white;   
 }
+
+/* Overriding /\\00a0*/
+.breadcrumb > li + li:before {
+    content: "/\00a0" !important;
+}

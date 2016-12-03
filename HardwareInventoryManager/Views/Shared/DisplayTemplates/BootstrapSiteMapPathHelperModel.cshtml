@@ -12,20 +12,18 @@
             {
                 if (node == Model.Nodes.First())
                 {
-                continue;
+                    continue;
                 }
 
                 if (node != Model.Nodes.Last())
                 {
-                string url = node.IsClickable ? node.Url : "#";
-
-
-                <li><a href="@url">@node.Title</a><span class="divider">></span></li>
+                    string url = node.IsClickable ? node.Url : "#";
+                    <li><a href="@url">@node.Title</a></li>
                 }
                 else
                 {
-        
-                <li class="active">@node.Title</li>
+       
+                    <li class="active">@node.Title</li>
                 }
             }
         </ul>

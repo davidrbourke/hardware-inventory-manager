@@ -9,6 +9,7 @@ namespace HardwareInventoryManager.ViewModels
 {
     public class QuoteRequestViewModel
     {
+        [Display(Name="Quote Request Item")]
         public int QuoteRequestId { get; set; }
 
         public DateTime? DateRequired { get; set; }
@@ -21,6 +22,7 @@ namespace HardwareInventoryManager.ViewModels
             }
         }
 
+        [Display(Name ="Specification Details")]
         [Required]
         public string SpecificationDetails { get; set; }
 
@@ -28,7 +30,7 @@ namespace HardwareInventoryManager.ViewModels
 
         [Required]
         public Lookup SelectedItemType { get; set; }
-
+            
         public int? Quantity { get; set; }
         
         public IEnumerable<TenantViewModel> Tenants { get; set; }

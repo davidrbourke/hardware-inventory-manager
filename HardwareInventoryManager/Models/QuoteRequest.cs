@@ -10,12 +10,15 @@ namespace HardwareInventoryManager.Models
     public class QuoteRequest: ModelEntity, ITenant
     {
         [Key]
+        [Display(Name = "Quote Request Id")]
         public int QuoteRequestId { get; set; }
 
+        [Display(Name = "Date Required")]
         public DateTime? DateRequired { get; set; }
 
         public int? Quantity { get; set; }
 
+        [Display(Name = "Specification Details")]
         public string SpecificationDetails { get; set; }
 
         public int? QuoteResponseId { get; set; }

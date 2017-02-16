@@ -1,9 +1,6 @@
 ﻿using HardwareInventoryManager.Models;
 using HardwareInventoryManager.Repository;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data.Entity;
 
 namespace HardwareInventoryManager.Helpers.Assets
@@ -16,8 +13,7 @@ namespace HardwareInventoryManager.Helpers.Assets
         {
             UserName = userName;
         }
-
-
+        
         public IQueryable<Asset> GetAllAssets()
         {
             var assets = Repository.GetAll()

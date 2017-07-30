@@ -1,2 +1,2 @@
-# HardwareInventoryManager
-Multi-tenant website for managing hardware assets in large organisations
+# hardware-inventory-manager
+Multi-tenant website for managing hardware assets in organisations
